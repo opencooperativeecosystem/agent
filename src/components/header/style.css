@@ -1,0 +1,230 @@
+.header {
+    height: 40px;
+    line-height: 40px;
+    position: relative;
+    background: #302929;
+    lost-utility: clearfix;
+    z-index: 9999;
+    border-bottom: 1px solid #f9f9f9;
+    box-shadow: 0 1px 2px rgba(0,0,0,.1);
+    /* background: rgba(0,0,0,.15);
+    box-shadow: 0 1px 1px rgba(0,0,0,.1); */
+    border: none;
+}
+
+
+
+.header_left {
+    float: left;
+    position: relative;
+}
+
+.header_panel {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    width: 320px;
+    background: #000;
+    height: 100vh;
+    left: -320px;
+    opacity: 0;
+    box-shadow: 2px 1px 4px 0 rgba(0,0,0,.2);
+}
+
+.panel_list a {
+    text-decoration: none;
+}
+
+.panel_navigation {
+    float: left;
+    margin-left: 10px;
+    margin-top: 8px;
+    background: #000;
+    border-radius: 2px;
+}
+
+.panel_navigation span {
+    display: block;
+    float: left;
+    height: 18px;
+    /* background: #0a2957; */
+    line-height: 19px;
+    padding: 3px 5px;
+    cursor: pointer;
+}
+
+.panel_navigation span:hover {
+    background: #121B28;
+}
+
+.panel_navigation span:first-of-type {
+    border-right: 1px solid rgba(255,255,255, .2);
+}
+
+.panel_navigation span:last-of-type {
+    margin-right: 0;
+}
+
+.panel_title {
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+    z-index: 999999999;
+    margin: 20px;
+    margin-bottom: 0;
+    border-bottom: 1px solid rgba(255,255,255, .1);
+}
+.panel_list {
+    padding: 20px;
+}
+.active {
+    opacity: 1;
+    left: 0;
+}
+
+.profileActive {
+    opacity: 1 !important;
+    right: 5px !important;
+    display: block !important;
+}
+
+.list_item {
+    height: 36px;
+    margin-bottom: 10px;
+    border-radius: 3px;
+    background-color: rgba(75, 191, 107, 0.15);
+
+}
+.item_title {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: .5px;
+    padding: 0 10px;
+    line-height: 36px;
+    color: white;
+    text-decoration: none;
+}
+
+.plans_icon {
+    vertical-align: sub;
+    padding-right: 5px;
+}
+
+.header .header_plans {
+    height: 30px;
+    border-radius: 3px;
+    line-height: 30px;
+    background: #5AAC44;
+    float: left;
+    margin-top: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+.header_plans:hover {
+    background: #437735;
+}
+
+.header_plans h5 {
+    line-height: 30px;
+    font-size: 13px;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    padding: 0 20px;
+    font-weight: 500;
+    letter-spacing: .5px;
+    color: white;
+}
+.logo {
+    display: block;
+    height: 40px;
+    line-height: 40px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: white;
+    /* margin-top: 5px; */
+    /* background: url('../../icons/1.svg'); */
+    /* width: 30px;
+    background-size: cover;
+    background-repeat: no-repeat; */
+
+}
+
+.logo svg {
+    width: 30px;
+}
+
+.header_title {
+    margin: 0;
+    position: absolute;
+    left: 50%;
+    line-height: 40px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: .5px;
+    top: 0;
+    text-transform: uppercase;
+    margin-left: -50px;
+}
+
+.header_title a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.header_right {
+    float: right;
+    margin-right: 10px;
+    margin-top: 5px;
+}
+.right_profile, .right_info {
+    height: 30px;
+    width: 30px;
+    border-radius: 3px;
+    background: #f9f9f9;
+    float: left;
+    margin-left: 8px;
+    cursor: pointer;
+}
+
+.profile_img {
+    height: 30px;
+    width: 30px;
+    border-radius: 3px;
+}
+
+.right_profile:hover, .right_info:hover {
+    background: #E0E0E0;
+}
+
+.right_profile_panel {
+    position: absolute;
+    right: 20px;
+    top: 45px;
+    padding: 10px;
+    background: #fff;
+    opacity: 0;
+    display: none;
+    border-radius: 3px;
+    border: 1px solid #D6DADC;
+    border-bottom-color: #C4C9CC;
+    box-shadow: 0 1px 6px rgba(0,0,0,.15);
+    /* display: none;
+    overflow: hidden; */
+    /* position: absolute; */
+    /* right: -9999px;
+    top: -9999px; */
+    display: none;
+    width: 300px;
+}
+
+.right_profile_panel_title {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #dadada;
+}

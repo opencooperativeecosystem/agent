@@ -1,0 +1,40 @@
+button {
+    background: -webkit-linear-gradient(top,#fff 0,#F8F9F9 100%);
+    background: linear-gradient(to bottom,#fff 0,#F8F9F9 100%);
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 1px solid #E2E4E6;
+    border-bottom-color: #CDD2D4;
+    cursor: pointer;
+    display: block;
+    font-weight: 700;
+    height: 34px;
+    margin-top: 6px;
+    max-width: 300px;
+    padding: 7px;
+    position: relative;
+    user-select: none;
+    white-space: nowrap;
+    border-radius: 3px;
+    text-decoration: none;
+    outline: 0;
+    width: 100%;
+}
+
+.good {
+  background: #5AAC44 !important;
+  border-color: 0 1px 0 #519839 !important;
+  color: #fff !important;
+  -webkit-transition: backgroun .3s ease !important;
+  transition: background .3s ease !important;
+}
+
+.negate {
+  background: #EB5A46 !important;
+  border-color: #EB5A46 #EB5A46 #B04632 !important;
+  color: white !important;
+}
+
+.inline {
+  display: inline-block;
+}

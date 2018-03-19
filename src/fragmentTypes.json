@@ -1,0 +1,1 @@
+{"__schema":{"types":[{"kind":"INTERFACE","name":"Agent","possibleTypes":[{"name":"Organization"},{"name":"Person"}]}]}}

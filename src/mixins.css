@@ -1,0 +1,32 @@
+/* MEDIA QUERY */
+
+@define-mixin for-phone-only {
+    @media (max-width: 599px) { @mixin-content; }
+}
+
+@define-mixin for-tablet-portrait-up {
+    @media (min-width: 600px) { @mixin-content; }
+}
+
+@define-mixin for-tablet-landscape-up {
+    @media (min-width: 900px) { @mixin-content; }
+}
+
+@define-mixin for-desktop-up {
+    @media (min-width: 1200px) { @mixin-content; }
+}
+
+@define-mixin for-big-desktop-up {
+    @media (min-width: 1800px) { @mixin-content; }
+}
+
+
+/* UTILITY  */
+@define-mixin clearfix {
+    &:before, &:after {
+      content: " ";
+      display: table; }
+    &:after {
+      clear: both; }
+  }
+  

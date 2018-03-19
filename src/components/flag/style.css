@@ -1,0 +1,98 @@
+.flag {
+    position: absolute;
+    z-index: 99999999;
+    width: 300px;
+    right: 20px;
+    top: 20px;
+    opacity: 0;
+    right: 20px;
+    display: none;
+}
+
+.flag.active {
+    right: 20px;
+    opacity: 1;
+    display: block;
+}
+
+.flag_internal {
+    background-color: #FFFFFF;
+    border-radius: 3px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-shadow: 0 0 1px rgba(9, 30, 66, 0.31), 0 20px 32px -8px rgba(9, 30, 66, 0.25);
+    color: #42526E;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    padding: 16px;
+    transition: background-color 200ms;
+    -webkit-transition: background-color 200ms;
+    width: 100%;
+    z-index: 600;
+}
+.internal_close {
+    float: right;
+}
+
+.internal_icon {
+    align-items: flex-start;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    -webkit-align-items: flex-start;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-inline-flexbox;
+    display: -webkit-inline-flex;
+    display: inline-flex;
+    flex: 0 0 auto;
+    -ms-flex: 0 0 auto;
+    -webkit-flex: 0 0 auto;
+    flex-direction: column;
+    -webkit-box-direction: normal;
+    -webkit-box-orient: vertical;
+    -ms-flex-direction: column;
+    -webkit-flex-direction: column;
+    vertical-align: middle;
+    height: 18px;
+    margin-right: 5px;
+}
+
+.internal_content {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    flex: 1 1 100%;
+    -ms-flex: 1 1 100%;
+    -webkit-flex: 1 1 100%;
+    flex-direction: column;
+    -webkit-box-direction: normal;
+    -webkit-box-orient: vertical;
+    -ms-flex-direction: column;
+    -webkit-flex-direction: column;
+    justify-content: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    min-width: 0;
+}
+
+.internal_content h1 {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0;
+    /* height: 10px; */
+    line-height: 22px;
+}
+
+.internal_content h5 {
+    font-size: 14px;
+    font-weight: 300;
+    margin: 0;
+    /* height: 10px; */
+    line-height: 20px;
+}
