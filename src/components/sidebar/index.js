@@ -12,7 +12,7 @@ export default compose(
         props.toggleProfile(!props.profile)
       },
       logout: props => event => {
-        localStorage.removeItem('token')
+        localStorage.removeItem('oce_token')
         window.location.reload()
       }
     })

@@ -178,7 +178,7 @@ const agentNotificationSettings =gql`
 const WrapperConnected = compose(
     graphql(allNotificationTypes, {
       options: (props) => ({ variables: {
-        token: localStorage.getItem('token')
+        token: localStorage.getItem('oce_token')
       }}),
       props: ({ ownProps, data: { viewer, loading, error, refetch } }) => ({
         notificationLoading: loading,
@@ -189,7 +189,7 @@ const WrapperConnected = compose(
     }),
     graphql(agent, {
       options: (props) => ({ variables: {
-        token: localStorage.getItem('token')
+        token: localStorage.getItem('oce_token')
       }}),
       props: ({ ownProps, data: { viewer, loading, error, refetch } }) => ({
         loading: loading,
@@ -200,7 +200,7 @@ const WrapperConnected = compose(
     graphql(updateSettings, {
       options: (props) => ({
         variables: {
-          token: localStorage.getItem('token')
+          token: localStorage.getItem('oce_token')
         }
       }),
       props: ({ mutate, ownProps: {name, image, note, primaryLocation} }) => ({
@@ -209,12 +209,12 @@ const WrapperConnected = compose(
       graphql(createNotification, {
         options: (props) => ({
           variables: {
-            token: localStorage.getItem('token')
+            token: localStorage.getItem('oce_token')
           },
           update: (store, { data }) => {
             let agentNotificationsCache = store.readQuery({ query: agentNotificationSettings,
               variables: {
-                token: localStorage.getItem('token')
+                token: localStorage.getItem('oce_token')
               }})
 
             agentNotificationsCache.viewer.myAgent.agentNotificationSettings.push({
@@ -224,7 +224,7 @@ const WrapperConnected = compose(
 
             store.writeQuery({ query: agentNotificationSettings,
               variables: {
-                token: localStorage.getItem('token')
+                token: localStorage.getItem('oce_token')
               },
               data: agentNotificationsCache })
           }}),
@@ -236,7 +236,7 @@ const WrapperConnected = compose(
       graphql(updateNotification, {
         options: (props) => ({
           variables: {
-            token: localStorage.getItem('token')
+            token: localStorage.getItem('oce_token')
           }
         }),
         props: ({ mutate, ownProps: {send, id} }) => ({
@@ -275,7 +275,7 @@ const WrapperConnected = compose(
               variables: {
                 send: !value,
                 id: id,
-                token: localStorage.getItem('token')
+                token: localStorage.getItem('oce_token')
               }
             })
             .then((data) => props.sendNotif(Math.random(), '✌️✌️✌️ Settings updated correctly', 'success', '5000'))
@@ -286,7 +286,7 @@ const WrapperConnected = compose(
                 agentId: props.data.id,
                 send: !value,
                 notificationTypeId: notificationId,
-                token: localStorage.getItem('token')
+                token: localStorage.getItem('oce_token')
               }
             })
             .then((data) => props.sendNotif(Math.random(), '✌️✌️✌️ Settings updated correctly', 'success', '5000'))
@@ -302,7 +302,7 @@ const WrapperConnected = compose(
                   email: props.email,
                   image: props.image,
                   note: props.bio,
-                  token: localStorage.getItem('token')
+                  token: localStorage.getItem('oce_token')
                 }
               })
               .then((data) => props.sendNotif(Math.random(), '✌️✌️✌️ Settings updated correctly', 'success', '5000'))

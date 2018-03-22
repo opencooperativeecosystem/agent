@@ -1,15 +1,15 @@
 import React from 'react'
 import style from './style.css'
-import {User, Preferites, Settings, Power, More} from '../../icons'
+import {User, Preferites, Settings, Power, More, Home, Work, Validate} from '../../icons'
 import {NavLink, withRouter} from 'react-router-dom'
 
 const Sidebar = (props) => {
-  let result = props.agents.reduce(function (r, a) {
-    let type = a.relationship.label.split(' ', 3)[1]
-    r[type] = r[type] || []
-    r[type].push(a)
-    return r
-  }, Object.create(null))
+  // let result = props.agents.reduce(function (r, a) {
+  //   let type = a.relationship.label.split(' ', 3)[1]
+  //   r[type] = r[type] || []
+  //   r[type].push(a)
+  //   return r
+  // }, Object.create(null))
   return (
     <div>
       <div className={style.sidebar_mobile + ' ' + style.sidebar_mobile_active}>
@@ -44,7 +44,7 @@ const Sidebar = (props) => {
       <header className={style.sidebar_header}>
       <div className={style.header_menu}>
         <div className={style.header_profile}>
-          <NavLink to={'/agent/' + props.data.id}>
+          <NavLink to={'/work/agent/' + props.data.id}>
             <div className={style.data_image}>
               <img src={props.data.image} />
             </div>
@@ -67,14 +67,14 @@ const Sidebar = (props) => {
       <section className={style.sidebar_section}>
         <h3 className={style.section_title}>Apps</h3>
         <ul className={style.section_list}>
-          <li className={style.list_active}><NavLink to={'/'}>Dashboard</NavLink></li>
-          <li className={style.list_active}><NavLink to={'/work'}>Work</NavLink></li>
-          <li className={style.list_active}><NavLink to={'/validate'}>Validate</NavLink></li>
+          <li className={style.list_item}><NavLink exact activeClassName={style.active} to={'/'}><span><Home width='18' height='17' color='#fff' /></span> Dashboard</NavLink></li>
+          <li className={style.list_item}><NavLink activeClassName={style.active} to={'/work'}><span><Work width='18' height='17' color='#fff' /></span>Work</NavLink></li>
+          <li className={style.list_item}><NavLink activeClassName={style.active} to={'/validate'}><span><Validate width='18' height='17' color='#fff' /></span>Validate</NavLink></li>
           <li><a href="https://board.net/p/Fair_Health_Care_v4" target='blank'>Health</a></li>
           <li><a target='blank' href="https://wallet.bankofthecommons.coop">Wallet</a></li>
         </ul>
       </section>
-      <section className={style.aside_section}>
+      {/* <section className={style.aside_section}>
       <h3 className={style.section_title}>Network</h3>
       {Object.keys(result).map((item, i) => (
         <div key={i}>
@@ -95,7 +95,7 @@ const Sidebar = (props) => {
           </ul>
         </div>
       ))}
-      </section>
+      </section> */}
     </div>
     </div>
   )

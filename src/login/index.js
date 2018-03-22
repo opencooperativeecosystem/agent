@@ -20,7 +20,7 @@ class Login extends React.Component {
     handleLogin = async () => {
         await this.props.mutate({variables: {username: this.state.username, password: this.state.password}})
         .then (res => {
-          localStorage.setItem('token', res.data.createToken.token)
+          localStorage.setItem('oce_token', res.data.createToken.token)
           this.props.history.replace('/')
         })
         .catch(err => {

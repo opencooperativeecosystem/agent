@@ -32,4 +32,4 @@ mutation ($token: String!, $committedUnitId:Int!, $due:String!, $action: String!
 }
 `
 
-export default graphql(createCommitment, {options: (props) => ({ variables: {token: localStorage.getItem('token')}})})
+export default graphql(createCommitment, {options: (props) => ({ variables: {token: localStorage.getItem('oce_token')}})})

@@ -7,13 +7,13 @@ import {HashRouter as Router, Route} from 'react-router-dom'
 import {ApolloProvider} from 'react-apollo'
 import {client, store} from './store'
 import { Provider } from 'react-redux'
-import AppTemplate from './templates/AppTemplate'
+import PrivateRoute from './templates/AppTemplate'
 import { Notifs } from 'redux-notifications'
 import style from './base.css'
 import Work from 'collaborate'
-import './App.css'
+import Validate from 'oce-validate'
 import 'collaborate/build/css/index.css'
-// require("react-datepicker/dist/react-datepicker-cssmodules.css")
+import 'oce-validate/build/css/index.css'
 
 function CustomNotif (props) {
   let type
@@ -32,19 +32,17 @@ ReactDOM.render(
   <ApolloProvider client={client}>
     <Provider store={store}>
       <Router>
-      <div>
-        <Notifs
-          CustomComponent={CustomNotif}
-          onActionClick={id => this.dismiss(id)}
-          actionLabel='close'
-        />
-        <AppTemplate>
+        <div>
+          <Notifs
+            CustomComponent={CustomNotif}
+            onActionClick={id => this.dismiss(id)}
+            actionLabel='close'
+          />
           <Route exact path='/login' component={Login} />
-          <Route exact path='/' component={() => (<h1>overview</h1>)} />
-          <Route path='/work' component={Work} />
-          <Route path='/validate' component={() => (<h1>validate</h1>)} />
-          <Route path='/settings' component={Settings} />
-        </AppTemplate>
+          <PrivateRoute exact path='/' component={() => (<h1>overview</h1>)} />
+          <PrivateRoute path='/work' component={Work} />
+          <PrivateRoute path='/validate' component={Validate} />
+          <PrivateRoute path='/settings' component={Settings} />
         </div>
       </Router>
     </Provider>

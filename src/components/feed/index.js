@@ -63,7 +63,7 @@ export default compose(
           {
             query: queryEvents,
             variables: {
-              token: localStorage.getItem('token'),
+              token: localStorage.getItem('oce_token'),
               id: props.id
             }
           }
@@ -74,7 +74,7 @@ export default compose(
       })
     }),
     graphql(queryEvents, {
-      options: ({id}) => ({ variables: { token: localStorage.getItem('token'), id: id}}),
+      options: ({id}) => ({ variables: { token: localStorage.getItem('oce_token'), id: id}}),
       props: ({ ownProps, data: { viewer, loading, error, refetch } }) => ({
         loading,
         error,
@@ -88,7 +88,7 @@ export default compose(
         return (
           mutate({
             variables: {
-              token: localStorage.getItem('token'),
+              token: localStorage.getItem('oce_token'),
               id: id
             }
           })

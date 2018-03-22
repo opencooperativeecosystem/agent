@@ -228,17 +228,28 @@
     margin-bottom: 20px;
 }
 
-.section_list .list_active a {
+.section_list li a span {
+    height: 18px;
+    width: 18px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+/* .section_list .list_item .active {
     font-weight: 600;
     color: $n10;
-}
+} */
 
 .section_list li a {
     color: #A8B4CE;
     font-size: 14px;
     font-weight: 400;
     text-decoration: none;
-    
+}
+
+.section_list li a.active {
+    font-weight: 600;
+    color: $n10;
 }
 
 
