@@ -2,8 +2,13 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Login from './login/'
 import Settings from './settings/wrapper'
+import Agent from './agent/wrapper'
+import Overview from './overview/wrapper'
 import registerServiceWorker from './registerServiceWorker'
-import {HashRouter as Router, Route} from 'react-router-dom'
+import {HashRouter as Router,
+  Route,
+  Switch
+} from 'react-router-dom'
 import {ApolloProvider} from 'react-apollo'
 import {client, store} from './store'
 import { Provider } from 'react-redux'
@@ -12,8 +17,19 @@ import { Notifs } from 'redux-notifications'
 import style from './base.css'
 import Work from 'collaborate'
 import Validate from 'oce-validate'
-import 'collaborate/build/css/index.css'
-import 'oce-validate/build/css/index.css'
+import Network from './network/wrapper'
+import Inventory from './inventory/wrapper'
+import workStyle from "collaborate/build/css/index.css"
+import validateStyle from "oce-validate/build/css/index.css"
+
+const NoMatch = ({ location }) => (
+  <div>
+    <h3>
+      No match for <code>{location.pathname}</code>
+    </h3>
+  </div>
+);
+
 
 function CustomNotif (props) {
   let type
@@ -38,11 +54,17 @@ ReactDOM.render(
             onActionClick={id => this.dismiss(id)}
             actionLabel='close'
           />
-          <Route exact path='/login' component={Login} />
-          <PrivateRoute exact path='/' component={() => (<h1>overview</h1>)} />
-          <PrivateRoute path='/work' component={Work} />
-          <PrivateRoute path='/validate' component={Validate} />
-          <PrivateRoute path='/settings' component={Settings} />
+          <Switch>
+            <Route path='/login' component={Login} />
+            <PrivateRoute exact path='/' component={Overview} />
+            <PrivateRoute exact path='/agent/:id' component={Agent} />
+            <PrivateRoute path='/work' component={Work} />
+            <PrivateRoute path='/validate' component={Validate} />
+            <PrivateRoute path='/settings' component={Settings} />
+            <PrivateRoute path='/network' component={Network} />
+            <PrivateRoute path='/inventory' component={Inventory} />
+            <Route component={NoMatch} />
+          </Switch>
         </div>
       </Router>
     </Provider>
