@@ -49,9 +49,8 @@
 }
 
   .item_desc {
-    margin-left: 10px;
-    float: left;
-    white-space: pre-line;
+    margin-left: 50px;
+    
   }
 
   .item_desc .desc {
