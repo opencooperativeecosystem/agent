@@ -92,8 +92,8 @@ choosePort(HOST, DEFAULT_PORT)
     process.exit(1);
   });
 
-// const uri: 'https://ocp.freedomcoop.eu/api/graph'
-var uri = 'https://testocp.freedomcoop.eu/api/graph'
+var uri = 'https://ocp.freedomcoop.eu/api/graph'
+// var uri = 'https://testocp.freedomcoop.eu/api/graph'
 
 fetch(uri, {
   method: 'POST',

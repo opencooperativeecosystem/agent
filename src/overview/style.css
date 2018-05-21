@@ -1,19 +1,41 @@
-.overview {
-    padding: 20px;
+.panel {
+    width: 320px;
+    background: #292D37;
+    border-radius: 3px;
+    min-height: 100vh;
+    flex: 1;
+    margin-right: 10px;
+    margin: 0 5px;
+    margin-left: 5px;
+    height: 100%;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    display: inline-block;
+    vertical-align: top;
+    white-space: nowrap;
+    position: relative;
+    border: 3px;
 }
 
-.overview h1 {
-    margin-top: 0;
+.panel_title {
+    height: 40px;
+    background: #313542;
+    lost-utility: clearfix;
 }
 
-
-.overview h5 {
-    margin-left: 0;
-    font-size: 20px;
+.panel_title h1 {
+    font-size: 14px;
+    color: #F0F0F0;
+    font-weight: 500;
+    float: left;
+    margin: 0;
+    line-height: 40px;
+    margin-left: 10px;
 }
 
-
-.overview h5 a {
-    margin-left: 0;
-    color: inherit;
+.panel_title span {
+    float: left;
+    margin-left: 10px;
+    vertical-align: sub;
+    margin-top: 6px;
 }

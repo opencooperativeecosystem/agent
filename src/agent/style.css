@@ -1,107 +1,49 @@
-@import "../mixins.css";
-@import "../variables.css";
-
 .agent {
-    padding: 20px;
     lost-utility: clearfix;
-    /* margin-top: 40px; */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    white-space: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
 }
 
 .agent_profile {
-    lost-column: 6/12;
-}
-
-.agent_sidebar {
-    background: white;
-    box-shadow: 0 1px 2px rgba(0,0,0,.25);
-    border-radius: 2px;
-    padding: 10px;
-}
-
-
-.agent_sidebar_wrapper {
-    lost-column: 2/12;
-    lost-offset: 1/12;
-
+    @media screen and (max-width: 800px) {
+        lost-column: 12/12;
+        padding: 10px;
+    }
 }
 
 .agent_info {
-    /* lost-column: 8/10;
-    lost-offset: 1/10; */
     lost-utility:clearfix;
-    display: table;
 }
 
-.item_member {
-    lost-column: 1/5;
-    margin-bottom: 20px;
-}
-
-
-
-/* .item_member a {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-} */
-
-.agent_list {
-    lost-utility: clearfix;
-    margin-top: 20px;
-}
-
-.item_member .item_photo {
+.info_image {
     width: 80px;
     height: 80px;
-    border-radius: 2px;
-    display: block;
+    border-radius: 100%;
     margin: 0 auto;
-    margin-bottom: 10px;
-    background: #dadada;
-}
-.item_member h5 {
-    text-align: center;
-    margin: 0;
-    font-size: 14px;
-    font-weight: 500;
-    color: #161515;
-}
-
-.item_photo img {
-    width: 80px;
-    height: 80px;
-    border-radius: 2px;
-}
-
-.resources_list {
     margin-top: 20px;
+    background: #606060;
 }
 
-/* .resources_list .list_item {
-    background: white;
-    box-shadow: 0 1px 2px rgba(0,0,0,.25);
-    border-radius: 2px;
-    margin-bottom: 10px;
-    lost-utility: clearfix;
-    padding: 10px;
-}
-
-.resources_list .list_item .item_desc {
-    float: left;
-}
-
-.resources_list .list_item .type {
-    float: right;
-    background: $g400;
-    padding: 2px 10px;
-    border-radius: 30px;
-    font-size: 12px;
-    color: white;
+.info_title {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 500;
     letter-spacing: .5px;
-} */
-
+    margin: 0;
+    color: #F0F0F0;
+    margin-top: 10px;
+    
+}
 
 .plan_scope {
     margin: 0;
@@ -158,24 +100,6 @@
     display: block; 
   }
   
-.info_image {
-    width: 80px;
-    height: 80px;
-    border-radius: 2px;
-    float: left;
-    margin-right: 20px;
-    background: #606060;
-    vertical-align: bottom;
-}
-
-.agent_sidebar h1 {
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: .5px;
-    border-bottom: 1px solid $n50;
-    padding-bottom: 10px;
-    padding-left: 10px;
-}
 
 .sidebar_panel {
     list-style: none;
@@ -198,17 +122,6 @@
     display: block;
 }
 
-.wrapper_subtitle {
-    font-size: 14px;
-    text-transform: uppercase;
-    letter-spacing: .5px;
-    color: $n900;
-    padding-bottom: 10px;
-    border-bottom: 1px solid $n40;
-    font-weight: 500;
-    margin-left: 0;
-}
-
 .info_note {
     font-size: 14px;
     margin:0;
@@ -216,23 +129,8 @@
     display: grid;
 }
 
-.info_data {
-    float: left;
-}
 
-.info_title {
-    /* float: left; */
-    /* lost-column:1/1; */
-    /* display: table-cell; */
-    font-size: 26px;
-    font-weight: 500;
-    letter-spacing: .5px;
-    height: 40px;
-    line-height: 40px;
-    margin: 0;
-    color: #161515;
-    margin-bottom: 10px;
-}
+
 
 .agent_menu {
     margin-top: 40px;
@@ -279,4 +177,46 @@
     margin-top: 10px;
     background: rgba(65, 155, 249, .2);
     border: 1px solid rgba(65, 155, 249, .6);
+}
+
+.agent_list {
+    margin: 10px;
+}
+
+.list_item {
+    background: #393F4F;
+    border-radius: 3px;
+    height: 60px;
+    margin-bottom: 10px;
+    lost-utility: clearfix;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .2)
+}
+
+.list_item h5 {
+    float: left;
+    color: #F0F0F0;
+    font-size: 14px;
+    line-height: 40px;
+    font-weight: 500;
+    margin-top: 12px;
+}
+
+.item_photo {
+    width: 40px;
+    height: 40px;
+    border-radius: 3px;
+    background: #292D37;
+    margin: 10px;
+    float: left;
+}
+
+.item_photo img {
+    width: 40px;
+    height: 40px;
+    border-radius: 3px;
+
+}
+
+.resources_list {
+    padding: 10px;
 }

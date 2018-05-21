@@ -18,10 +18,20 @@ const AppTemplate = ({component: Component, ...rest}) => {
         isLoggedIn ? (
           rest.loading ? <strong>Loading...</strong> : (
             rest.error ? <p style={{ color: '#F00' }}>API error</p> : (
-              <div >
-                <Sidebar data={rest.data} agents={rest.data.agentRelationships} />
-                <div className={style.container}>
-                  <Component {...props} agentData={rest} />
+              <div className={style.surface}>
+                <div className={style.content}>
+                  <div className={style.boards}>
+                    <div className={style.boards_main_content}>
+                      <div className={style.boards_canvas}>
+                        <div className={style.canvas}>
+                          <Sidebar data={rest.data} agents={rest.data.agentRelationships} />
+                          <div className={style.container}>
+                            <Component {...props} agentData={rest} />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             )
@@ -56,20 +66,6 @@ query ($token: String) {
             name
             note
             image
-          }
-        }
-        agentPlans {
-          name
-          id
-          note
-          planProcesses {
-            name
-            committedInputs {
-              id
-              note
-              action
-            }
-            note
           }
         }
       }

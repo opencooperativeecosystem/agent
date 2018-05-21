@@ -166,59 +166,106 @@ module.exports = {
           // use the "style" loader inside the async code so CSS from them won't be
           // in the main CSS file.
           {
-            test: /\.css$/,  
-            include: /node_modules/,  
-            loaders: ['style-loader', 'css-loader'],
+            test: /\.css$/,
+            include: /node_modules/,
+            loader: 'style-loader!css-loader'
           },
           {
             test: /\.css$/,
-            loader: ExtractTextPlugin.extract(
-              Object.assign(
-                {
-                  fallback: require.resolve('style-loader'),
-                  use: [
-                    {
-                      loader: require.resolve('css-loader'),
-                      options: {
-                        importLoaders: 1,
-                        minimize: true,
-                        modules: true,                        
-                        sourceMap: shouldUseSourceMap,
-                      },
-                    },
-                    {
-                      loader: require.resolve('postcss-loader'),
-                      options: {
-                        // Necessary for external CSS imports to work
-                        // https://github.com/facebookincubator/create-react-app/issues/2677
-                        ident: 'postcss',
-                        importLoaders: 1,
-                          plugins: () => [
-                            require('postcss-import'),
-                            require('postcss-mixins'),
-                            require('postcss-simple-vars'),
-                            require('lost'),
-                            require('postcss-cssnext'),
-                            require('postcss-nested')
-                            // autoprefixer({
-                            //   browsers: [
-                            //     '>1%',
-                            //     'last 4 versions',
-                            //     'Firefox ESR',
-                            //     'not ie < 9', // React doesn't support IE8 anyway
-                            //   ],
-                            //   flexbox: 'no-2009',
-                            // })
-                          ]
-                      },
-                    },
-                  ],
+            use: [
+              require.resolve('style-loader'),
+              {
+                loader: require.resolve('css-loader'),
+                // include: [path.join(__dirname, '..', 'node_modules')],
+                options: {
+                  importLoaders: 1,
+                  modules: true,
+                  localIdentName: "[name]__[local]___[hash:base64:5]"  
                 },
-                extractTextPluginOptions
-              )
-            ),
-            // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
+              },
+              {
+                loader: require.resolve('postcss-loader'),
+                options: {
+                  // Necessary for external CSS imports to work
+                  // https://github.com/facebookincubator/create-react-app/issues/2677
+                  // ident: 'postcss',
+                  importLoaders: 1,
+                  plugins: () => [
+                    require('postcss-import'),
+                    require('postcss-mixins'),
+                    require('postcss-simple-vars'),
+                    require('lost'),
+                    require('postcss-cssnext'),
+                    require('postcss-nested')
+                    // autoprefixer({
+                    //   browsers: [
+                    //     '>1%',
+                    //     'last 4 versions',
+                    //     'Firefox ESR',
+                    //     'not ie < 9', // React doesn't support IE8 anyway
+                    //   ],
+                    //   flexbox: 'no-2009',
+                    // })
+                  ]
+                },
+              },
+              'postcss-loader'
+            ],
           },
+          // {
+          //   test: /\.css$/,  
+          //   include: /node_modules/,  
+          //   loaders: ['style-loader', 'css-loader'],
+          // },
+          // {
+          //   test: /\.css$/,
+          //   loader: ExtractTextPlugin.extract(
+          //     Object.assign(
+          //       {
+          //         fallback: require.resolve('style-loader'),
+          //         use: [
+          //           {
+          //             loader: require.resolve('css-loader'),
+          //             options: {
+          //               importLoaders: 1,
+          //               minimize: true,
+          //               modules: true,                        
+          //               sourceMap: shouldUseSourceMap,
+          //             },
+          //           },
+          //           {
+          //             loader: require.resolve('postcss-loader'),
+          //             options: {
+          //               // Necessary for external CSS imports to work
+          //               // https://github.com/facebookincubator/create-react-app/issues/2677
+          //               ident: 'postcss',
+          //               importLoaders: 1,
+          //                 plugins: () => [
+          //                   require('postcss-import'),
+          //                   require('postcss-mixins'),
+          //                   require('postcss-simple-vars'),
+          //                   require('lost'),
+          //                   require('postcss-cssnext'),
+          //                   require('postcss-nested')
+          //                   // autoprefixer({
+          //                   //   browsers: [
+          //                   //     '>1%',
+          //                   //     'last 4 versions',
+          //                   //     'Firefox ESR',
+          //                   //     'not ie < 9', // React doesn't support IE8 anyway
+          //                   //   ],
+          //                   //   flexbox: 'no-2009',
+          //                   // })
+          //                 ]
+          //             },
+          //           },
+          //         ],
+          //       },
+          //       extractTextPluginOptions
+          //     )
+          //   ),
+          //   // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
+          // },
           // "file" loader makes sure assets end up in the `build` folder.
           // When you `import` an asset, you get its filename.
           // This loader don't uses a "test" so it will catch all modules

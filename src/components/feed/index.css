@@ -1,13 +1,15 @@
 
   .activities_list  {
     margin-top: 20px;
+    padding: 10px;
   }
 
   .activities_list .list_item {
-    border-bottom: 1px solid #E2E4E6;
+    border-bottom: 1px solid #e2e4e61a;
     min-height: 30px;
     padding: 10px 0;
     position: relative;
+    margin-bottom: 10px;
   }
   
   .list_item {
@@ -15,7 +17,7 @@
     margin: 0 6px 0 0;
     word-wrap: break-word;
     font-size: 14px;
-    color: #4d4d4d;
+    color: #f0f0f0bd;
     lost-utility: clearfix;
   }
 
@@ -69,27 +71,27 @@
     color: #4d4d4d;
     display: block;
     float: left;
-    height: 40px;
+    height: 30px;
     margin: 0 4px 4px 0;
     overflow: hidden;
     position: relative;
-    width: 40px;
+    width: 30px;
     -ms-user-select: none;
     user-select: none;
     z-index: 0;
   }
 
   .members_item img {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
     display: block;
     -webkit-appearance: none;
-    line-height: 40px;
+    line-height: 32px;
     text-indent: 4px;
     font-size: 13px;
     overflow: hidden;
-    max-width: 40px;
-    max-height: 40px;
+    max-width: 32px;
+    max-height: 32px;
     text-overflow: ellipsis;
   }
   
@@ -99,7 +101,7 @@
   }
   
   .list_item span {
-    font-weight: 600;
+    font-weight: 500;
   }
   
   .list_item .item_meta {

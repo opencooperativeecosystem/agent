@@ -15,11 +15,11 @@ import { Provider } from 'react-redux'
 import PrivateRoute from './templates/AppTemplate'
 import { Notifs } from 'redux-notifications'
 import style from './base.css'
-import Work from 'collaborate'
+import Work from 'oce-collaborate'
 import Validate from 'oce-validate'
 import Network from './network/wrapper'
 import Inventory from './inventory/wrapper'
-import workStyle from "collaborate/build/css/index.css"
+import workStyle from "oce-collaborate/build/css/index.css"
 import validateStyle from "oce-validate/build/css/index.css"
 
 const NoMatch = ({ location }) => (

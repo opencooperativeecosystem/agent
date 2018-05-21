@@ -3,15 +3,14 @@
 @import "./variables.css";
 
 html {
-  background-color: #F1F4F5;
+  background-color: #191B22;
 }
 
 
 body {
   margin: 0;
-  /* padding: 20px; */
+  padding: 10px;
   font-family: 'Fira Sans';
-  /* lost-utility: edit;  */
 }
   
 .canvas_title {

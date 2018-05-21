@@ -5,6 +5,7 @@ import style from '../base.css'
 import { withRouter } from 'react-router'
 import {connect} from 'react-redux'
 import { actions as notifActions } from 'redux-notifications'
+import { Prompt } from "react-router-dom"
 
 class Login extends React.Component {
     constructor (props) {
@@ -13,7 +14,8 @@ class Login extends React.Component {
         this.password = this.password.bind(this)
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            isBlocking: false
         }
     }
 
@@ -21,6 +23,7 @@ class Login extends React.Component {
         await this.props.mutate({variables: {username: this.state.username, password: this.state.password}})
         .then (res => {
           localStorage.setItem('oce_token', res.data.createToken.token)
+          localStorage.setItem('agent_id', res.data.createToken.id)
           this.props.history.replace('/')
         })
         .catch(err => {
@@ -56,9 +59,20 @@ class Login extends React.Component {
             <div className={style.login_wrapper}>
             <div className={style.wrapper_container}>
                 <div className={style.wrapper_title}><h3><span role='img'>👋</span> Welcome</h3></div>
+                <form
+                    onSubmit={event => {
+                        event.preventDefault();
+                        event.target.reset();
+                        this.setState({
+                        isBlocking: false
+                        })
+                        this.handleLogin()
+                    }}
+                >
                 <input placeholder='Insert your username' type='text' value={username} onChange={this.user} className='username' />
                 <input placeholder='Insert your password' type='password' value={password} onChange={this.password} className='password' />
-                <button onClick={()=>this.handleLogin()}>login</button>
+                <button>login</button>
+                </form>
                 <a href='https://ocp.freedomcoop.eu/account/password/reset/' target='blank' className={style.wrapper_lost}>Password lost?</a>
                 </div>
             </div>
