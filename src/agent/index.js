@@ -4,13 +4,13 @@ import Cards from '../components/cards'
 import Feed from '../components/feed/feed'
 import { NavLink } from 'react-router-dom'
 import Item from '../components/inventoryItem'
-import {Menu, Globe, Inventory, Diary, Card} from '../icons'
-import Panel from '../components/panel'
+import {Icons, Panel, NavigationItem} from 'oce-components/build'
+// import Panel from '../components/panel'
 
 const Agent = ({data}) => {
   return (
     <section className={style.agent}>
-      <Panel icon={<Diary width='18' color='#f0f0f0' />} title='Diary'>
+      <Panel icon={<Icons.Diary width='18' color='#f0f0f0' />} title='Diary'>
         <div className={style.agent_profile}>
           <div className={style.agent_info}>
             <div className={style.info_image}>
@@ -23,33 +23,25 @@ const Agent = ({data}) => {
           : <div className={style.emptyBox}>No item in this section :(</div>}
         </div>
       </Panel>
-      <Panel icon={<Card width='18' color='#f0f0f0' />} title='Plans'>
+      <Panel icon={<Icons.Card width='18' color='#f0f0f0' />} title='Plans'>
         {data.agentPlans.length > 0
           ? <Cards
             data={data.agentPlans}
-            link='work/canvas'
+            link='canvas'
           />
           : <div className={style.emptyBox}>No item in this section :(</div>
         }
       </Panel>
-      <Panel icon={<Globe width='18' color='#f0f0f0' />} title='Network'>
+      <Panel icon={<Icons.Globe width='18' color='#f0f0f0' />} title='Network'>
         <div className={style.agent_list}>
           {data.agentRelationships.map((item, i) => (
-            <div key={i} className={style.list_item + ' ' + style.item_member}>
-              {data.type !== 'Person'
-                ? <NavLink key={i} activeClassName={style.activeLink} to={'/agent/' + item.subject.id}>
-                  <div className={style.item_photo}><img src={item.subject.image} /></div>
-                  <h5>{item.subject.name}</h5>
-                </NavLink>
-                : <NavLink key={i} activeClassName={style.activeLink} to={'/agent/' + item.object.id}>
-                    <div className={style.item_photo}><img src={item.object.image} /></div>
-                    <h5>{item.object.name}</h5>
-                </NavLink>}
-            </div>
+            <NavLink key={i} activeClassName={style.activeLink} to={'/agent/' + item.object.id}>
+              <NavigationItem img={item.object.image} title={item.object.name} />
+            </NavLink>
           ))}
         </div>
       </Panel>
-      <Panel icon={<Inventory width='18' color='#f0f0f0' />} title='Inventory'>
+      <Panel icon={<Icons.Inventory width='18' color='#f0f0f0' />} title='Inventory'>
         <div className={style.resources_list}>
           {data.ownedEconomicResources.length > 0
             ? data.ownedEconomicResources.map((item, i) => (
