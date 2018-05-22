@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className={undefined}
+  onClick={[Function]}
+>
+  <svg
+    className="rc-progress-line "
+    preserveAspectRatio="none"
+    style={Object {}}
+    viewBox="0 0 100 1"
+  >
+    <path
+      className="rc-progress-line-trail"
+      d="M 0.5,0.5
+               L 99.5,0.5"
+      fillOpacity="0"
+      stroke="#D9D9D9"
+      strokeLinecap="round"
+      strokeWidth={1}
+    />
+    <path
+      className="rc-progress-line-path"
+      d="M 0.5,0.5
+               L 99.5,0.5"
+      fillOpacity="0"
+      stroke="#4DC65E"
+      strokeLinecap="round"
+      strokeWidth="1"
+      style={
+        Object {
+          "strokeDasharray": "100px, 100px",
+          "strokeDashoffset": "53px",
+          "transition": "stroke-dashoffset 0.3s ease 0s, stroke 0.3s linear",
+        }
+      }
+    />
+  </svg>
+  <span
+    className={undefined}
+  >
+    test a card
+  </span>
+  <div
+    className={undefined}
+  >
+    <h4
+      className={undefined}
+    >
+      Due to 
+      19 Mar 2018
+    </h4>
+    <div
+      className={undefined}
+    />
+  </div>
+</div>
+`;

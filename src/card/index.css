@@ -1,0 +1,124 @@
+.card {
+    background: white;
+    border-bottom: 1px solid #ccc;
+    border-radius: 3px;
+    overflow: hidden;
+    padding: 6px 6px 2px 8px;
+    position: relative;
+    z-index: 10;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    cursor: pointer;
+    margin-bottom: 6px;
+    max-width: 300px;
+    min-height: 20px;
+    position: relative;
+    z-index: 0;
+    padding: 10px;
+    padding-top: 0;
+}
+
+.info_status {
+  lost-utility: clearfix;
+}
+.completedTask {
+  height: 24px;
+  line-height: 24px;
+  line-height: 24px;
+  font-size: 13px;
+  font-weight: 500;
+  margin:0;
+  background: #36B37E;
+  border-radius: 3px;
+  color: #172b4d;
+  cursor: default;
+  height: 20px;
+  line-height: 20px;
+  margin: 10px 2px 5px 0;
+  max-width: 100%;
+  overflow: hidden;
+  padding: 3px 15px;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  float: left;
+  -ms-flex-direction: row;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  flex-direction: row;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  font-size: 14px;
+}
+
+.isFinished {
+  background: #36b37d;
+  padding-top: 10px;
+}
+
+.isFinished:hover {
+  background: #2e9267 !important;
+}
+
+.isFinished .infos_due {
+  color: #e1e1e1 !important;
+}
+
+.card:hover {
+  background: #EDEFF0;
+  border-bottom-color: #d6dacc;
+}
+
+.card.dragged {
+  opacity: .5;
+  cursor: move;
+}
+
+.card_title {
+    font-size: 14px;
+    line-height: 20px;
+    clear: both;
+    font-weight: 400;
+    margin: 0 0 4px;
+    overflow: hidden;
+    word-wrap: break-word;
+    color: #4d4d4d;
+}
+
+.card_infos{
+  margin-top: 5px;
+}
+
+.card_infos .infos_due{
+  color: #ADADAD;
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 1px;
+  margin: 0;
+  float: left;
+  height: 20px;
+  line-height: 20px;
+}
+
+.card_infos .infos_members {
+  float: right;
+}
+
+.card_infos .infos_members .members_item {
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  display: inline-block;
+  background: #adadad;
+  margin-left: 5px;
+}
+
+.card_infos .infos_members .members_item  img {
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+}
