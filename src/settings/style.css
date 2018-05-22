@@ -4,6 +4,18 @@ body {
 }
 .settings {
     lost-utility:clearfix;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    white-space: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
 }
 .settings_container {
     lost-column: 3/5;
@@ -154,19 +166,16 @@ body {
 
 .form_item {
     lost-utility: clearfix;
-    margin-bottom: 15px;
+    margin-bottom: 25px;
 }
 
 .form_item h5 {
-    float: left;
     font-size: 16px;
-    color: #3F4657;
+    color: #f0f0f0;
     font-weight: 400;
-    width: 100px;
     margin: 0;
-    height: 40px;
-    line-height: 40px;
-    text-align: right;
+    margin-left: 10px;
+    margin-bottom: 5px;
 }
 
 .item_photo {
@@ -176,6 +185,8 @@ body {
     height: 60px;
     border-radius: 2px;
     background: #DCDCDC;
+    margin: 0 auto;
+    margin-top: 10px;
 }
 
 .item_photo img {
@@ -184,26 +195,28 @@ body {
 }
 
 .form_item input {
-    float: left;
     margin-left: 10px;
     height: 40px;
     font-size: 14px;
     color: #3F4657;
     font-weight: 400;
     text-indent: 10px;
-    width: 250px;
+    /* width: 250px; */
+    width: 300px;
+    /* margin-right: 10px; */
+    border: 0;
+    border-radius: 3px;
 }
 
 .form_item textarea {
     margin-left: 10px;
-    height: 40px;
     font-size: 14px;
     color: #3F4657;
     background: white;
     font-weight: 400;
     text-indent: 10px;
     display: inline-block;
-    width: 420px;
+    width: 300px;
     height: 100px;
 }
 
@@ -217,4 +230,32 @@ body {
     width: 160px;
     margin: 0 auto;
     margin-top: 8px;
+}
+
+.container_form .form_item {
+  padding-bottom: 10px;
+}
+
+.form_setting {
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(240, 240, 240, 0.15)
+}
+
+.container_form .form_item  .item_info{
+    float: left;
+    width: 200px;
+}
+
+.container_form .form_item p {
+    font-size: 14px;
+    color: #f0f0f0a6;
+    margin-left: 10px;
+    margin: 0;
+    margin-left: 10px;
+}
+
+.item_status {
+    float: right;
+    /* margin-top: -45px; */
+    margin-right: 20px;
 }
