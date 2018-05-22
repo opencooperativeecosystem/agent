@@ -5,7 +5,7 @@ import Settings from './settings/wrapper'
 import Agent from './agent/wrapper'
 import Overview from './overview/wrapper'
 import registerServiceWorker from './registerServiceWorker'
-import {HashRouter as Router,
+import {BrowserRouter as Router,
   Route,
   Switch
 } from 'react-router-dom'
@@ -15,11 +15,12 @@ import { Provider } from 'react-redux'
 import PrivateRoute from './templates/AppTemplate'
 import { Notifs } from 'redux-notifications'
 import style from './base.css'
-import Work from 'oce-collaborate'
+// import Work from 'oce-collaborate'
 import Validate from 'oce-validate'
 import Network from './network/wrapper'
 import Inventory from './inventory/wrapper'
-import workStyle from "oce-collaborate/build/css/index.css"
+import Work from './work'
+// import workStyle from "oce-collaborate/build/css/index.css"
 import validateStyle from "oce-validate/build/css/index.css"
 
 const NoMatch = ({ location }) => (
@@ -62,7 +63,6 @@ ReactDOM.render(
             <PrivateRoute path='/validate' component={Validate} />
             <PrivateRoute path='/settings' component={Settings} />
             <PrivateRoute path='/network' component={Network} />
-            <PrivateRoute path='/inventory' component={Inventory} />
             <Route component={NoMatch} />
           </Switch>
         </div>
