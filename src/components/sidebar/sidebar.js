@@ -27,7 +27,6 @@ const Sidebar = (props) => {
           <li className={style.list_item}><NavLink activeClassName={style.active} to={'/work'}>Work</NavLink></li>
           <li className={style.list_item}><NavLink activeClassName={style.active} to={'/validate'}>Validate</NavLink></li>
           <li className={style.list_item}><NavLink activeClassName={style.active} to={'/network'}>Network</NavLink></li>
-          <li className={style.list_item}><NavLink activeClassName={style.active} to={'/inventory'}>Inventory</NavLink></li>
           <li className={style.list_item}><a href='http://fairplayground.info/datasources/editor.php' target='blank' >Stats</a></li>
           <li><a href='https://board.net/p/Fair_Health_Care_v4' target='blank'>Welfare</a></li>
         </ul>
