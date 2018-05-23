@@ -29,6 +29,7 @@ class Canvas extends React.Component {
     const {modalSelected, modalIsOpen} = this.state
     const {data} = this.props
     let customHeight = window.innerHeight
+    console.log(data)
     return (
       data
       ? <section className={style.surface} >
@@ -54,7 +55,7 @@ class Canvas extends React.Component {
                   .map(task => (
                     {
                       id: Number(task.id),
-                      title: task.action + ' ' + task.committedQuantity.numericValue + ' ' + task.committedQuantity.unit.name + ' of ' + task.resourceClassifiedAs.name,
+                      title: task.action + ' ' + task.committedQuantity.numericValue + ' ' + task.committedQuantity.unit.name + task.resourceClassifiedAs ? ' of ' + task.resourceClassifiedAs.name : '',
                       members: task.involvedAgents,
                       process: task.inputOf.name,
                       due: task.due,

@@ -7,7 +7,9 @@ import Item from '../components/inventoryItem'
 import {Icons, Panel, NavigationItem} from 'oce-components/build'
 // import Panel from '../components/panel'
 
-const Agent = ({data}) => {
+const Agent = ({data, match}) => {
+  console.log(data)
+  console.log(match)
   return (
     <section className={style.agent}>
       <Panel icon={<Icons.Diary width='18' color='#f0f0f0' />} title='Diary'>
@@ -27,18 +29,25 @@ const Agent = ({data}) => {
         {data.agentPlans.length > 0
           ? <Cards
             data={data.agentPlans}
-            link='canvas'
+            link='/canvas'
           />
           : <div className={style.emptyBox}>No item in this section :(</div>
         }
       </Panel>
       <Panel icon={<Icons.Globe width='18' color='#f0f0f0' />} title='Network'>
         <div className={style.agent_list}>
-          {data.agentRelationships.map((item, i) => (
+          {data.type === 'Person' 
+          ? data.agentRelationships.map((item, i) => (
             <NavLink key={i} activeClassName={style.activeLink} to={'/agent/' + item.object.id}>
               <NavigationItem img={item.object.image} title={item.object.name} />
             </NavLink>
-          ))}
+          ))
+          : data.agentRelationships.map((item, i) => (
+            <NavLink key={i} activeClassName={style.activeLink} to={'/agent/' + item.subject.id}>
+              <NavigationItem img={item.subject.image} title={item.subject.name} />
+            </NavLink>
+          )) }
+          
         </div>
       </Panel>
       <Panel icon={<Icons.Inventory width='18' color='#f0f0f0' />} title='Inventory'>

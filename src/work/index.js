@@ -15,9 +15,11 @@ const Work = (props) => {
         <Panel icon={<Icons.Globe width='18' color='#f0f0f0' />} title='Network'>
           <div>
             {props.agentData.data.agentRelationships.map((item, i) => (
-              <Link key={i} to={`${props.match.path}/agent/` + item.object.id}>
-                <NavigationItem img={item.object.image} title={item.object.name} />
-              </Link>
+              <div className={style.container_link} key={i}>
+                <NavLink activeClassName={style.active} to={`${props.match.path}/agent/` + item.object.id}>
+                  <NavigationItem img={item.object.image} title={item.object.name} />
+                </NavLink>
+              </div>
             ))}
           </div>
         </Panel>
