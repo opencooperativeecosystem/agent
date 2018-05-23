@@ -10,14 +10,9 @@ query ($token: String, $id: Int) {
         note
         type
         agentRelationships {
-          relationship {
-            label
-            category
-          }
           object {
             id
             name
-            note
             image
           }
           subject {

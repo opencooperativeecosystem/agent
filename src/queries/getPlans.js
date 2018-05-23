@@ -14,11 +14,6 @@ query ($token: String, $id: Int) {
             isStarted
             isFinished
             name
-            workingAgents {
-              id
-              name
-              image
-            }
           }
         }
       }
