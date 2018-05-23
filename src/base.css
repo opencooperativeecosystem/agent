@@ -218,7 +218,7 @@ body {
 
 .left_section {
   lost-column: 1/2;
-  background: url('./images/bg.png');
+  /* background: url('./images/bg.png'); */
   background-size: cover;
   min-height: 100vh;
   @mixin for-phone-only {
