@@ -8,8 +8,9 @@ import {
   withRouter
  } from 'react-router'
 import Sidebar from '../../components/sidebar'
+import {compose, withHandlers, withState} from 'recompose'
 
-const AppTemplate = ({component: Component, ...rest}) => {
+const AppTemplate = ({component: Component, ...rest, handleTogglePanel, panel}) => {
   let isLoggedIn = localStorage.getItem('oce_token')
   return (
     <Route
@@ -24,9 +25,9 @@ const AppTemplate = ({component: Component, ...rest}) => {
                     <div className={style.boards_main_content}>
                       <div className={style.boards_canvas}>
                         <div className={style.canvas}>
-                          <Sidebar data={rest.data} agents={rest.data.agentRelationships} />
-                          <div className={style.container}>
-                            <Component {...props} agentData={rest} />
+                          <Sidebar handleTogglePanel={handleTogglePanel} panel={panel} data={rest.data} agents={rest.data.agentRelationships} />
+                          <div className={panel ? style.container + ' ' + style.full : style.container}>
+                            <Component {...props} agentData={rest} panel={panel} />
                           </div>
                         </div>
                       </div>
@@ -74,14 +75,22 @@ query ($token: String) {
 `
 const App = withRouter(AppTemplate)
 
-export default graphql(agentPlans, {
-  options: (props) => ({variables: {
-    token: localStorage.getItem('oce_token')
-  }}),
-  props: ({ownProps, data: {viewer, loading, error, refetch}}) => ({
-    loading,
-    error,
-    refetch,
-    data: viewer ? viewer.myAgent : null
-  })
-})(App)
+export default compose(
+  graphql(agentPlans, {
+    options: (props) => ({variables: {
+      token: localStorage.getItem('oce_token')
+    }}),
+    props: ({ownProps, data: {viewer, loading, error, refetch}}) => ({
+      loading,
+      error,
+      refetch,
+      data: viewer ? viewer.myAgent : null
+    })
+  }),
+  withState('panel', 'togglePanel', true),
+  withHandlers({
+    handleTogglePanel: props => event => {
+      props.togglePanel(!props.panel)
+    }}
+  )
+)(App)
