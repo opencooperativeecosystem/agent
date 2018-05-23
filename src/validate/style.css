@@ -1,0 +1,20 @@
+.container {
+    user-select: none;
+    white-space: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.container_link {
+    position: relative;
+    margin: 10px;
+}
+
+.active > div {
+    border: 2px solid #419bf9;
+}
