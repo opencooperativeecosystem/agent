@@ -1,16 +1,18 @@
 import React from 'react'
 import style from './style.css'
-import {User, Menu, Settings, Power, More} from '../../icons'
+import {Icons} from 'oce-components/build'
+
 import {NavLink, withRouter} from 'react-router-dom'
 
 const Sidebar = (props) => {
   return (
-    <div className={style.sidebar}>
+    props.panel
+    ? <div className={props.panel ? style.sidebar + ' ' + style.visible : style.sidebar}>
       <header className={style.sidebar_menu}>
-        <span className={style.menu_icon}><Menu color='#99ADC6' width='18' /></span>
-        <span className={style.menu_icon}><NavLink to={'/'}><User color='#99ADC6' width='18' /></NavLink></span>
-        <span className={style.menu_icon}><NavLink to={'/settings'}><Settings color='#99ADC6' width='18' /></NavLink></span>
-        <span onClick={props.logout} className={style.menu_icon}><Power color='#99ADC6' width='18' /></span>
+        <span className={props.panel ? style.menu_icon + ' ' + style.icon_active : style.menu_icon} onClick={() => props.handleTogglePanel()}><Icons.Menu color='#99ADC6' width='18' /></span>
+        <span className={style.menu_icon}><NavLink to={'/'}><Icons.User color='#99ADC6' width='18' /></NavLink></span>
+        <span className={style.menu_icon}><NavLink to={'/settings'}><Icons.Settings color='#99ADC6' width='18' /></NavLink></span>
+        <span onClick={props.logout} className={style.menu_icon}><Icons.Power color='#99ADC6' width='18' /></span>
       </header>
       <div className={style.sidebar_header}>
         <div className={style.header_profile}>
@@ -32,6 +34,9 @@ const Sidebar = (props) => {
         </ul>
       </div>
     </div>
+    : <header className={style.sidebar_menu + ' ' + style.sidebar_menu_collapsed}>
+      <span className={style.menu_icon} onClick={() => props.handleTogglePanel()}><Icons.Menu color='#99ADC6' width='18' /></span>
+    </header>
   )
 }
 

@@ -1,13 +1,10 @@
 .sidebar {
-    left: 0px;
+    left: -270px;
     top: 0px;
     bottom: 0px;
-    width: 270px;
+    width: 280px;
     overflow: auto;
     z-index: 99999;
-    /* @mixin for-phone-only {
-        display: none;
-    } */
     margin: 0 5px;
     margin-left: 5px;
     height: 100%;
@@ -19,19 +16,37 @@
     position: relative;
 }
 
+.sidebar_menu_collapsed {
+    width: 40px;
+}
+
+.sidebar_menu_collapsed .menu_icon {
+    width: 40px !important;
+}
+
+.visible {
+    left: -10px;
+}
+
 .sidebar_menu {
     background: #393F4F;
     border-radius: 3px;
     height: 40px;
-    padding: 0 10px;
+    padding: 0;
     lost-utility: clearfix;
 }
 
 .sidebar_menu .menu_icon {
     lost-column: 1/4;
     vertical-align: middle;
-    margin-top: 8px;
     text-align: center;
+    height: 100%;
+    line-height: 52px;
+    cursor: pointer;
+}
+
+.icon_active {
+    background: #292D37
 }
 
 .sidebar_header {
