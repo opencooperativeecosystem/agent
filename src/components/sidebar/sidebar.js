@@ -18,7 +18,7 @@ const Sidebar = (props) => {
         <div className={style.header_profile}>
           <NavLink to={'/'}>
             <div className={style.data_image}>
-              <img src={props.data.image} />
+              <img alt='profile' src={props.data.image} />
             </div>
             <h3>{props.data.name}</h3>
           </NavLink>
@@ -28,7 +28,7 @@ const Sidebar = (props) => {
           <li className={style.list_item}><NavLink activeClassName={style.active} to={'/plan'}>Plan</NavLink></li>
           <li className={style.list_item}><NavLink activeClassName={style.active} to={'/work'}>Work</NavLink></li>
           <li className={style.list_item}><NavLink activeClassName={style.active} to={'/validate'}>Validate</NavLink></li>
-          <li className={style.list_item}><NavLink activeClassName={style.active} to={'/network'}>Network</NavLink></li>
+          {/* <li className={style.list_item}><NavLink activeClassName={style.active} to={'/network'}>Network</NavLink></li> */}
           <li className={style.list_item}><a href='http://fairplayground.info/datasources/editor.php' target='blank' >Stats</a></li>
           <li><a href='https://board.net/p/Fair_Health_Care_v4' target='blank'>Welfare</a></li>
         </ul>

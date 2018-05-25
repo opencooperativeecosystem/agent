@@ -16,7 +16,7 @@ import PrivateRoute from './templates/AppTemplate'
 import { Notifs } from 'redux-notifications'
 import style from './base.css'
 import Canvas from './canvas/wrapper'
-import Network from './network/wrapper'
+// import Network from './network/wrapper'
 import Work from './work'
 import Validate from './validate'
 // import Work from 'oce-collaborate'
@@ -63,7 +63,7 @@ ReactDOM.render(
             <PrivateRoute path='/canvas/:id' component={Canvas} />
             <PrivateRoute path='/validate' component={Validate} />
             <PrivateRoute path='/settings' component={Settings} />
-            <PrivateRoute path='/network' component={Network} />
+            {/* <PrivateRoute path='/network' component={Network} /> */}
             <Route component={NoMatch} />
           </Switch>
         </div>

@@ -1,6 +1,6 @@
 import React from 'react'
 import style from '../index.css'
-import {Users} from '../../../icons'
+// import {Users} from '../../../icons'
 
 export default function ModalMembers ({provider, editProvider, allPlanAgents, members, toggleVisibility, isVisible, onMember}) {
   // const membersName = members.map(m => m.name)

@@ -1,8 +1,8 @@
 import React from 'react'
 import style from './style.css'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import {Check} from '../icons'
-import Select from 'react-select'
+// import Select from 'react-select'
 import {
   Accordion,
   AccordionItem,
@@ -10,49 +10,47 @@ import {
   AccordionItemBody
 } from 'react-accessible-accordion'
 
-const Filter = () => (
-  <section className={style.filter}>
-    <div className={style.filter_item}>
-      <Select 
-        placeholder={'Select a plan...'}
-        options={[
-          { value: 'one', label: 'One' },
-          { value: 'two', label: 'Two' },
-        ]} />
-    </div>
-    <div className={style.filter_item}>
-      <Select
-        placeholder={'Select a process...'}
-        options={[
-        { value: 'one', label: 'One' },
-        { value: 'two', label: 'Two' },
-      ]} />
-    </div>
-    <div className={style.filter_item}>
-      <Select 
-        placeholder={'Select a commitment...'}
-        options={[
-          { value: 'one', label: 'One' },
-          { value: 'two', label: 'Two' },
-        ]} />
-    </div>
-    <div className={style.filter_item}>
-      <Select
-        placeholder={'Select an agent...'}
-        options={[
-        { value: 'one', label: 'One' },
-        { value: 'two', label: 'Two' },
-      ]} />
-    </div>
-  </section>
-)
+// const Filter = () => (
+//   <section className={style.filter}>
+//     <div className={style.filter_item}>
+//       <Select 
+//         placeholder={'Select a plan...'}
+//         options={[
+//           { value: 'one', label: 'One' },
+//           { value: 'two', label: 'Two' },
+//         ]} />
+//     </div>
+//     <div className={style.filter_item}>
+//       <Select
+//         placeholder={'Select a process...'}
+//         options={[
+//         { value: 'one', label: 'One' },
+//         { value: 'two', label: 'Two' },
+//       ]} />
+//     </div>
+//     <div className={style.filter_item}>
+//       <Select 
+//         placeholder={'Select a commitment...'}
+//         options={[
+//           { value: 'one', label: 'One' },
+//           { value: 'two', label: 'Two' },
+//         ]} />
+//     </div>
+//     <div className={style.filter_item}>
+//       <Select
+//         placeholder={'Select an agent...'}
+//         options={[
+//         { value: 'one', label: 'One' },
+//         { value: 'two', label: 'Two' },
+//       ]} />
+//     </div>
+//   </section>
+// )
 
 const Canvas = (props) => {
   const {data} = props
   return (
-    <section className={style.surface} >
       <div className={style.canvas_board + ' ' + style.wrapper_accordion}>
-        <div className={style.accordion_list}>
           <Accordion accordion={false} className={style.accordion}>
             <AccordionItem expanded className={style.accordion_item} hideBodyClassName>
               <AccordionItemTitle className={style.accordion_title + ' ' + style.title_plan} hideBodyClassName>
@@ -65,9 +63,9 @@ const Canvas = (props) => {
                   <AccordionItemTitle key={j++} className={style.accordion_title + ' ' + style.title_process} hideBodyClassName>
                     <h3>{process.name}</h3>
                     <div className={style.accordion_arrow} role='presentation' />
-                    <div className={style.section_link + ' ' + style.white}>
+                    {/* <div className={style.section_link + ' ' + style.white}>
                       <Link to={'/validate/process/' + process.id}>View process</Link>
-                    </div>
+                    </div> */}
                   </AccordionItemTitle>
                   <AccordionItemBody key={j + 2} className={style.accordion_body} hideBodyClassName={style.accordion_body_hidden}>
                     {process.committedInputs.map((commitment, z) => (
@@ -77,10 +75,10 @@ const Canvas = (props) => {
                           <div className={style.accordion_arrow} role='presentation' />
                           {commitment.fulfilledBy.length > 0
                           ? ''
-                          : <div className={style.section_empty}>No items</div>}
-                          <div className={style.section_link}>
+                          : <div className={style.section_empty}>Empty</div>}
+                          {/* <div className={style.section_link}>
                             <Link to={'/validate/commitment/' + commitment.id}>View commitment</Link>
-                          </div>
+                          </div> */}
                         </AccordionItemTitle>
                           <AccordionItemBody key={z + 3} className={style.accordion_body} hideBodyClassName={style.accordion_body_hidden}>
                             {commitment.fulfilledBy.map((event, o) => (
@@ -95,9 +93,7 @@ const Canvas = (props) => {
               </AccordionItemBody>
             </AccordionItem>
         </Accordion>
-      </div>
     </div>
-  </section>
   )
 }
 
@@ -129,15 +125,14 @@ const SingleValidation = ({style, event, createValidation, deleteValidation, myI
           <div className={style.actions_validations}>
             {validations}
           </div>
-          <div className={style.event_secondary}>
-            <span><Link to={'/validate/event/' + event.id}>View event</Link></span>
-            <span>Date: {event.start}</span>
-          </div>
           <div className={style.infos_title}>
-            <img src={event.provider.image} />
+            <img alt='provider' src={event.provider.image} />
             <h3><b>{event.provider.name}</b> {event.action} <b>{event.affectedQuantity.numericValue + ' ' + event.affectedQuantity.unit.name}</b> in process: <b>{event.inputOf.name}</b></h3>
           </div>
           <div className={style.info_description}><p>{event.note}</p></div>
+          <div className={style.event_secondary}>
+            <span>{event.start}</span>
+          </div>
           {button}
         </div>
         <div className={style.info_validation}>

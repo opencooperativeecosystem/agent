@@ -1,14 +1,12 @@
 import React from 'react'
 import {Icons, Panel, NavigationItem} from 'oce-components/build'
 import style from './style.css'
-import { BrowserRouter as Router, Route, NavLink, Link } from "react-router-dom"
+import { BrowserRouter as Router, Route, NavLink } from "react-router-dom"
 
 // ROUTES
 import AgentPlans from '../agentPlans/wrapper'
 
 const Work = (props) => {
-  console.log(props.match)
-
   return (
     <Router>
       <div className={style.container}>

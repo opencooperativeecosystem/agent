@@ -1,12 +1,11 @@
 import React from 'react'
 import {Icons, Panel} from 'oce-components/build'
 import Cards from '../components/cards'
-import { BrowserRouter as Router, Route, NavLink, Link } from "react-router-dom"
+import { BrowserRouter as Router, Route } from "react-router-dom"
 import Plan from '../validation_plan/wrapper'
 import style from './style.css'
 
 const AgentPlans = (props) => {
-  console.log(props)
   return (
     <Router>
       <div className={style.container}>

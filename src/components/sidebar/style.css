@@ -45,6 +45,10 @@
     cursor: pointer;
 }
 
+.menu_icon:hover {
+    background: #292D37
+}
+
 .icon_active {
     background: #292D37
 }

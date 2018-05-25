@@ -1,29 +1,43 @@
-import List from './list'
+import React from 'react'
 import {compose, withState, withHandlers} from 'recompose'
 import {graphql} from 'react-apollo'
-import gql from 'graphql-tag'
-import Plan from '../queries/getPlan'
+import Plan from '../../queries/getPlan'
+import UpdateProcess from '../../mutations/updateProcess'
+import {Bin, Card} from 'oce-components/build'
 
-const updateProcess = gql`
-mutation ($token: String!, $id: Int!, $isFinished: Boolean ) {
-  updateProcess(
-    token: $token, 
-    id: $id, 
-    isFinished: $isFinished
-  ) {
-    process {
-      processPlan {
-        id
-      }
-      id
-      name
-      isFinished
-    }
-  }
-}`
+const BinWrapper = ({name, note, plannedStart, id, updateProcess, actionPopup, actionPopupId, toggleActions, cards, outputs, status, openModal, info}) => (
+  <Bin
+    openCardController={() => console.log('open')}
+    updateProcess={updateProcess}
+    actionPopupId={actionPopupId}
+    actionPopup={actionPopup}
+    toggleActions={toggleActions}
+    name={name}
+    status={status}
+    infoNote={note}
+    plannedStart={plannedStart}
+    outputs={outputs}
+    id={id}
+    cardController={false}
+  >
+    {cards.map((card, i) => (
+      <Card
+        key={card.id}
+        id={card.id}
+        listId={id}
+        isFinished={card.isFinished}
+        openCard={() => openModal(id, card.id)}
+        percentage={card.percentage}
+        note={card.note || card.title}
+        due={card.due}
+        members={card.members}
+      />
+    ))}
+  </Bin>
+)
 
 const enhancedList = compose(
-    graphql(updateProcess, {
+    graphql(UpdateProcess, {
       props: ({mutate, ownProps: {id}}) => ({
         updateProcessMutation: mutate
       })
@@ -66,6 +80,6 @@ const enhancedList = compose(
         )
       }
     })
-  )(List)
+  )(BinWrapper)
 
 export default enhancedList

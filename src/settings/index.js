@@ -37,7 +37,7 @@ const Settings = ({allNotification, toggleNotification, data, saveSettings, upda
             <h5>Photo</h5>
             <input onChange={updateImage} placeholder={data.image} />
             <div className={style.item_photo}>
-              <img src={data.image} />
+              <img alt='agent' src={data.image} />
             </div>
           </div>
           <div className={style.form_item}>

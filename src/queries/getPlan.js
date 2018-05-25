@@ -15,7 +15,6 @@ query ($token: String, $planId: Int) {
           id
           isFinished
           name
-          plannedDuration
           plannedStart
           committedOutputs {
             id

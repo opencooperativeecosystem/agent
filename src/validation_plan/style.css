@@ -51,13 +51,11 @@
 
 .section_empty {
   position: absolute;
-  right: 150px;
+  right: 5px;
   top: 5px;
   z-index: 999999999999;
   background: white;
   padding: 5px;
-  padding: 5px 10px;
-  border: 1px solid;
   border-radius: 3px;
   color: #172b4d;
   text-decoration: none;
@@ -311,7 +309,7 @@
 }
 
 .wrapper_accordion {
-    padding: 20px;
+    padding: 10px;
     padding-top: 0;
 }
 
@@ -364,7 +362,8 @@
 .accordion {
   /* border-left: 1px solid rgba(0, 0, 0, 0.1); */
   border-radius: 2px;
-  margin-top: 20px;
+  margin-top: 10px;
+  width: 540px;
 }
 
 .accordion_item + .accordion_item {
@@ -390,9 +389,11 @@
 }
 
 .title_plan {
- background: #091E42;
  color: #fff;
- border: 1px solid #091E42;
+ background: #393F4F;
+  border-radius: 3px;
+  border: 0;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
 }
 .title_process {
  background:  #505F79;
@@ -422,12 +423,12 @@
 }
 
 .accordion_body {
-  padding-left: 20px;
+  /* padding-left: 20px; */
   display: block;
   animation: fadein 0.35s ease-in;
   border-left: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 10px;
-  padding-left: 20px;
+  padding: 5px;
+  /* padding-left: 20px; */
 }
 
 .accordion_body_hidden {
@@ -505,7 +506,7 @@
 }
 
 .accordion_list {
-    margin-top: 20px;
+    margin-top: 0px;
 }
 
 .accordion_list .list_item {
@@ -583,33 +584,20 @@
 }
 
 .event_secondary span {
-  float: right;
   margin: 0;
-  height: 20px;
-  border-radius: 2px;
-  border: 1px solid $n40;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 20px;
-  padding: 0 10px;
-  margin-left: 10px;
   font-weight: 400;
+  margin-top: 10px;
+  display: block;
+  font-weight: 400;
+  color: #a1a1a1;
 }
 
 .infos_title {
   lost-utility: clearfix;
-  height: 24px;
-  float: none;
-  display: table;
-  margin-top: -30px;
-}
-
-.infos_title:before, .infos_title:after {
-    content: " ";
-    display: table; 
-}
-
-.infos_title:after {
-    clear: both; 
+  position: relative;
+  margin-bottom: 10px;
 }
 
 .info_description {
@@ -621,7 +609,6 @@
   width: 24px;
   height: 24px;
   border-radius: 100px;
-  display: inline-block;
   vertical-align: middle;
   margin-right: 5px;
 }
@@ -630,10 +617,17 @@
   font-weight: 400;
   margin: 0;
   letter-spacing: .5px;
-  display: inline-block;
+  /* display: inline-block; */
   font-size: 14px;
   line-height: 24px;
   margin-left: 5px;
+  /* word-break: break-all; */
+  /* display: block; */
+  overflow-wrap: normal;
+  /* float: left; */
+  position: absolute;
+  left: 25px;
+  top: 10px;
 }
 
 

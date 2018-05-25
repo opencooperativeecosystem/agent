@@ -5,7 +5,7 @@ import style from '../base.css'
 import { withRouter } from 'react-router'
 import {connect} from 'react-redux'
 import { actions as notifActions } from 'redux-notifications'
-import { Prompt } from "react-router-dom"
+import {Icons, Panel} from 'oce-components/build'
 
 class Login extends React.Component {
     constructor (props) {
@@ -44,42 +44,41 @@ class Login extends React.Component {
     }
 
     render () {
-        const {username, password} = this.state
-        return (
-            <div>
-            <div className={style.left_section}>
-              <h1>Open <br />Cooperative<br />Ecosystem</h1>
+      const {username, password} = this.state
+      return (
+          <div className={style.login_wrapper}>
+            <div className={style.wrapper_title}>
+              <h3><span aria-label='emoji' role='img'>🧙</span> agent.</h3>
+              <h4>Your events - networked</h4>
+            </div>
+            <div className={style.login_container}>
+            <Panel title='login' icon={<Icons.Power width='18' height='18' color='#f0f0f0' />}>
+              <form
+                onSubmit={event => {
+                    event.preventDefault();
+                    event.target.reset();
+                    this.setState({
+                    isBlocking: false
+                    })
+                    this.handleLogin()
+                }}
+              >
+                <input placeholder='Insert your username' type='text' value={username} onChange={this.user} className='username' />
+                <input placeholder='Insert your password' type='password' value={password} autoComplete onChange={this.password} className='password' />
+              <button>login</button>
+              </form>
+              <a href='https://ocp.freedomcoop.eu/account/password/reset/' target='blank' className={style.wrapper_lost}>Password lost?</a>
+              <h5>Useful links</h5>
               <ul>
-                  <li><a href='https://open-cooperative-ecosystem.gitbooks.io/docs/' target='blank'>Documentation</a></li>
+                  <li><a href='https://www.opencoopecosystem.net' target='blank'>Documentation</a></li>
                   <li><a href='https://t.me/ocewelcome' target='blank'>Telegram</a></li>
                   <li><a href='https://github.com/opencooperativeecosystem' target='blank'>Github</a></li>
               </ul>
-            </div>
-            <div className={style.right_section}>
-            <div className={style.login_wrapper}>
-            <div className={style.wrapper_container}>
-                <div className={style.wrapper_title}><h3><span role='img'>👋</span> Welcome</h3></div>
-                <form
-                    onSubmit={event => {
-                        event.preventDefault();
-                        event.target.reset();
-                        this.setState({
-                        isBlocking: false
-                        })
-                        this.handleLogin()
-                    }}
-                >
-                <input placeholder='Insert your username' type='text' value={username} onChange={this.user} className='username' />
-                <input placeholder='Insert your password' type='password' value={password} onChange={this.password} className='password' />
-                <button>login</button>
-                </form>
-                <a href='https://ocp.freedomcoop.eu/account/password/reset/' target='blank' className={style.wrapper_lost}>Password lost?</a>
-                </div>
-            </div>
-            </div>
-            </div>
-        )
-    }
+            </Panel>
+          </div>
+        </div>
+  )
+  }
 }
 
 

@@ -1,5 +1,4 @@
 import React from 'react'
-import AppTemplate from '../templates/AppTemplate'
 import Component from './index'
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
@@ -154,7 +153,7 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const agentNotificationSettings =gql` 
+const agentNotificationSettings = gql` 
   query ($token: String) {
     viewer(token: $token) {
       myAgent {

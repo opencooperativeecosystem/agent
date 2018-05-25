@@ -8,15 +8,13 @@ import {Icons, Panel, NavigationItem} from 'oce-components/build'
 // import Panel from '../components/panel'
 
 const Agent = ({data, match}) => {
-  console.log(data)
-  console.log(match)
   return (
     <section className={style.agent}>
       <Panel icon={<Icons.Diary width='18' color='#f0f0f0' />} title='Diary'>
         <div className={style.agent_profile}>
           <div className={style.agent_info}>
             <div className={style.info_image}>
-              <img className={style.image_photo} src={data.image} />
+              <img alt='agent' className={style.image_photo} src={data.image} />
             </div>
             <h1 className={style.info_title}>{data.name}</h1>
           </div>

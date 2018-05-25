@@ -2,7 +2,7 @@ import React from 'react'
 import Component from './index'
 import { graphql, withApollo } from 'react-apollo'
 import Claim from '../queries/getClaim'
-import getClaims from '../queries/getClaims'
+// import getClaims from '../queries/getClaims'
 import createValidation from '../mutations/createValidation'
 import deleteValidation from '../mutations/deleteValidation'
 import {compose, withHandlers} from 'recompose'
@@ -11,15 +11,6 @@ import {Icons, Panel} from 'oce-components/build'
 import style from './style.css'
 
 class CanvasWrapper extends React.Component {
-  // render () {
-  //   const {loading, error, viewer} = this.props
-  //   return (
-  //       loading ? <strong>Loading...</strong> : (
-  //         error ? <p style={{ color: '#F00' }}>API error</p> : (
-  //           <Component data={viewer} param={this.props.match.params.id} />
-  //       ))
-  //   )
-  // }
   constructor () {
     super()
     this.state = {
@@ -48,9 +39,6 @@ class CanvasWrapper extends React.Component {
   }
   render () {
     const {createValidation, deleteValidation, loading, error, data} = this.props
-    console.log(data)
-    console.log(error)
-    console.log('ciao io volo')
     return (
       loading ? <strong>Loading...</strong> : (
         error ? <p style={{ color: '#F00' }}>API error</p> : (
