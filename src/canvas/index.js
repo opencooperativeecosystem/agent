@@ -1,15 +1,24 @@
 import React from 'react'
 import CardModal from '../components/cardModal'
+import NewCommitmentModal from '../components/newCommitmentModal/wrapper'
 import Bin from '../components/bin'
+import {NewBin} from 'oce-components/build'
+import style from './style.css'
+import DatePicker from 'react-datepicker'
+require('react-datepicker/dist/react-datepicker-cssmodules.css')
 
 class Canvas extends React.Component {
   render () {
-    const {data, modalSelected, modalIsOpen, openModal, closeModal} = this.props
-    let customHeight = window.innerHeight
+    const {data, modalSelected, relationships, modalIsOpen, openModal, closeModal, clicked, toggleClicked, newCommitmentIsOpen, toggleNewCommitmentModal} = this.props
+    console.log(newCommitmentIsOpen)
+    const relationshipsArray = []
+    relationships.map((rel, i) => (
+      relationshipsArray.push(<option key={i} value={rel.object.id}>{rel.object.name}</option>)
+    ))
     return (
       data
-      ? <section >
-        <div style={{height: customHeight + 'px'} }>
+      ? <section className={style.canvasWrapper} >
+        <div className={style.wrapperContainer}>
           {data.planProcesses.map((list, i) => (
             <Bin
               cards={list.committedInputs
@@ -37,8 +46,25 @@ class Canvas extends React.Component {
               agents={list.workingAgents}
               name={list.name}
               openModal={openModal}
+              openCardController={toggleNewCommitmentModal}
             />
           ))}
+          <NewBin
+            clicked={clicked}
+            toggleClicked={toggleClicked}
+            options={relationshipsArray}
+            newName={this.props.newProcessName}
+            newNote={this.props.newProcessNote}
+            newScope={this.props.newProcessScope}
+            newProcess={this.props.createProcess}
+            dateComponent={<DatePicker
+              selected={this.props.start}
+              onChange={this.props.newProcessDate}
+              dateFormatCalendar={'DD MMM YYYY'}
+              className='dateClass'
+              withPortal
+            />}
+          />
         </div>
         <CardModal
           allPlanAgents={this.props.allPlanAgents}
@@ -46,6 +72,10 @@ class Canvas extends React.Component {
           closeModal={closeModal}
           id={modalSelected}
           param={this.props.param}
+        />
+        <NewCommitmentModal
+          modalIsOpen={newCommitmentIsOpen}
+          closeModal={toggleNewCommitmentModal}
         />
       </section>
       : <h1>loading</h1>
