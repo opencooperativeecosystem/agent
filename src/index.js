@@ -16,12 +16,9 @@ import PrivateRoute from './templates/AppTemplate'
 import { Notifs } from 'redux-notifications'
 import style from './base.css'
 import Canvas from './canvas/wrapper'
-// import Network from './network/wrapper'
 import Work from './work'
+import Plan from './plan/wrapper'
 import Validate from './validate'
-// import Work from 'oce-collaborate'
-// import workStyle from "oce-collaborate/build/css/index.css"
-// import validateStyle from "oce-validate/build/css/index.css"
 
 const NoMatch = ({ location }) => (
   <div>
@@ -29,8 +26,7 @@ const NoMatch = ({ location }) => (
       No match for <code>{location.pathname}</code>
     </h3>
   </div>
-);
-
+)
 
 function CustomNotif (props) {
   let type
@@ -60,6 +56,7 @@ ReactDOM.render(
             <PrivateRoute exact path='/' component={Overview} />
             <PrivateRoute exact path='/agent/:id' component={Agent} />
             <PrivateRoute path='/work' component={Work} />
+            <PrivateRoute path='/plan' component={Plan} />
             <PrivateRoute path='/canvas/:id' component={Canvas} />
             <PrivateRoute path='/validate' component={Validate} />
             <PrivateRoute path='/settings' component={Settings} />

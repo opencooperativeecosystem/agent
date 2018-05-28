@@ -1,8 +1,9 @@
 import React from 'react'
 import style from './style.css'
 import ToggleButton from 'react-toggle-button'
-import Panel from '../components/panel'
-import {User, Bell} from '../icons'
+// import Panel from '../components/panel'
+// import {User, Bell} from '../icons'
+import {Icons, Panel} from 'oce-components/build'
 
 const Settings = ({allNotification, toggleNotification, data, saveSettings, updateImage, updateBio, updateEmail, updateLocation, updateName}) => {
   const notifications = allNotification.map(notification => {
@@ -23,7 +24,7 @@ const Settings = ({allNotification, toggleNotification, data, saveSettings, upda
   })
   return (
     <div className={style.settings}>
-      <Panel icon={<User width='18' color='#f0f0f0' />} title='General'>
+      <Panel icon={<Icons.User width='18' color='#f0f0f0' />} title='General'>
         <div className={style.container_form}>
           <div className={style.form_item}>
             <h5>Name</h5>
@@ -49,7 +50,7 @@ const Settings = ({allNotification, toggleNotification, data, saveSettings, upda
           </div>
         </div>
       </Panel>
-      <Panel icon={<Bell width='18' color='#f0f0f0' />} title='Notification'>
+      <Panel icon={<Icons.Bell width='18' color='#f0f0f0' />} title='Notification'>
         <div className={style.container_form}>
           {notifications.map((notification, i) => (
             <div key={i} className={style.form_item + ' ' + style.form_setting}>

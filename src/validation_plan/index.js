@@ -1,7 +1,8 @@
 import React from 'react'
 import style from './style.css'
 // import { Link } from 'react-router-dom'
-import {Check} from '../icons'
+// import {Check} from '../icons'
+import {Icons} from 'oce-components/build'
 // import Select from 'react-select'
 import {
   Accordion,
@@ -138,7 +139,7 @@ const SingleValidation = ({style, event, createValidation, deleteValidation, myI
         <div className={style.info_validation}>
           {event.validations
             ? event.validations.map((val, i) => (
-              <div key={i} className={style.validation_item}><span><Check width='18' height='18' color='#00875A' /></span> {val.validatedBy.name} validated </div>
+              <div key={i} className={style.validation_item}><span><Icons.Check width='18' height='18' color='#00875A' /></span> {val.validatedBy.name} validated </div>
             ))
             : ''
           }
