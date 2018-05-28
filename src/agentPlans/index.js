@@ -6,7 +6,6 @@ import Canvas from '../canvas/wrapper'
 import style from './style.css'
 
 const AgentPlans = (props) => {
-  console.log(props)
   return (
     <Router>
       <div className={style.container}>
