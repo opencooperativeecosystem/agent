@@ -5,9 +5,9 @@ import Plan from '../../queries/getPlan'
 import UpdateProcess from '../../mutations/updateProcess'
 import {Bin, Card} from 'oce-components/build'
 
-const BinWrapper = ({name, note, plannedStart, id, updateProcess, actionPopup, actionPopupId, toggleActions, cards, outputs, status, openModal, info}) => (
+const BinWrapper = ({name, note, openCardController, plannedStart, id, updateProcess, actionPopup, actionPopupId, toggleActions, cards, outputs, status, openModal}) => (
   <Bin
-    openCardController={() => console.log('open')}
+    openCardController={openCardController}
     updateProcess={updateProcess}
     actionPopupId={actionPopupId}
     actionPopup={actionPopup}
