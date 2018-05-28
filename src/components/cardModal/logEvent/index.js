@@ -20,7 +20,6 @@ query ($token: String, $planId: Int) {
           note
           id
           name
-          plannedDuration
           plannedStart
           committedOutputs {
             id

@@ -5,7 +5,7 @@ import TextArea from '../../textarea'
 import DatePicker from 'react-datepicker'
 import ToggleButton from 'react-toggle-button'
 import moment from 'moment'
-require("react-datepicker/dist/react-datepicker-cssmodules.css")
+require('react-datepicker/dist/react-datepicker-cssmodules.css')
 
 export default function LogEvent ({previousEvent, updateEvent, eventId, update, toggle, units, requestPayment, startDate, addPayment, addDate, commitmentId, scopeId, log, note, addNote, addAction, addNumericValue, numericValue, addUnitId}) {
     return (

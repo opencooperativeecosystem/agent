@@ -2,10 +2,10 @@ import React from 'react'
 import style from '../index.css'
 import moment from 'moment'
 import Button from '../../button'
-import {Cross} from '../../../icons'
+import {Icons} from 'oce-components/build'
+
 import LogEvent from '../logEvent'
 export default function ({param, units, scopeId, commitmentId, idEventToEdit, editEventModal, toggleEditEvent, idEventToDelete, deleteEventModal, toggleDeleteEvent, activities, id, date, deleteEvent, editEvent, loading, error, refetchData}) {
-  console.log(activities)
   return (
     <div className={style.activities_list}>
       {loading ? '' : (
@@ -13,7 +13,7 @@ export default function ({param, units, scopeId, commitmentId, idEventToEdit, ed
           <div className={deleteEventModal ? style.delete + ' ' + style.popup : style.delete + ' ' + style.popup + ' ' + style.hidden}>
             <div className={style.popup_header}>
               <h5>Delete Event</h5>
-              <span className={style.icon_delete} onClick={() => toggleDeleteEvent(deleteEventModal)}><Cross width={20} height={20} color={'#999'}/></span>
+              <span className={style.icon_delete} onClick={() => toggleDeleteEvent(deleteEventModal)}><Icons.Cross width={20} height={20} color={'#999'}/></span>
             </div>
             <div className={style.popup_content}>
               <h5 className={style.content_description}>Are you sure to delete this event?</h5>
@@ -41,7 +41,7 @@ export default function ({param, units, scopeId, commitmentId, idEventToEdit, ed
               <div className={editEventModal && idEventToEdit === item.fulfilledBy.id ? style.edit_activity : style.edit_activity + ' ' + style.hidden}>
                 <div className={style.activity_header}>
                   <h5>Update Event</h5>
-                  <span className={style.icon_delete} onClick={() => toggleEditEvent(editEventModal)}><Cross width={20} height={20} color={'#999'}/></span>
+                  <span className={style.icon_delete} onClick={() => toggleEditEvent(editEventModal)}><Icons.Cross width={20} height={20} color={'#999'}/></span>
                   <LogEvent previousEvent={item} eventId={item.fulfilledBy.id} param={param} id={id} units={units} scopeId={scopeId} commitmentId={commitmentId} updateEvent toggle={() => toggleEditEvent(editEventModal)} />
                 </div>
               </div>
