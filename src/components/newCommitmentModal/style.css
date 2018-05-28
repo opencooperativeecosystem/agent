@@ -1,0 +1,12 @@
+.cardModal {
+    width: 600px;
+    box-shadow: 0 2px 8px 3px rgba(0,0,0,.3);
+    z-index : 9999999999;
+    background-color: #EDEFF0;
+    padding:  0;
+    margin: 40px auto;
+    position: relative;
+    border-radius: 3px;
+    padding-bottom: 20px;
+    outline: none;
+  }
