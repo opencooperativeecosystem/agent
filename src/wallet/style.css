@@ -1,0 +1,12 @@
+.container {
+    display: initial;
+}
+
+.boxesWrapper {
+    lost-utility: clearfix;
+    margin-bottom: 20px;
+}
+
+.space {
+    padding: 10px;
+}
