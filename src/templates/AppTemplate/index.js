@@ -1,57 +1,80 @@
-import * as React from 'react'
-import { graphql } from 'react-apollo'
-import gql from 'graphql-tag'
-import style from './style.css'
-import { 
-  Route,
-  Redirect,
-  withRouter
- } from 'react-router'
-import Sidebar from '../../components/sidebar'
-import {compose, withHandlers, withState} from 'recompose'
+import * as React from "react";
+import { graphql } from "react-apollo";
+import gql from "graphql-tag";
+import style from "./style.css";
+import { Route, withRouter } from "react-router-dom";
+import Sidebar from "../../components/sidebar";
+import { compose, withHandlers, withState } from "recompose";
+import Canvas from "../../canvas/wrapper";
+import Plan from "../../plan/wrapper";
+import Validate from "../../validate";
+import Settings from "../../settings/wrapper";
+import Agent from "../../agent/wrapper";
+import Overview from "../../overview/wrapper";
+import { PropsRoute } from "../../helpers/router";
+import Wallet from '../../wallet'
 
-const AppTemplate = ({component: Component, ...rest, handleTogglePanel, panel}) => {
-  let isLoggedIn = localStorage.getItem('oce_token')
-  return (
-    <Route
-      {...rest}
-      render={props =>
-        isLoggedIn ? (
-          rest.loading ? <strong>Loading...</strong> : (
-            rest.error ? <p style={{ color: '#F00' }}>API error</p> : (
-              <div className={style.surface}>
-                <div className={style.content}>
-                  <div className={style.boards}>
-                    <div className={style.boards_main_content}>
-                      <div className={style.boards_canvas}>
-                        <div className={style.canvas}>
-                          <Sidebar handleTogglePanel={handleTogglePanel} panel={panel} data={rest.data} agents={rest.data.agentRelationships} />
-                          <div className={panel ? style.container + ' ' + style.full : style.container}>
-                            <Component {...props} agentData={rest} panel={panel} />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+const AppTemplate = props => {
+  return props.loading ? (
+    <strong>Loading...</strong>
+  ) : props.error ? (
+    <p style={{ color: "#F00" }}>API error</p>
+  ) : (
+    <div className={style.surface}>
+      <div className={style.content}>
+        <div className={style.boards}>
+          <div className={style.boards_main_content}>
+            <div className={style.boards_canvas}>
+              <div className={style.canvas}>
+                <Sidebar
+                  handleTogglePanel={props.handleTogglePanel}
+                  panel={props.panel}
+                  data={props.data}
+                  agents={props.data.agentRelationships}
+                />
+                <div
+                  className={
+                    props.panel
+                      ? style.container + " " + style.full
+                      : style.container
+                  }
+                >
+                  <PropsRoute
+                    exact
+                    path={props.match.path}
+                    component={Overview}
+                    id={props.data.id}
+                  />
+                  <PropsRoute
+                    path="/agent/:id"
+                    component={Agent}
+                    data={props}
+                  />
+                  <PropsRoute
+                    path="/plans"
+                    component={Plan}
+                    relationships={props.data.agentRelationships}
+                  />
+                  <PropsRoute path="/validate" component={Validate} />
+                  <PropsRoute
+                    path="/canvas/:id"
+                    component={Canvas}
+                    relationships={props.data.agentRelationships}
+                  />
+                  <Route path="/settings" component={Settings} />
+                  <Route path="/wallet" component={Wallet} />
                 </div>
               </div>
-            )
-          )
-        ) : (
-          <Redirect
-            to={{
-              pathname: "/login",
-              state: { from: props.location }
-            }}
-          />
-        )
-      }
-    />
-  )
-}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const agentPlans = gql`
-query ($token: String) {
+  query($token: String) {
     viewer(token: $token) {
       myAgent {
         id
@@ -71,26 +94,28 @@ query ($token: String) {
         }
       }
     }
-  }  
-`
-const App = withRouter(AppTemplate)
+  }
+`;
+const App = withRouter(AppTemplate);
 
 export default compose(
   graphql(agentPlans, {
-    options: (props) => ({variables: {
-      token: localStorage.getItem('oce_token')
-    }}),
-    props: ({ownProps, data: {viewer, loading, error, refetch}}) => ({
+    options: props => ({
+      variables: {
+        token: localStorage.getItem("oce_token")
+      }
+    }),
+    props: ({ ownProps, data: { viewer, loading, error, refetch } }) => ({
       loading,
       error,
       refetch,
       data: viewer ? viewer.myAgent : null
     })
   }),
-  withState('panel', 'togglePanel', true),
+  withState("panel", "togglePanel", true),
   withHandlers({
     handleTogglePanel: props => event => {
-      props.togglePanel(!props.panel)
-    }}
-  )
-)(App)
+      props.togglePanel(!props.panel);
+    }
+  })
+)(App);
