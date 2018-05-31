@@ -1,7 +1,24 @@
 @import '../base.css';
 @import "../mixins.css";
 @import "../variables.css";
+.right_button {
+  background: #1c1d1f;
+  border-radius: 4px;
+  padding: 0 15px;
+  height: 30px;
+  display: inline-block;
+  margin-top: 5px;
+  margin-right: 10px;
+  line-height: 30px;
+  color: #fafafa;
+  text-decoration: none;
+  font-size: 14px;
+}
 
+.right_button span {
+  margin-right: 5px;
+  vertical-align: sub;
+}
 .wrapper_accordion {
     padding: 20px;
     padding-top: 0;

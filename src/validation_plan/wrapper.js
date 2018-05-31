@@ -9,6 +9,7 @@ import {compose, withHandlers} from 'recompose'
 import gql from 'graphql-tag'
 import {Icons, Panel} from 'oce-components/build'
 import style from './style.css'
+import {Link} from 'react-router-dom'
 
 class CanvasWrapper extends React.Component {
   constructor () {
@@ -39,11 +40,12 @@ class CanvasWrapper extends React.Component {
   }
   render () {
     const {createValidation, deleteValidation, loading, error, data} = this.props
+    console.log(this.props)
     return (
       loading ? <strong>Loading...</strong> : (
         error ? <p style={{ color: '#F00' }}>API error</p> : (
           <div className={style.container}>
-            <Panel large icon={<Icons.Globe width='18' color='#f0f0f0' />} title={data.name}>
+            <Panel large icon={<Icons.Globe width='18' color='#f0f0f0' />} title={data.name} actions={<Link className={style.right_button} to={`/canvas/${this.props.match.params.id}`}><span><Icons.Validate width={18} height={18} color={'#fafafa'} /></span>Log</Link>}>
               <Component data={data} myAgentId={this.state.myAgentId} deleteValidation={deleteValidation} createValidation={createValidation} />
             </Panel>
           </div>
