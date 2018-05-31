@@ -25,9 +25,10 @@ const Sidebar = (props) => {
         </div>
         <ul className={style.section_list}>
           <li className={style.list_item}><NavLink exact activeClassName={style.active} to={'/'}>Dashboard</NavLink></li>
-          <li className={style.list_item}><NavLink activeClassName={style.active} to={'/plan'}>Plan</NavLink></li>
-          <li className={style.list_item}><NavLink activeClassName={style.active} to={'/work'}>Work</NavLink></li>
+          {/* <li className={style.list_item}><NavLink activeClassName={style.active} to={'/plan'}>Plan</NavLink></li> */}
+          <li className={style.list_item}><NavLink activeClassName={style.active} to={'/plans'}>Plans</NavLink></li>
           <li className={style.list_item}><NavLink activeClassName={style.active} to={'/validate'}>Validate</NavLink></li>
+          <li className={style.list_item}><NavLink activeClassName={style.active} to={'/wallet'}>Wallet</NavLink></li>
           {/* <li className={style.list_item}><NavLink activeClassName={style.active} to={'/network'}>Network</NavLink></li> */}
           <li className={style.list_item}><a href='http://fairplayground.info/datasources/editor.php' target='blank' >Stats</a></li>
           <li><a href='https://board.net/p/Fair_Health_Care_v4' target='blank'>Welfare</a></li>
