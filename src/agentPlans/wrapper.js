@@ -9,7 +9,7 @@ class AgentWrapper extends React.Component {
     return (
       loading ? <strong>Loading...</strong> : (
         error ? <p style={{ color: '#F00' }}>API error</p> : (
-          <Component data={data} {...this.props}/>
+          <Component data={data} {...this.props} />
       ))
     )
   }
