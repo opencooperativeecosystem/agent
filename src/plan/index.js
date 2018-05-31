@@ -1,5 +1,6 @@
 import React from 'react'
 import {Panel, Icons, Input, Select, Textarea, Button} from 'oce-components/build'
+import AgentRelationships from '../agentRelationships'
 import style from './style.css'
 import DatePicker from 'react-datepicker'
 require("react-datepicker/dist/react-datepicker-cssmodules.css")
@@ -10,18 +11,11 @@ const Plan = (props) => {
     <div className={style.container}>
       <Panel icon={<Icons.Globe width='18' color='#f0f0f0' />} title='Create new plan'>
         <div className={style.panel_container}>
-          <span className={style.form_select}>
-            <Select dark >
-              {props.agentData.data.agentRelationships.map((rel, i) => (
-                <option value={rel.object.id} key={i}>{rel.object.name}</option>
-              ))}
-            </Select>
-          </span>
           <span className={style.form_input}>
-            <Input dark placeholder='Type the plan name' onChange={props.updateName} />
+            <Input dark placeholder='Type the plan name' action={props.updateName} />
           </span>
           <span className={style.form_note}>
-            <Textarea placeholder='What is the plan about' onChange={props.updateNote} />
+            <Textarea placeholder='What is the plan about' action={props.updateNote} />
           </span>
           <div className={style.dates}>
             <div className={style.item_date}>
@@ -46,6 +40,7 @@ const Plan = (props) => {
           </div>
         </div>
       </Panel>
+      <AgentRelationships match={props.match} relationships={props.relationships} />
     </div>
   )
 }

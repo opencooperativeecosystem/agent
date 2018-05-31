@@ -24,11 +24,11 @@ export default compose(
   withState('due', 'handleDue', moment()),
   withHandlers({
     updateNote: props => event => {
-      event.preventDefault()
+      console.log(event.target.value)
       props.handleNote(event.target.value)
     },
     updateName: props => event => {
-      event.preventDefault()
+      console.log(event.target.value)
       props.handleName(event.target.value)
     },
     updateStart: props => event => {
