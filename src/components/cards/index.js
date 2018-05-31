@@ -2,8 +2,12 @@ import React from 'react'
 import style from './style.css'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
-const Cards = ({data, link}) => {
+import {withRouter} from 'react-router-dom'
+const Cards = ({data, link, match, location}) => {
   let newData = data.map(x => ({...x, date: moment(x.plannedOn).unix()}))
+  console.log(link)
+  console.log(match)
+  console.log(location)
   return (
     <div className={style.section_wrapper}>
       {newData
@@ -27,4 +31,4 @@ const Cards = ({data, link}) => {
 )
 }
 
-export default Cards
+export default withRouter(Cards)

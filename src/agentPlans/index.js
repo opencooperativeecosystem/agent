@@ -4,7 +4,6 @@ import Cards from "../components/cards";
 import style from "./style.css";
 
 const AgentPlans = props => {
-  console.log(props)
   return (
     <div className={style.container}>
       <Panel

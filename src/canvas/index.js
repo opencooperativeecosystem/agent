@@ -10,7 +10,6 @@ require('react-datepicker/dist/react-datepicker-cssmodules.css')
 class Canvas extends React.Component {
   render () {
     const {data, modalSelected, relationships, modalIsOpen, openModal, closeModal, clicked, toggleClicked, newCommitmentIsOpen, toggleNewCommitmentModal} = this.props
-    console.log(this.props.createProcess)
     const relationshipsArray = []
     relationships.map((rel, i) => (
       relationshipsArray.push(<option key={i} value={rel.object.id}>{rel.object.name}</option>)
