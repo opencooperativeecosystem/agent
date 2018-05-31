@@ -7,12 +7,12 @@ import Sidebar from "../../components/sidebar";
 import { compose, withHandlers, withState } from "recompose";
 import Canvas from "../../canvas/wrapper";
 import Plan from "../../plan/wrapper";
-import Validate from "../../validate";
 import Settings from "../../settings/wrapper";
 import Agent from "../../agent/wrapper";
 import Overview from "../../overview/wrapper";
 import { PropsRoute } from "../../helpers/router";
 import Wallet from '../../wallet'
+import Validate from '../../validation_plan/wrapper'
 
 const AppTemplate = props => {
   return props.loading ? (
@@ -57,8 +57,14 @@ const AppTemplate = props => {
                   />
                   <PropsRoute path="/validate" component={Validate} />
                   <PropsRoute
+                    exact
                     path="/canvas/:id"
                     component={Canvas}
+                    relationships={props.data.agentRelationships}
+                  />
+                  <PropsRoute
+                    path="/canvas/:id/validate"
+                    component={Validate}
                     relationships={props.data.agentRelationships}
                   />
                   <Route path="/settings" component={Settings} />
