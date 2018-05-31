@@ -1,9 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Login from './login/'
-import Settings from './settings/wrapper'
-import Agent from './agent/wrapper'
-import Overview from './overview/wrapper'
 import registerServiceWorker from './registerServiceWorker'
 import {BrowserRouter as Router,
   Route,
@@ -12,13 +9,10 @@ import {BrowserRouter as Router,
 import {ApolloProvider} from 'react-apollo'
 import {client, store} from './store'
 import { Provider } from 'react-redux'
-import PrivateRoute from './templates/AppTemplate'
+import AppTemplate from './templates/AppTemplate'
 import { Notifs } from 'redux-notifications'
 import style from './base.css'
-import Canvas from './canvas/wrapper'
-import Work from './work'
-import Plan from './plan/wrapper'
-import Validate from './validate'
+import {PrivateRoute} from './helpers/router'
 
 const NoMatch = ({ location }) => (
   <div>
@@ -53,14 +47,7 @@ ReactDOM.render(
           />
           <Switch>
             <Route path='/login' component={Login} />
-            <PrivateRoute exact path='/' component={Overview} />
-            <PrivateRoute exact path='/agent/:id' component={Agent} />
-            <PrivateRoute path='/work' component={Work} />
-            <PrivateRoute path='/plan' component={Plan} />
-            <PrivateRoute path='/canvas/:id' component={Canvas} />
-            <PrivateRoute path='/validate' component={Validate} />
-            <PrivateRoute path='/settings' component={Settings} />
-            {/* <PrivateRoute path='/network' component={Network} /> */}
+            <PrivateRoute path='/' component={AppTemplate} redirectTo='/login' />
             <Route component={NoMatch} />
           </Switch>
         </div>
