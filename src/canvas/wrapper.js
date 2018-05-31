@@ -4,9 +4,10 @@ import { graphql } from 'react-apollo'
 import Plan from '../queries/getPlan'
 import CreateProcess from '../mutations/createProcess'
 import {Icons, Panel} from 'oce-components/build'
+import {Link} from 'react-router-dom'
 import {compose, withState, withHandlers} from 'recompose'
 import moment from 'moment'
-
+import style from './style.css'
 class CanvasWrapper extends React.Component {
   render () {
     const {createProcess, nameNewProcess, noteNewProcess, scope, start, newProcessDate, newProcessName, newProcessNote, newProcessScope, loading, error, viewer, modalIsOpen, modalSelected, openModal, closeModal, clicked, toggleClicked } = this.props
@@ -14,8 +15,8 @@ class CanvasWrapper extends React.Component {
         loading ? <strong>Loading...</strong> : (
           error ? <p style={{ color: '#F00' }}>API error</p> : (
             <div style={{display: 'initial'}}>
-              <Panel large icon={<Icons.Globe width='18' color='#f0f0f0' />} title={viewer.name}>
-                <Component toggleNewCommitmentModal={this.props.toggleNewCommitmentModal} newCommitmentIsOpen={this.props.newCommitmentIsOpen} createProcess={createProcess} newProcessDate={newProcessDate} nameNewProcess={nameNewProcess} noteNewProcess={noteNewProcess} scope={scope} start={start} newProcessName={newProcessName} newProcessNote={newProcessNote} newProcessScope={newProcessScope} relationships={this.props.agentData.data.agentRelationships} clicked={clicked} toggleClicked={toggleClicked} data={viewer} param={this.props.match.params.id} modalIsOpen={modalIsOpen} modalSelected={modalSelected} openModal={openModal} closeModal={closeModal} />
+              <Panel large icon={<Icons.Globe width='18' color='#f0f0f0' />} title={viewer.name} actions={<Link className={style.right_button} to={`${this.props.match.url}/validate`}><span><Icons.Validate width={18} height={18} color={'#fafafa'} /></span>Validate</Link>}>
+                <Component toggleNewCommitmentModal={this.props.toggleNewCommitmentModal} newCommitmentIsOpen={this.props.newCommitmentIsOpen} createProcess={createProcess} newProcessDate={newProcessDate} nameNewProcess={nameNewProcess} noteNewProcess={noteNewProcess} scope={scope} start={start} newProcessName={newProcessName} newProcessNote={newProcessNote} newProcessScope={newProcessScope} relationships={this.props.relationships} clicked={clicked} toggleClicked={toggleClicked} data={viewer} param={this.props.match.params.id} modalIsOpen={modalIsOpen} modalSelected={modalSelected} openModal={openModal} closeModal={closeModal} />
               </Panel>
             </div>
         ))
@@ -65,7 +66,6 @@ export default compose(
       props.handleStartNewProcess(event)
     },
     toggleNewCommitmentModal: props => (id) => {
-      console.log('cia')
       props.toggleNewCommitmenIsOpen(!props.newCommitmentIsOpen)
     },
     openModal: props => (id, cardId) => {
@@ -82,12 +82,13 @@ export default compose(
           token: localStorage.getItem('oce_token'),
           name: props.nameNewProcess,
           planned: date,
+          planId: props.match.params.id,
           note: props.noteNewProcess,
-          scope: props.scope,
+          scope: Number(props.scope),
           duration: 9
         }
       })
-      .then((data) => {console.log('yuhuuuuuuuuuu')})
+      .then((data) => {console.log(data)})
       .catch((e) => console.log(e))
     }
   })
