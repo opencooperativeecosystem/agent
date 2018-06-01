@@ -64,7 +64,7 @@ class Login extends React.Component {
                 }}
               >
                 <input placeholder='Insert your username' type='text' value={username} onChange={this.user} className='username' />
-                <input placeholder='Insert your password' type='password' value={password} autoComplete onChange={this.password} className='password' />
+                <input placeholder='Insert your password' type='password' value={password} autoComplete="true" onChange={this.password} className='password' />
               <button>login</button>
               </form>
               <a href='https://ocp.freedomcoop.eu/account/password/reset/' target='blank' className={style.wrapper_lost}>Password lost?</a>

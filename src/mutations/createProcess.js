@@ -15,6 +15,19 @@ mutation ($token: String!, $planId: Int! $name: String!, $planned: String!, $dur
         name
         note
         plannedStart
+        isFinished
+        committedOutputs {
+          id
+        }
+        committedInputs {
+          id
+        }
+        inputs {
+          id
+        }
+        workingAgents {
+          id
+        }
       }
     }
   }`
