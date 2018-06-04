@@ -16,7 +16,9 @@ const CanvasWrapper = ({
   relationships,
   modalIsOpen,
   modalSelected,
+  processId,
   openModal,
+  scopeId,
   closeModal
 }) => (
   <Query
@@ -66,6 +68,10 @@ const CanvasWrapper = ({
           <NewCommitmentModal
             modalIsOpen={newCommitmentIsOpen}
             closeModal={toggleNewCommitmentModal}
+            processId={processId}
+            planId={match.params.id}
+            match={match}
+            scopeId={scopeId}
           />
         </div>
       );
@@ -77,9 +83,13 @@ export default compose(
   withState("modalIsOpen", "toggleModalIsOpen", false),
   withState("newCommitmentIsOpen", "toggleNewCommitmenIsOpen", false),
   withState("modalSelected", "handleModalSelected", null),
+  withState("processId", "updateProcessId", null),
+  withState("scopeId", "updateScopeId", null),
   withHandlers({
-    toggleNewCommitmentModal: props => id => {
+    toggleNewCommitmentModal: props => (id, scope) => {
       props.toggleNewCommitmenIsOpen(!props.newCommitmentIsOpen);
+      props.updateProcessId(id)
+      props.updateScopeId(scope)
     },
     openModal: props => (id, cardId) => {
       props.toggleModalIsOpen(true);

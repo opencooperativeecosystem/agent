@@ -9,14 +9,15 @@ const Canvas = ({
   param,
   openModal,
   toggleNewCommitmentModal
-}) => (
+}) => {
+  return (
   <section className={style.canvasWrapper}>
     <div className={style.wrapperContainer}>
       {data.planProcesses.map((list, i) => (
         <Bin
           cards={list.committedInputs
-            .filter(comm => comm.action === "work")
-            .map(task => ({
+            // .filter(comm => comm.action === "work")
+            .map((task, j) => ({
               id: Number(task.id),
               title:
                 task.action +
@@ -27,6 +28,7 @@ const Canvas = ({
                 " of " +
                 task.resourceClassifiedAs.name,
               members: task.involvedAgents,
+              key: j,
               process: task.inputOf.name,
               due: task.due,
               note: task.note,
@@ -50,7 +52,7 @@ const Canvas = ({
           agents={list.workingAgents}
           name={list.name}
           openModal={openModal}
-          openCardController={toggleNewCommitmentModal}
+          openCardController={() => toggleNewCommitmentModal(list.id, list.scope.id)}
         />
       ))}
       <NewBin
@@ -63,6 +65,6 @@ const Canvas = ({
       />
     </div>
   </section>
-);
+)};
 
 export default Canvas;
