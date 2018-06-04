@@ -10,3 +10,15 @@
     padding-bottom: 20px;
     outline: none;
   }
+
+  .dateComp {
+    height: 30px;
+    width: 110px;
+    font-size: 14px;
+    text-indent: 5px;
+    border: none;
+    background: #6accaa;
+    margin: 0;
+    padding: 0;
+    color: #fafafa;
+  }

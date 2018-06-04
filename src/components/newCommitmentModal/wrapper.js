@@ -27,7 +27,7 @@ const customStyles = {
   // }
 }
 
-const UModal = ({modalIsOpen, closeModal}) => (
+const UModal = ({modalIsOpen, closeModal, planId, match, scopeId, processId}) => (
   <Modal
     isOpen={modalIsOpen}
     onRequestClose={closeModal}
@@ -37,7 +37,12 @@ const UModal = ({modalIsOpen, closeModal}) => (
       base: style.cardModal
     }}
     >
-      <CardModal  />
+      <CardModal
+        processId={processId}
+        planId={planId}
+        match={match}
+        scopeId={scopeId}
+      />
   </Modal>
 )
 

@@ -11,6 +11,7 @@ import UpdateCommitmentStatus from '../../mutations/updateCommitmentStatus'
 import moment from 'moment'
 
 const CardModal = ({param, id, toggleActions, actionPopup, updateCommitment, allPlanAgents, units, updateProcess, loading, data, error, close, modalDescription}) => {
+  console.log(data)
   return (
     loading ? <h1>loading...</h1> : (
     error ? <p style={{ color: '#ddd' }}>API error</p> : (
