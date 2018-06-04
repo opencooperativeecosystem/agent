@@ -13,6 +13,9 @@ query ($token: String, $planId: Int) {
         planProcesses {
           note
           id
+          scope {
+            id
+          }
           isFinished
           name
           plannedStart

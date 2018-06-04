@@ -2,34 +2,49 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 const createCommitment = gql`
-mutation ($token: String!, $committedUnitId:Int!, $due:String!, $action: String!, $scopeId: Int, $note: String, $committedNumericValue: String!, $committedResourceClassificationId: Int!, $providerId: Int) {
-  createCommitment(token: $token, committedUnitId:$committedUnitId, due:$due, action: $action, note: $note, committedResourceClassificationId: $committedResourceClassificationId, scopeId: $scopeId, committedNumericValue: $committedNumericValue, providerId: $providerId) {
+mutation ($token: String!, $inputOfId: Int, $committedUnitId:Int!, $due:String!, $action: String!, $planId: Int, $note: String, $committedNumericValue: String!, $committedResourceClassifiedAsId: Int!, $providerId: Int, $scopeId: Int) {
+  createCommitment(token: $token, inputOfId: $inputOfId, committedUnitId:$committedUnitId, due:$due, action: $action, note: $note, committedResourceClassifiedAsId: $committedResourceClassifiedAsId, planId: $planId, scopeId: $scopeId, committedNumericValue: $committedNumericValue, providerId: $providerId) {
     commitment {
-      id
-      action
-      plannedStart
-      due
-      provider {
-        name
-      }
-      scope {
-        name
-      }
-      resourceClassifiedAs {
-        name
-      }
-      committedQuantity {
-        numericValue
-        unit {
+        action
+        id
+        note
+        fulfilledBy {
+          fulfilledQuantity {
+            numericValue
+          }
+          fulfills {
+            action
+            fulfilledBy{
+              fulfilledBy {
+                requestDistribution
+              }
+            }
+          }
+        }
+        inputOf {
+          id
+          name
+        }
+        due
+        isFinished
+        involvedAgents {
+          image
+          id
+          name
+        }
+        committedQuantity {
+          unit {
+            name
+          }
+          numericValue
+        }
+        resourceClassifiedAs {
+          category
           name
         }
       }
-      committedOn
-      isFinished
-      note
-    }
   }
 }
 `
 
-export default graphql(createCommitment, {options: (props) => ({ variables: {token: localStorage.getItem('oce_token')}})})
+export default createCommitment
