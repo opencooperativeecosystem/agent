@@ -10,7 +10,13 @@ const Canvas = ({
   openModal,
   toggleNewCommitmentModal
 }) => {
-  console.log(data)
+  let relationshipsArr = []
+  relationshipsArr = relationships.map((rel, i) => (
+    <option key={i} value={rel.object.id}>
+      {rel.object.name}
+    </option>
+  ))
+  relationshipsArr.unshift(<option key={'222'} defaultvalue=''>Select a project</option>)
   return (
   <section className={style.canvasWrapper}>
     <div className={style.wrapperContainer}>
@@ -57,11 +63,7 @@ const Canvas = ({
         />
       ))}
       <NewBin
-        relationships={relationships.map((rel, i) => (
-          <option key={i} value={rel.object.id}>
-            {rel.object.name}
-          </option>
-        ))}
+        relationships={relationshipsArr}
         param={param}
       />
     </div>

@@ -46,9 +46,9 @@ const UModal = ({
     onRequestClose={closeModal}
     contentLabel="CardModal"
     style={customStyles}
-    className={{
-      base: style.cardModal
-    }}
+    // className={{
+    //   base: style.cardModal
+    // }}
   >
     <CardModal
       param={param}

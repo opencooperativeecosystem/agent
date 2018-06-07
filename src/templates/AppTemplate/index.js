@@ -11,7 +11,7 @@ import Settings from "../../settings/wrapper";
 import Agent from "../../agent/wrapper";
 import Overview from "../../overview/wrapper";
 import { PropsRoute } from "../../helpers/router";
-import Wallet from '../../wallet'
+import Wallet from '../../wallet/wrapper'
 import Validate from '../../validation_plan/wrapper'
 
 const AppTemplate = props => {

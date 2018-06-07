@@ -33,9 +33,9 @@ const UModal = ({modalIsOpen, closeModal, planId, match, scopeId, processId}) =>
     onRequestClose={closeModal}
     contentLabel='Commitment Modal'
     style={customStyles}
-    className={{
-      base: style.cardModal
-    }}
+    // className={{
+    //   base: style.cardModal
+    // }}
     >
       <CardModal
         processId={processId}
