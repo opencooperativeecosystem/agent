@@ -36,11 +36,16 @@ const Bin = ({
       }}
       update={(cache, {data: {createProcess}}) => {
           console.log(cache)
+          console.log('cache')
           const data = cache.readQuery({query: Plan, variables: {
-            token: localStorage.getItem('oce_token'),
-            planId: Number(param)
-        }})
+              token: localStorage.getItem('oce_token'),
+              planId: Number(param)
+            }})
+            console.log('cache2')
+          console.log(data)
+          console.log(createProcess.process)
           data.viewer.plan.planProcesses.push(createProcess.process)
+          console.log(data)
           cache.writeQuery({
               query: Plan,
               data,

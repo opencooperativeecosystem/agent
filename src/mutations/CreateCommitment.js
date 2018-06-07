@@ -2,8 +2,8 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 const createCommitment = gql`
-mutation ($token: String!, $inputOfId: Int, $committedUnitId:Int!, $due:String!, $action: String!, $planId: Int, $note: String, $committedNumericValue: String!, $committedResourceClassifiedAsId: Int!, $providerId: Int, $scopeId: Int) {
-  createCommitment(token: $token, inputOfId: $inputOfId, committedUnitId:$committedUnitId, due:$due, action: $action, note: $note, committedResourceClassifiedAsId: $committedResourceClassifiedAsId, planId: $planId, scopeId: $scopeId, committedNumericValue: $committedNumericValue, providerId: $providerId) {
+mutation ($token: String!, $inputOfId: Int, $outputOfId: Int, $committedUnitId:Int!, $due:String!, $action: String!, $planId: Int, $note: String, $committedNumericValue: String!, $committedResourceClassifiedAsId: Int!, $providerId: Int, $scopeId: Int) {
+  createCommitment(token: $token, inputOfId: $inputOfId, outputOfId: $outputOfId, committedUnitId:$committedUnitId, due:$due, action: $action, note: $note, committedResourceClassifiedAsId: $committedResourceClassifiedAsId, planId: $planId, scopeId: $scopeId, committedNumericValue: $committedNumericValue, providerId: $providerId) {
     commitment {
         action
         id
@@ -22,6 +22,10 @@ mutation ($token: String!, $inputOfId: Int, $committedUnitId:Int!, $due:String!,
           }
         }
         inputOf {
+          id
+          name
+        }
+        outputOf {
           id
           name
         }

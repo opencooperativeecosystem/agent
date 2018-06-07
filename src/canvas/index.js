@@ -10,6 +10,7 @@ const Canvas = ({
   openModal,
   toggleNewCommitmentModal
 }) => {
+  console.log(data)
   return (
   <section className={style.canvasWrapper}>
     <div className={style.wrapperContainer}>
@@ -29,7 +30,7 @@ const Canvas = ({
                 task.resourceClassifiedAs.name,
               members: task.involvedAgents,
               key: j,
-              process: task.inputOf.name,
+              process: task.inputOf ? task.inputOf.name : task.outputOf.name,
               due: task.due,
               note: task.note,
               isFinished: task.isFinished,

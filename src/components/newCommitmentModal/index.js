@@ -9,6 +9,8 @@ import DatePicker from "react-datepicker";
 import style from './style.css'
 import Plan from "../../queries/getPlan";
 import CreateCommitment from '../../mutations/CreateCommitment'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 require("react-datepicker/dist/react-datepicker-cssmodules.css");
 
 const events = [
@@ -92,7 +94,8 @@ const Modal = ({
             />}
           handleNote={handleNote}
         />
-      )}
+    )}
+    <ToastContainer />
     </ApolloConsumer>
     // createCommitment={} resources={[]}
   );
@@ -158,7 +161,6 @@ export default compose(
     },
     createCommitment: props => (client, planId, processId, match, scopeId) => {
       let date = moment(props.date).format("YYYY-MM-DD")
-      console.log(scopeId)
       return client.mutate({
           mutation: CreateCommitment,
           variables: {
@@ -170,6 +172,7 @@ export default compose(
               committedUnitId: props.unit,
               committedNumericValue: props.qty,
               inputOfId: processId,
+              outputOfId: processId,
               planId: planId,
               scopeId: scopeId
           },
@@ -178,10 +181,12 @@ export default compose(
               token: localStorage.getItem('oce_token'),
               planId: Number(planId)
           }})
-          console.log(data)
           const processIndex = data.viewer.plan.planProcesses.findIndex(process => Number(process.id) === Number(props.processId))
-          data.viewer.plan.planProcesses[processIndex].committedInputs.push(createCommitment.commitment)
-          console.log(data)
+          if (createCommitment.commitment.action === 'work') {
+              data.viewer.plan.planProcesses[processIndex].committedInputs.push(createCommitment.commitment)
+            } else {
+                data.viewer.plan.planProcesses[processIndex].committedOutputs.push(createCommitment.commitment)
+          }
             cache.writeQuery({
                 query: Plan,
                 data,
@@ -192,8 +197,8 @@ export default compose(
             })
         }
       })
-      .then(res => console.log(res))
-      .catch(e => console.log(e))
+      .then(res => () => toast("Wow so easy !"))
+      .catch(e => () => toast("error !"))
     }
   })
 )(Modal);

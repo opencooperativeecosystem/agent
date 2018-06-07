@@ -13,12 +13,13 @@ query ($token: String, $planId: Int) {
         planProcesses {
           note
           id
-          scope {
-            id
-          }
           isFinished
           name
           plannedStart
+          scope {
+            id
+            name
+          }
           committedOutputs {
             id
             committedQuantity {
@@ -49,6 +50,11 @@ query ($token: String, $planId: Int) {
               }
             }
             inputOf {
+              id
+              name
+            }
+            outputOf {
+              id
               name
             }
             due

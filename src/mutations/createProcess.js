@@ -16,6 +16,10 @@ mutation ($token: String!, $planId: Int! $name: String!, $planned: String!, $dur
         note
         plannedStart
         isFinished
+        scope {
+          id
+          name
+        }
         committedOutputs {
           id
         }
