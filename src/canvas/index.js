@@ -10,7 +10,6 @@ const Canvas = ({
   openModal,
   toggleNewCommitmentModal
 }) => {
-  console.log(data)
   return (
   <section className={style.canvasWrapper}>
     <div className={style.wrapperContainer}>

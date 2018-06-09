@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { compose, withState, withHandlers } from "recompose";
 import style from "./style.css";
 import CardModal from "../components/cardModal";
-import NewCommitmentModal from "../components/newCommitmentModal/wrapper";
+import NewCommitmentModal from "../components/newCommitmentModal";
 
 const CanvasWrapper = ({
   match,
@@ -20,7 +20,9 @@ const CanvasWrapper = ({
   openModal,
   scopeId,
   closeModal
-}) => (
+}) => {
+  console.log(newCommitmentIsOpen)
+  return (
   <Query
     query={Plan}
     variables={{
@@ -58,16 +60,16 @@ const CanvasWrapper = ({
               closeModal={closeModal}
             />
           </Panel>
-          <CardModal
+          {/* <CardModal
             allPlanAgents={data.viewer.plan.allPlanAgents}
             modalIsOpen={modalIsOpen}
             closeModal={closeModal}
             id={modalSelected}
             param={match.params.id}
-          />
+          /> */}
           <NewCommitmentModal
             modalIsOpen={newCommitmentIsOpen}
-            closeModal={toggleNewCommitmentModal}
+            toggleNewCommitmentModal={toggleNewCommitmentModal}
             processId={processId}
             planId={match.params.id}
             match={match}
@@ -77,7 +79,7 @@ const CanvasWrapper = ({
       );
     }}
   </Query>
-);
+)};
 
 export default compose(
   withState("modalIsOpen", "toggleModalIsOpen", false),
@@ -87,6 +89,8 @@ export default compose(
   withState("scopeId", "updateScopeId", null),
   withHandlers({
     toggleNewCommitmentModal: props => (id, scope) => {
+      console.log(id)
+      console.log(scope)
       props.toggleNewCommitmenIsOpen(!props.newCommitmentIsOpen);
       props.updateProcessId(id)
       props.updateScopeId(scope)
@@ -97,6 +101,10 @@ export default compose(
     },
     closeModal: props => (id, cardId) => {
       props.toggleModalIsOpen(false);
+    },
+    toggleModal: props => (id, cardId) => {
+      props.toggleModalIsOpen(!props.modalIsOpen)
+      props.handleModalSelected(cardId);
     }
   })
 )(CanvasWrapper);

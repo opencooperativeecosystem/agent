@@ -35,7 +35,7 @@ options.unshift(
   </option>
 );
 
-const Modal = ({
+const NewCommModal = ({
   createCommitment,
   units,
   date,
@@ -49,7 +49,9 @@ const Modal = ({
   handleEvent,
   handleQty,
   handleResource,
-  handleUnit
+  handleUnit,
+  modalIsOpen,
+  toggleNewCommitmentModal
 }) => {
   let resourcesOptions = resources.map((ev, i) => (
     <option key={i} value={ev.id}>
@@ -71,10 +73,16 @@ const Modal = ({
       Select your units
     </option>
   );
+  console.log('qui')
+  console.log(modalIsOpen)
   return (
     <ApolloConsumer>
       {client => (
         <NewCommitmentModal
+          isOpen={true}
+          toggleModal={toggleNewCommitmentModal}
+          rootId={'root'}
+          modalId={'modal'}
           createCommitment={() => createCommitment(client, planId, processId, match, scopeId)}
           events={options}
           units={unitsOptions}
@@ -94,10 +102,8 @@ const Modal = ({
             />}
           handleNote={handleNote}
         />
-    )}
-    <ToastContainer />
-    </ApolloConsumer>
-    // createCommitment={} resources={[]}
+      )}
+      </ApolloConsumer>
   );
 };
 
@@ -201,4 +207,4 @@ export default compose(
       .catch(e => () => toast("error !"))
     }
   })
-)(Modal);
+)(NewCommModal);
