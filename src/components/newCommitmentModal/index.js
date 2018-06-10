@@ -73,16 +73,10 @@ const NewCommModal = ({
       Select your units
     </option>
   );
-  console.log('qui')
-  console.log(modalIsOpen)
   return (
     <ApolloConsumer>
       {client => (
         <NewCommitmentModal
-          isOpen={true}
-          toggleModal={toggleNewCommitmentModal}
-          rootId={'root'}
-          modalId={'modal'}
           createCommitment={() => createCommitment(client, planId, processId, match, scopeId)}
           events={options}
           units={unitsOptions}
