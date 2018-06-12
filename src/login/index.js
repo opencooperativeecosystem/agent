@@ -6,6 +6,8 @@ import { withRouter } from 'react-router'
 import {connect} from 'react-redux'
 import { actions as notifActions } from 'redux-notifications'
 import {Icons, Panel} from 'oce-components/build'
+import { withFormik, Form, Field } from 'formik'
+import Yup from 'yup'
 
 class Login extends React.Component {
     constructor (props) {
@@ -90,31 +92,57 @@ mutation($username: String! $password: String!) {
   }
 `
 
-const mapStateToProps = (state) => {
-    return {
-        state: state
-    }
-}
+// const mapStateToProps = (state) => {
+//     return {
+//         state: state
+//     }
+// }
 
-const mapDispatchToProps = (dispatch) => {
-    const sendNotif = (id, message, kind, dismissAfter) => {
-        notifActions.notifSend({
-            message,
-            kind,
-            id: id,
-            dismissAfter: 2000
-        })(dispatch)
-    }
-    return {
-        sendNotif
-    }
-}
+// const mapDispatchToProps = (dispatch) => {
+//     const sendNotif = (id, message, kind, dismissAfter) => {
+//         notifActions.notifSend({
+//             message,
+//             kind,
+//             id: id,
+//             dismissAfter: 2000
+//         })(dispatch)
+//     }
+//     return {
+//         sendNotif
+//     }
+// }
 
-const LoginConnected = connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(Login);
+// const LoginConnected = connect(
+//     mapStateToProps,
+//     mapDispatchToProps
+//   )(Login);
 
 const LoginWithMutation = graphql(loginMutation)(LoginConnected)
+
+
+const FormikLogin = withFormik({
+    mapPropsToValues({username, password}) {
+        return {
+            username: username || '',
+            password: password || ''
+        }
+    },
+    validationSchema: Yup.object().shape({
+       username: Yup.string().required(),
+       password: Yup.string().min(4).required()
+    }),
+    handleSubmit(values, {resetForm, setErrors, setSubmitting}, props) {
+        props.mutate({variables: {username: this.state.username, password: this.state.password}})
+        .then (res => {
+          localStorage.setItem('oce_token', res.data.createToken.token)
+          localStorage.setItem('agent_id', res.data.createToken.id)
+        })
+        .then( () => props.history.replace('/'))
+        .catch(err => {
+            props.sendNotif('sdasad', err.message, 'danger', '5000')
+        })
+    }
+})(Login)
+
 
 export default withRouter(LoginWithMutation)

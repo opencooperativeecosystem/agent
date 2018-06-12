@@ -13,8 +13,8 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
 })
 
 const link = createHttpLink({
-  // uri: 'https://ocp.freedomcoop.eu/api/graph'
-  uri: 'https://testocp.freedomcoop.eu/api/graph'
+  uri: 'https://ocp.freedomcoop.eu/api/graph'
+  // uri: 'https://testocp.freedomcoop.eu/api/graph'
 })
 
 const cache = new InMemoryCache({
