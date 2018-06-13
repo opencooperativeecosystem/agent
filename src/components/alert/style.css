@@ -1,0 +1,9 @@
+.alert {
+    border-radius: 4px;
+    height: 26px;
+    line-height: 26px;
+    color: white;
+    background: red;
+    padding: 0 10px;
+    font-size: 14px;
+}
