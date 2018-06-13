@@ -1,7 +1,8 @@
 import React from "react";
 import CardModal from "./CardModal";
-import Modal from "react-modal";
+// import Modal from "react-modal";
 import style from "./index.css";
+import {Modal} from 'oce-components/build'
 
 const customStyles = {
   overlay: {

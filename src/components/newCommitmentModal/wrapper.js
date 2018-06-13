@@ -1,6 +1,6 @@
 import React from 'react'
 import CardModal from './index'
-import Modal from 'react-modal'
+import Modal from 'oce-components/build'
 import style from './style.css'
 
 const customStyles = {
