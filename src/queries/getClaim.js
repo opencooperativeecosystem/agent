@@ -11,7 +11,7 @@ query ($token: String, $id: Int) {
         id
         name
       }
-      planProcesses(month:4, year: 2018) {
+      planProcesses {
         name
         id
         committedInputs(action: WORK) {
