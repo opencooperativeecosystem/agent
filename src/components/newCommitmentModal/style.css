@@ -22,3 +22,57 @@
     padding: 0;
     color: #fafafa;
   }
+
+  .dateWrapper {
+    display: inline-block;
+    width: 180px;
+    height: 32px;
+    border: none;
+    margin-top: 5px;
+    background: #6bccab;
+    border-radius: 4px;
+    color: white;
+    font-weight: 500;
+    line-height: 32px;
+}
+
+.dateName {
+    margin: 0;
+    float: left;
+    margin-left: 10px;
+    padding-right: 10px;
+    border-right: 1px solid #ffffff52;
+    line-height: 32px;
+    font-weight: 500;
+    color: white;
+    letter-spacing: .5px;
+}
+
+.dateWrapper > div:first-of-type {
+    float: left;
+    width: 125px;
+    border: none;
+}
+
+.dateWrapper div input {
+    height: 29px;
+    border: none;
+    padding: 0;
+    background: none;
+    text-indent: 10px;
+    font-size: 14px;
+    color: white;
+}
+
+
+.commitmentWrapper {
+    lost-utility: clearfix;
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+
+.commInput {
+    float: left;
+    margin-right: 1%;
+    width: 24%
+}
