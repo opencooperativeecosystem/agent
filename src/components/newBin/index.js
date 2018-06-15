@@ -1,5 +1,4 @@
 import React from "react";
-import { Mutation } from "react-apollo";
 import { NewBin, Input, Textarea, Select } from "oce-components/build";
 import CreateProcess from "../../mutations/createProcess";
 import { compose, withState, withHandlers } from "recompose";

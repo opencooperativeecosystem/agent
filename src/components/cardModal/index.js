@@ -1,7 +1,6 @@
 import React from "react";
 import CardModal from "./CardModal";
 import Modal from '../modal'
-import style from "./index.css";
 
 const CommitmentModal = ({
   param,

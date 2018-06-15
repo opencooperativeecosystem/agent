@@ -1,12 +1,11 @@
 import React from 'react'
-import AgentRelationships from '../agentRelationships'
-import {Panel, Icons, TxForm, DataBox, Feed, SupTitle, NavigationItem, Wrapper, Tag} from 'oce-components/build'
+import {Panel, Icons, TxForm, DataBox, SupTitle, NavigationItem, Wrapper} from 'oce-components/build'
 import style from './style.css'
-const Economic = () => (
-    <div className={{'font-size': '14px'}}>
-      <b>Mario</b> sent 10.83774 ƒ to <b>Alekos</b>
-    </div>
-  );
+// const Economic = () => (
+//     <div className={{'font-size': '14px'}}>
+//       <b>Mario</b> sent 10.83774 ƒ to <b>Alekos</b>
+//     </div>
+//   );
 
 const Wallet = ({match, relationships}) => (
     <div className={style.container}>

@@ -1,9 +1,7 @@
-import { compose, withHandlers, withState } from "recompose";
 import Component from "./index";
-import gql from "graphql-tag";
-import { graphql } from "react-apollo";
+import { graphql , compose} from "react-apollo";
 import moment from "moment";
-import {withFormik, Form, Field} from 'formik'
+import {withFormik} from 'formik'
 import * as Yup from 'yup'
 import createPlan from '../mutations/CreatePlan'
 

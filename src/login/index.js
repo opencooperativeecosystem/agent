@@ -1,7 +1,6 @@
 import React from 'react'
 import { graphql, compose } from 'react-apollo'
 import style from '../base.css'
-import { withRouter } from 'react-router'
 import {Icons, Panel} from 'oce-components/build'
 import { withFormik, Form, Field } from 'formik'
 import * as Yup from 'yup'

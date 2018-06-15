@@ -1,11 +1,9 @@
 import React from 'react'
-import {Panel, Icons, Input, Select, Textarea, Button} from 'oce-components/build'
+import {Panel, Icons, Input, Textarea, Button} from 'oce-components/build'
 import AgentRelationships from '../agentRelationships'
 import style from './style.css'
 import DatePicker from 'react-datepicker'
-import moment from 'moment'
-import {withFormik, Form, Field} from 'formik'
-import * as Yup from 'yup'
+import {Form, Field} from 'formik'
 import Alert from '../components/alert'
 require("react-datepicker/dist/react-datepicker-cssmodules.css")
 
@@ -84,6 +82,7 @@ const DueDate = (props) => {
       selected={props.value}
       onChange={handleChange}
       dateFormatCalendar={'DD MMM YYYY'}
+      withPortal
     />
     {props.error && props.touched && <Alert>{props.error}</Alert>}
     </div>

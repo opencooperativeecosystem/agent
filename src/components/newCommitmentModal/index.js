@@ -1,15 +1,14 @@
 import React from "react";
-import { NewCommitmentModal, SupTitle, Wrapper, Input, Textarea, Button, Select, Icons } from "oce-components/build";
+import { SupTitle, Wrapper, Input, Textarea, Button, Select, Icons } from "oce-components/build";
 import { compose, withState, withHandlers } from "recompose";
 import moment from "moment";
-import { graphql, withApollo } from "react-apollo";
 import getResourcesQuery from "../../queries/getResources";
 import getUnitsQuery from "../../queries/getUnits";
 import DatePicker from "react-datepicker";
 import style from './style.css'
 import Plan from "../../queries/getPlan";
 import CreateCommitment from '../../mutations/CreateCommitment'
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import {Form, withFormik, Field} from 'formik' 
 import * as Yup from 'yup'
 import Alert from '../alert'

@@ -8,7 +8,7 @@ import AgentPlans from '../agentPlans/wrapper'
 const AgentRelationships = props => (
     <div className={style.container}>
     <Panel icon={<Icons.Globe width="18" color="#f0f0f0" />} title="Network">
-      <div>
+      <div style={{padding: '10px'}}>
         {props.relationships.map((item, i) => (
           <div className={style.container_link} key={i}>
             <NavLink

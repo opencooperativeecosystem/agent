@@ -1,7 +1,6 @@
 import React from 'react'
 import CardModal from './index'
 import Modal from '../modal'
-import style from './style.css'
 import {  ApolloConsumer } from "react-apollo";
 
 const NCModal = ({toggleNewCommitmentModal, modalIsOpen, closeModal, planId, match, scopeId, processId}) => (
