@@ -166,7 +166,7 @@ const StartDate = (props) => {
   };
   return (
     <div className={style.dateWrapper}>
-      <h5 className={style.dateName}>Start</h5>
+      <h5 className={style.dateName}>Due</h5>
       <DatePicker
       selected={props.value}
       onChange={handleChange}

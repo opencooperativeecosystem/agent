@@ -30,6 +30,7 @@ export default compose(
         .then(data => {
           return props.history.push(`canvas/${data.data.createPlan.plan.id}`);
         }, (e) => {
+          console.log(e)
           const errors = e.graphQLErrors.map(error => error.message)
           props.setSubmitting(false)
           props.setErrors({ username: ' ', password: ' ', form: errors[0] })
