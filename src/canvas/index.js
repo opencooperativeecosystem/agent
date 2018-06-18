@@ -51,6 +51,7 @@ const Canvas = ({
           plannedStart={list.plannedStart}
           agents={list.workingAgents}
           name={list.name}
+          planId={param}
           openModal={openModal}
           openCardController={() => toggleNewCommitmentModal(list.id, list.scope.id)}
         />

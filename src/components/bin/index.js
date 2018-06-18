@@ -3,18 +3,21 @@ import {compose, withState, withHandlers} from 'recompose'
 import {graphql} from 'react-apollo'
 import Plan from '../../queries/getPlan'
 import UpdateProcess from '../../mutations/updateProcess'
-import {Bin, Card} from 'oce-components/build'
+import {Bin, Card, Button, Input} from 'oce-components/build'
+import style from './style.css'
+import EditTitle from './editTitle'
+import EditNote from './editNote'
+
 
 const BinWrapper = ({name, note, openCardController, plannedStart, id, updateProcess, actionPopup, actionPopupId, toggleActions, cards, outputs, status, openModal}) => (
   <Bin
     openCardController={openCardController}
     updateProcess={updateProcess}
-    actionPopupId={actionPopupId}
-    actionPopup={actionPopup}
-    toggleActions={toggleActions}
     name={name}
     status={status}
     infoNote={note}
+    Titleform={EditTitle}
+    Noteform={EditNote}
     plannedStart={plannedStart}
     outputs={outputs}
     id={id}
@@ -42,27 +45,22 @@ const enhancedList = compose(
         updateProcessMutation: mutate
       })
     }),
-    withState('actionPopup', 'toggleActionPopup', false),
-    withState('actionPopupId', 'toggleActionPopupId', null),
+    graphql(UpdateProcess, { name: 'updateProcessMutation' }),
     withState('processStatus', 'toggleProcessStatus', props => props.status),
     withHandlers({
-      toggleActions: (props) => (id) => {
-        props.toggleActionPopupId(id)
-        props.toggleActionPopup(!props.actionPopup)
-      },
-      updateProcess: ({updateProcessMutation, id}) => (status) => {
+      updateProcess: props => event => {
         return (
-          updateProcessMutation({
+          props.updateProcessMutation({
             variables: {
               token: localStorage.getItem('oce_token'),
-              id: id,
-              isFinished: status
+              id: props.id,
+              isFinished: !props.status
             },
             update: (store, {data}) => {
               let planProcessesCache = store.readQuery({query: Plan, 
                 variables: {
                   token: localStorage.getItem('oce_token'),
-                  planId: Number(data.updateProcess.process.processPlan.id)
+                  planId: Number(props.planId)
                 }})
               
               const processToUpdateIndex = planProcessesCache.viewer.plan.planProcesses.findIndex(proc => proc.id === data.updateProcess.process.id)
@@ -70,12 +68,12 @@ const enhancedList = compose(
               store.writeQuery({ query: Plan,
                 variables: {
                   token: localStorage.getItem('oce_token'),
-                  planId: Number(data.updateProcess.process.processPlan.id)
+                  planId: Number(props.planId)
                 },
                 data: planProcessesCache })
             }
           })
-          .then((data) => console.log('cancellados'))
+          .then((data) => console.log(data))
           .catch((e) => console.log(e))
         )
       }
