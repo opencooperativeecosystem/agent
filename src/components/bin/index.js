@@ -6,19 +6,23 @@ import UpdateProcess from '../../mutations/updateProcess'
 import {Bin, Card, Button, Input} from 'oce-components/build'
 import style from './style.css'
 import EditTitle from './editTitle'
+import EditStart from './editStart'
 import EditNote from './editNote'
+import Archive from './archive'
+import moment from 'moment'
 
-
-const BinWrapper = ({name, note, openCardController, plannedStart, id, updateProcess, actionPopup, actionPopupId, toggleActions, cards, outputs, status, openModal}) => (
+const BinWrapper = ({name, note, openCardController, planId, plannedStart, id, updateProcess, actionPopup, actionPopupId, toggleActions, cards, outputs, status, openModal}) => (
   <Bin
     openCardController={openCardController}
     updateProcess={updateProcess}
     name={name}
     status={status}
     infoNote={note}
-    Titleform={EditTitle}
-    Noteform={EditNote}
-    plannedStart={plannedStart}
+    Titleform={<EditTitle id={id} planId={planId}/>}
+    Noteform={<EditNote id={id} planId={planId} />}
+    Startform={<EditStart id={id} planId={planId} />}
+    Archive={<Archive id={id} planId={planId} />}
+    plannedStart={moment(plannedStart).format("DD MMM YYYY")}
     outputs={outputs}
     id={id}
     cardController={false}
@@ -28,11 +32,11 @@ const BinWrapper = ({name, note, openCardController, plannedStart, id, updatePro
         key={card.id}
         id={card.id}
         listId={id}
-        isFinished={card.isFinished}
+        status={card.isFinished}
         openCard={() => openModal(id, card.id)}
         percentage={card.percentage}
         note={card.note || card.title}
-        due={card.due}
+        due={moment(card.due).format("DD MMM YYYY")}
         members={card.members}
       />
     ))}
@@ -40,11 +44,6 @@ const BinWrapper = ({name, note, openCardController, plannedStart, id, updatePro
 )
 
 const enhancedList = compose(
-    graphql(UpdateProcess, {
-      props: ({mutate, ownProps: {id}}) => ({
-        updateProcessMutation: mutate
-      })
-    }),
     graphql(UpdateProcess, { name: 'updateProcessMutation' }),
     withState('processStatus', 'toggleProcessStatus', props => props.status),
     withHandlers({
@@ -57,6 +56,7 @@ const enhancedList = compose(
               isFinished: !props.status
             },
             update: (store, {data}) => {
+              console.log(props.planId)
               let planProcessesCache = store.readQuery({query: Plan, 
                 variables: {
                   token: localStorage.getItem('oce_token'),

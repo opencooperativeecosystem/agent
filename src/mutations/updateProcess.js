@@ -1,21 +1,20 @@
-import gql from 'graphql-tag'
+import gql from "graphql-tag";
 
 export const UpdateProcess = gql`
-mutation ($token: String!, $id: Int!, $isFinished: Boolean ) {
-  updateProcess(
-    token: $token, 
-    id: $id, 
-    isFinished: $isFinished
-  ) {
-    process {
-      processPlan {
+  mutation($token: String!, $id: Int!, $isFinished: Boolean, $name: String, $note: String, $start: String) {
+    updateProcess(token: $token, id: $id, isFinished: $isFinished, name: $name note: $note, plannedStart: $start) {
+      process {
+        processPlan {
+          id
+        }
         id
+        name
+        note
+        plannedStart
+        isFinished
       }
-      id
-      name
-      isFinished
     }
   }
-}`
+`;
 
-export default UpdateProcess
+export default UpdateProcess;

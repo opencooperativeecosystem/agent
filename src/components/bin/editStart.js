@@ -7,23 +7,47 @@ import Alert from '../alert'
 import Plan from "../../queries/getPlan";
 import UpdateProcess from "../../mutations/updateProcess";
 import { graphql, compose } from "react-apollo";
+import DatePicker from "react-datepicker";
+import moment from 'moment'
+require("react-datepicker/dist/react-datepicker-cssmodules.css");
 
-const EditNote = (props) => (
+const EditStart = (props) => (
   <Form>
-    <span className={style.form_note}>
-      <Field name="note" render={({ field /* _form */ }) => (<Textarea {...field} placeholder='Type the process note...' />)} />
-      {props.errors.note && props.touched.note && <Alert>{props.errors.note}</Alert>}
-    </span>
-    <Button>Update note</Button>
+    <StartDate 
+        value={props.values.start}
+        onChange={props.setFieldValue}
+        onBlur={props.setFieldTouched}
+        error={props.errors.start}
+        touched={props.touched.start}
+    />
+    <Button>Update Start</Button>
   </Form>
 )
+
+
+const StartDate = (props) => {
+    const handleChange = value => {
+      props.onChange('start', value);
+    };
+    return (
+      <div className={style.dateWrapper}>
+        <DatePicker
+            selected={props.value}
+            onChange={handleChange}
+            dateFormatCalendar={'DD MMM YYYY'}
+        />
+      {props.error && props.touched && <Alert>{props.error}</Alert>}
+      </div>
+    )
+  }
+  
 
 export default compose(
     graphql(UpdateProcess, { name: "updateProcessMutation" }),
     withFormik({
-      mapPropsToValues: (props) => ({ note: '' }),
+      mapPropsToValues: (props) => ({ start: moment() }),
       validationSchema: Yup.object().shape({
-         note: Yup.string().required()
+         start: Yup.string().required()
       }),
       handleSubmit: (values, { props, resetForm, setErrors, setSubmitting }) => {
         props
@@ -31,7 +55,7 @@ export default compose(
             variables: {
               token: localStorage.getItem("oce_token"),
               id: props.id,
-              note: values.note
+              start: moment(values.start).format("YYYY-MM-DD"),
             },
             update: (store, { data }) => {
               let planProcessesCache = store.readQuery({
@@ -47,8 +71,8 @@ export default compose(
               );
               planProcessesCache.viewer.plan.planProcesses[
                 processToUpdateIndex
-              ].note =
-                data.updateProcess.process.note;
+              ].plannedStart =
+                data.updateProcess.process.plannedStart;
               store.writeQuery({
                 query: Plan,
                 variables: {
@@ -72,4 +96,4 @@ export default compose(
       }
     })
 ) 
-(EditNote);
+(EditStart);

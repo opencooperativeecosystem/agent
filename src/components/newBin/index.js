@@ -107,7 +107,6 @@ export default compose(
           start: Yup.string(),
       }),
       handleSubmit: (values, {props, resetForm, setErrors, setSubmitting}) => {
-        console.log(props)
         props
           .createProcessMutation({
             variables: {
