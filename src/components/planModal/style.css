@@ -1,0 +1,35 @@
+.planModal {
+    padding: 20px;
+    padding-bottom: 0;
+}
+
+.form_input {
+    margin-bottom: 10px;
+}
+
+.form_note {
+    height: 150px;
+    margin-bottom: 10px;
+}
+
+.archiveTitle {
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 0px;
+}
+
+.archiveDesc {
+    font-size: 14px;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.formWrapper {
+  padding-bottom: 20px;
+}
+
+.deletePlanWrapper {
+    background: gainsboro;
+    border-radius: 4px;
+    padding: 10px;
+}

@@ -4,7 +4,7 @@ const agentQuery = gql`
 query ($token: String, $id: Int) {
     viewer(token: $token) {
       agent(id: $id) {
-        agentPlans {
+        agentPlans (isFinished: false)  {
           name
           id
           note

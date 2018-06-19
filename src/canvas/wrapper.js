@@ -2,12 +2,24 @@ import React from "react";
 import Bins from "./index";
 import { Query } from "react-apollo";
 import Plan from "../queries/getPlan";
-import { Icons, Panel } from "oce-components/build";
+import { Icons, Panel, Button } from "oce-components/build";
 import { Link } from "react-router-dom";
 import { compose, withState, withHandlers } from "recompose";
 import style from "./style.css";
 import CardModal from "../components/cardModal";
 import NewCommitmentModal from "../components/newCommitmentModal/wrapper";
+import PlanModal from '../components/planModal'
+
+const ErrorPlan = () => (
+  <div className={style.errorWrapper}>
+    <h1 className={style.errorEmoji}>🕳️</h1>
+    <h3 className={style.errorWrapperTitle}>This plan is closed.</h3>
+    <h5 className={style.errorWrapperDesc}>The plan may be closed or inexistent</h5>
+    <Link className={style.errorLink} to='/'>Back home</Link>
+  </div>
+)
+
+
 
 const CanvasWrapper = ({
   match,
@@ -17,9 +29,12 @@ const CanvasWrapper = ({
   modalIsOpen,
   modalSelected,
   processId,
+  history,
   openModal,
   scopeId,
-  closeModal
+  closeModal,
+  onTogglePlanModal,
+  planModalIsOpen
 }) => (
   <Query
     query={Plan}
@@ -29,8 +44,9 @@ const CanvasWrapper = ({
     }}
   >
     {({ loading, error, data }) => {
+      console.log(error)
       if (loading) return null;
-      if (error) return `Error!: ${error}`;
+      if (error) return <ErrorPlan />;
       return (
         <div style={{ display: "initial" }}>
           <Panel
@@ -38,11 +54,14 @@ const CanvasWrapper = ({
             icon={<Icons.Globe width="18" color="#f0f0f0" />}
             title={data.viewer.plan.name}
             actions={
+              <div>
+              <Button small onClick={onTogglePlanModal}><span className={style.buttonIcon}><Icons.Edit width='16' height='16' color='#fff' /></span> Edit Plan</Button>
               <Link className={style.right_button} to={`${match.url}/validate`}>
                 <span>
                   <Icons.Validate width={18} height={18} color={"#fafafa"} />
                 </span>Validate
               </Link>
+              </div>
             }
           >
             <Bins
@@ -65,6 +84,15 @@ const CanvasWrapper = ({
             id={modalSelected}
             param={match.params.id}
           />
+          <PlanModal
+            isOpen={planModalIsOpen}
+            toggleModal={onTogglePlanModal}
+            param={match.params.id}
+            title={data.viewer.plan.name}
+            note={data.viewer.plan.note}
+            planId={match.params.id}
+            history={history}
+          />
           <NewCommitmentModal
             modalIsOpen={newCommitmentIsOpen}
             toggleNewCommitmentModal={toggleNewCommitmentModal}
@@ -82,6 +110,7 @@ const CanvasWrapper = ({
 export default compose(
   withState("modalIsOpen", "toggleModalIsOpen", false),
   withState("newCommitmentIsOpen", "toggleNewCommitmenIsOpen", false),
+  withState("planModalIsOpen", "togglePlanModal", false),
   withState("modalSelected", "handleModalSelected", null),
   withState("processId", "updateProcessId", null),
   withState("scopeId", "updateScopeId", null),
@@ -94,6 +123,9 @@ export default compose(
     openModal: props => (id, cardId) => {
       props.toggleModalIsOpen(true);
       props.handleModalSelected(cardId);
+    },
+    onTogglePlanModal: props => () => {
+      props.togglePlanModal(!props.planModalIsOpen);
     },
     closeModal: props => (id, cardId) => {
       props.toggleModalIsOpen(false);

@@ -1,7 +1,7 @@
 .canvasWrapper {
   position: relative;
   min-height: 100vh;
-  padding: 10px;
+  margin: 10px;
 }
 
 .wrapperContainer {
@@ -9,7 +9,7 @@
   white-space: nowrap;
   overflow-x: auto;
   overflow-y: hidden;
-  /* position: absolute; */
+  position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
@@ -28,9 +28,52 @@
   color: #fafafa;
   text-decoration: none;
   font-size: 14px;
+  margin-left: 10px;
 }
 
 .right_button span {
   margin-right: 5px;
   vertical-align: sub;
+}
+
+.buttonIcon {
+  line-height: 28px;
+  vertical-align: sub;
+}
+
+
+.errorEmoji {
+  text-align: center;
+}
+
+.errorWrapper {
+  margin-top: 100px;
+}
+
+.errorWrapperTitle {
+  text-align: center;
+  font-size: 28px;
+  color: #fafafa;
+}
+
+.errorWrapperDesc {
+  text-align: center;
+    font-size: 18px;
+    color: #fafafacc;
+    font-weight: 400;
+}
+
+.errorLink {
+  background: #2588d0;
+    padding: 0 10px;
+    height: 40px;
+    display: block;
+    width: 100px;
+    line-height: 40px;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 40px;
+    text-decoration: none;
+    border-radius: 4px;
+    color: white;
 }

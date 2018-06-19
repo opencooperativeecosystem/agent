@@ -86,6 +86,9 @@ const agentPlans = gql`
         id
         name
         image
+        agentPlans {
+          id
+        }
         agentRelationships {
           relationship {
             label

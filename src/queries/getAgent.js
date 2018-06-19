@@ -56,7 +56,7 @@ query ($token: String, $id: Int) {
             }
           }
         }
-        agentPlans {
+        agentPlans (isFinished: false) {
           name
           id
           note
