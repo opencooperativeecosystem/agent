@@ -1,12 +1,13 @@
 import React from "react";
 import style from "./style.css";
-import { Input, Button } from "oce-components/build";
+import { Input, Button, Icons } from "oce-components/build";
 import UpdateProcess from "../../mutations/updateProcess";
 import { Form, Field, withFormik } from "formik";
 import { graphql, compose } from "react-apollo";
 import * as Yup from "yup";
 import Alert from "../alert";
 import Plan from "../../queries/getPlan";
+import updateNotification from "../../mutations/updateNotification";
 
 const EditTitle = props => (
   <Form>
@@ -26,6 +27,7 @@ const EditTitle = props => (
 
 export default compose(
   graphql(UpdateProcess, { name: "updateProcessMutation" }),
+  graphql(updateNotification, {name: 'updateNotification'}),
   withFormik({
     mapPropsToValues: props => ({ title: "" }),
     validationSchema: Yup.object().shape({
@@ -67,12 +69,17 @@ export default compose(
         })
         .then(
           data => {
-            console.log(data);
+            props.updateNotification({variables: {
+              message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Bell width='18' height='18' color='white' /></span>Title updated successfully!</div>,
+              type: 'success'
+            }})
           },
           e => {
             const errors = e.graphQLErrors.map(error => error.message);
-            props.setSubmitting(false);
-            props.setErrors({ username: " ", password: " ", form: errors[0] });
+            props.updateNotification({variables: {
+              message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Cross width='18' height='18' color='white' /></span>{errors}</div>,
+              type: 'alert'
+            }})
           }
         );
     }

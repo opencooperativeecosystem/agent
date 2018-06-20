@@ -2,7 +2,7 @@ import React from "react";
 import { withFormik, Form, Field } from "formik";
 import { graphql, compose } from "react-apollo";
 import * as Yup from "yup";
-import { Button, Input, Textarea } from "oce-components/build";
+import { Icons, Button, Input, Textarea } from "oce-components/build";
 import Alert from "../alert";
 import Plan from "../../queries/getPlan";
 import agentPlans from "../../queries/getAgentPlans";
@@ -10,6 +10,7 @@ import style from "./style.css";
 import updatePlan from '../../mutations/updatePlan'
 import deletePlan from '../../mutations/deletePlan'
 import {withHandlers} from 'recompose'
+import updateNotification from "../../mutations/updateNotification";
 
 const PlanModal = props => (
   <div className={style.planModal}>
@@ -56,6 +57,7 @@ const PlanModal = props => (
 export default compose(
   graphql(updatePlan, { name: "updatePlanMutation" }),
   graphql(deletePlan, { name: "deletePlanMutation" }),
+  graphql(updateNotification, {name: 'updateNotification'}),
   withHandlers({
     deletePlan: props => event => {
         event.preventDefault()
@@ -87,10 +89,21 @@ export default compose(
         })
             .then(
                 data => {
-                    console.log(data);
+                  console.log(data)
+                  props.updateNotification({variables: {
+                      message: <div className={style.message}><span><Icons.Bell width='18' height='18' color='white' /></span>Plan {data.data.deletePlan.plan.name} deleted successfully!</div>,
+                      type: 'success'
+                    }
+                  })
+                  props.history.replace('/')
                 },
                 e => {
                     const errors = e.graphQLErrors.map(error => error.message);
+                    props.updateNotification({variables: {
+                      message: <div className={style.message}><span><Icons.Cross width='18' height='18' color='white' /></span>{errors}</div>,
+                      type: 'alert'
+                    }
+                  })
                 }
             );
     }
@@ -138,13 +151,19 @@ export default compose(
         })
         .then(
           data => {
-            console.log(data);
+            props.updateNotification({variables: {
+              message: <div className={style.message}><span><Icons.Bell width='18' height='18' color='white' /></span>Plan updated successfully!</div>,
+              type: 'success'
+            }
+          })
           },
           e => {
             const errors = e.graphQLErrors.map(error => error.message);
-            console.log(errors)
+            props.updateNotification({variables: {
+              message: <div className={style.message}><span><Icons.Cross width='18' height='18' color='white' /></span>{errors}</div>,
+              type: 'alert'
+            }})
             props.setSubmitting(false);
-            props.setErrors({ username: " ", password: " ", form: errors[0] });
           }
         );
     }

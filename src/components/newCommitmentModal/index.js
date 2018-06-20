@@ -1,5 +1,6 @@
 import React from "react";
 import { SupTitle, Wrapper, Input, Textarea, Button, Select, Icons } from "oce-components/build";
+import { graphql } from "react-apollo";
 import { compose, withState, withHandlers } from "recompose";
 import moment from "moment";
 import getResourcesQuery from "../../queries/getResources";
@@ -11,6 +12,7 @@ import CreateCommitment from '../../mutations/CreateCommitment'
 import { toast } from 'react-toastify';
 import {Form, withFormik, Field} from 'formik' 
 import * as Yup from 'yup'
+import updateNotification from "../../mutations/updateNotification";
 import Alert from '../alert'
 import 'react-toastify/dist/ReactToastify.css';
 require("react-datepicker/dist/react-datepicker-cssmodules.css");
@@ -184,6 +186,7 @@ const StartDate = (props) => {
 export default compose(
   withState("resources", "onResourcesArray", []),
   withState("units", "onUnitsArray", []),
+  graphql(updateNotification, {name: 'updateNotification'}),
   withFormik({
     mapPropsToValues: () => ({ event: '', note: '', resource: '', qty: '', unit: '', date: moment() }),
     validationSchema: Yup.object().shape({
@@ -232,8 +235,17 @@ export default compose(
             })
         }
       })
-      .then(res => () => toast("Wow so easy !"))
-      .catch(e => () => toast("error !"))
+      .then(res => props.updateNotification({variables: {
+        message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Bell width='18' height='18' color='white' /></span>Commitment created successfully!</div>,
+        type: 'success'
+      }}))
+      .catch(e => {
+      const errors = e.graphQLErrors.map(error => error.message)
+      props.setSubmitting(false)
+      props.updateNotification({variables: {
+        message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Cross width='18' height='18' color='white' /></span>{errors}</div>,
+        type: 'alert'
+      }})})
     }
   }),
   withHandlers({

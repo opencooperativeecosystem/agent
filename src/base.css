@@ -318,8 +318,17 @@ body {
 
 .genericAlert {
   position: fixed;
-  bottom: 10px;
+  top: 10px;
   left: 10px;
   right: 10px;
   z-index: 99999999999999999999999999999999;
+}
+
+.message {
+  font-size: 14px;    
+}
+
+.message span {
+margin-right: 10px;
+vertical-align: sub;
 }

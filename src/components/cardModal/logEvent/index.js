@@ -3,8 +3,8 @@ import Component from './logEvent'
 import {graphql} from 'react-apollo'
 import gql from 'graphql-tag'
 import moment from 'moment'
-import {connect} from 'react-redux'
-import { actions as notifActions } from 'redux-notifications'
+// import {connect} from 'react-redux'
+// import { actions as notifActions } from 'redux-notifications'
 
 const plan = gql`
 query ($token: String, $planId: Int) {
@@ -208,25 +208,25 @@ mutation ($token: String!, $id: Int!, $start: String!, $requestDistribution: Boo
   }
 }`
 
-const mapStateToProps = (state) => {
-  return {
-    state: state
-  }
-}
+// const mapStateToProps = (state) => {
+//   return {
+//     state: state
+//   }
+// }
 
-const mapDispatchToProps = (dispatch) => {
-  const sendNotif = (id, message, kind, dismissAfter) => {
-    notifActions.notifSend({
-      message,
-      kind,
-      id: id,
-      dismissAfter: 2000
-    })(dispatch)
-  }
-  return {
-    sendNotif
-  }
-}
+// const mapDispatchToProps = (dispatch) => {
+//   const sendNotif = (id, message, kind, dismissAfter) => {
+//     notifActions.notifSend({
+//       message,
+//       kind,
+//       id: id,
+//       dismissAfter: 2000
+//     })(dispatch)
+//   }
+//   return {
+//     sendNotif
+//   }
+// }
 
 const wrapperComponent = compose(
   graphql(createEvent, { name: 'createEventMutation' }),
@@ -341,8 +341,8 @@ const wrapperComponent = compose(
           }
         })
         // })
-        .then((data) => props.sendNotif(Math.random(), '✌️✌️✌️ Work logged correctly', 'success', '5000'))
-        .catch((e) => props.sendNotif(Math.random(), e.message, 'danger', '5000'))
+        .then((data) => console.log(data))
+        .catch((e) => console.log(e))
       )
     },
     update: props => (event) => {
@@ -439,11 +439,11 @@ const wrapperComponent = compose(
           }
         })
         //  })
-        .then((data) => props.sendNotif(Math.random(), '✌️✌️✌️ Event updated correctly', 'success', '5000'))
-        .catch((e) => props.sendNotif(Math.random(), e.message, 'danger', '5000'))
+        .then((data) => console.log(data))
+        .catch((e) => console.log(e))
       )
     }
   })
 )(Component)
 
-export default connect(mapStateToProps, mapDispatchToProps)(wrapperComponent)
+export default wrapperComponent

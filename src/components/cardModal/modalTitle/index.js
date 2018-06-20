@@ -2,11 +2,11 @@ import { compose, withState, withHandlers } from 'recompose'
 import {graphql} from 'react-apollo'
 import UpdateCommitmentTitle from '../../../mutations/updateCommitmentTitle'
 import ModalTitle from './modalTitle'
-import {connect} from 'react-redux'
+// import {connect} from 'react-redux'
 
-const mapStateToProps = state => ({
-  state
-})
+// const mapStateToProps = state => ({
+//   state
+// })
 
 export default compose(
   graphql(UpdateCommitmentTitle, {
@@ -16,7 +16,6 @@ export default compose(
       note: note
     })
   }),
-  connect(mapStateToProps),
   withState('isVisible', 'toggleVis', false),
   withHandlers({
     toggleVisibility: ({ toggleVis, isVisible }) => (event) => toggleVis(!isVisible),

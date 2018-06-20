@@ -4,7 +4,7 @@ import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 import {compose, withHandlers, withState} from 'recompose'
 import {connect} from 'react-redux'
-import { actions as notifActions } from 'redux-notifications'
+// import { actions as notifActions } from 'redux-notifications'
 
 const allNotificationTypes = gql`
 query ($token: String) {
@@ -133,25 +133,25 @@ class SettingsWrapper extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    state: state
-  }
-}
+// const mapStateToProps = (state) => {
+//   return {
+//     state: state
+//   }
+// }
 
-const mapDispatchToProps = (dispatch) => {
-  const sendNotif = (id, message, kind, dismissAfter) => {
-    notifActions.notifSend({
-      message,
-      kind,
-      id: id,
-      dismissAfter: 2000
-    })(dispatch)
-  }
-  return {
-    sendNotif
-  }
-}
+// const mapDispatchToProps = (dispatch) => {
+//   const sendNotif = (id, message, kind, dismissAfter) => {
+//     notifActions.notifSend({
+//       message,
+//       kind,
+//       id: id,
+//       dismissAfter: 2000
+//     })(dispatch)
+//   }
+//   return {
+//     sendNotif
+//   }
+// }
 
 const agentNotificationSettings = gql` 
   query ($token: String) {
@@ -288,8 +288,8 @@ const WrapperConnected = compose(
                 token: localStorage.getItem('oce_token')
               }
             })
-            .then((data) => props.sendNotif(Math.random(), '✌️✌️✌️ Settings updated correctly', 'success', '5000'))
-            .catch((e) => props.sendNotif(Math.random(), e.message, 'danger', '5000'))
+            .then((data) => console.log(data))
+            .catch((e) => console.log(e))
           }
         },
         saveSettings: (props) => () => {
@@ -304,11 +304,11 @@ const WrapperConnected = compose(
                   token: localStorage.getItem('oce_token')
                 }
               })
-              .then((data) => props.sendNotif(Math.random(), '✌️✌️✌️ Settings updated correctly', 'success', '5000'))
-              .catch((e) => {props.sendNotif(Math.random(), e.message, 'danger', '5000')})
+              .then((data) => console.log(data))
+              .catch((e) => console.log(e))
           )
         }
     })
 )(SettingsWrapper)
 
-export default connect(mapStateToProps, mapDispatchToProps)(WrapperConnected)
+export default WrapperConnected

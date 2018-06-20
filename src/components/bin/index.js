@@ -3,13 +3,14 @@ import {compose, withState, withHandlers} from 'recompose'
 import {graphql} from 'react-apollo'
 import Plan from '../../queries/getPlan'
 import UpdateProcess from '../../mutations/updateProcess'
-import {Bin, Card, Button, Input} from 'oce-components/build'
+import {Bin, Card, Icons, Button, Input} from 'oce-components/build'
 import style from './style.css'
 import EditTitle from './editTitle'
 import EditStart from './editStart'
 import EditNote from './editNote'
 import Archive from './archive'
 import moment from 'moment'
+import updateNotification from "../../mutations/updateNotification";
 
 const BinWrapper = ({name, note, openCardController, planId, plannedStart, id, updateProcess, actionPopup, actionPopupId, toggleActions, cards, outputs, status, openModal}) => (
   <Bin
@@ -45,6 +46,7 @@ const BinWrapper = ({name, note, openCardController, planId, plannedStart, id, u
 
 const enhancedList = compose(
     graphql(UpdateProcess, { name: 'updateProcessMutation' }),
+    graphql(updateNotification, {name: 'updateNotification'}),
     withState('processStatus', 'toggleProcessStatus', props => props.status),
     withHandlers({
       updateProcess: props => event => {
@@ -56,7 +58,6 @@ const enhancedList = compose(
               isFinished: !props.status
             },
             update: (store, {data}) => {
-              console.log(props.planId)
               let planProcessesCache = store.readQuery({query: Plan, 
                 variables: {
                   token: localStorage.getItem('oce_token'),
@@ -73,8 +74,17 @@ const enhancedList = compose(
                 data: planProcessesCache })
             }
           })
-          .then((data) => console.log(data))
-          .catch((e) => console.log(e))
+          .then((data) => props.updateNotification({variables: {
+            message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Bell width='18' height='18' color='white' /></span>Process updated successfully!</div>,
+            type: 'success'
+          }}))
+          .catch((e) => {
+            const errors = e.graphQLErrors.map(error => error.message);
+          props.setSubmitting(false);
+          props.updateNotification({variables: {
+            message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Cross width='18' height='18' color='white' /></span>{errors}</div>,
+            type: 'alert'
+          }})})
         )
       }
     })

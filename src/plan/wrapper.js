@@ -4,10 +4,13 @@ import moment from "moment";
 import {withFormik} from 'formik'
 import * as Yup from 'yup'
 import createPlan from '../mutations/CreatePlan'
-
+import updateNotification from "../mutations/updateNotification";
+import {Icons} from 'oce-components/build'
+import React from 'react'
 
 export default compose(
   graphql(createPlan, { name: "createPlanMutation" }),
+  graphql(updateNotification, {name: 'updateNotification'}),
   withFormik({
     mapPropsToValues: (props) => ({ name: '', note: '', start: moment(), due: moment() }),
     validationSchema: Yup.object().shape({
@@ -28,13 +31,20 @@ export default compose(
           }
         })
         .then(data => {
+          props.updateNotification({variables: {
+            message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Bell width='18' height='18' color='white' /></span>Plan {data.data.createPlan.plan.name} created successfully!</div>,
+            type: 'success'
+          }})
           return props.history.push(`canvas/${data.data.createPlan.plan.id}`);
         }, (e) => {
-          console.log(e)
           const errors = e.graphQLErrors.map(error => error.message)
+          props.updateNotification({variables: {
+            message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Cross width='18' height='18' color='white' /></span>{errors}</div>,
+            type: 'alert'
+          }})
           props.setSubmitting(false)
-          props.setErrors({ username: ' ', password: ' ', form: errors[0] })
        })
     }
   })
 )(Component);
+

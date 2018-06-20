@@ -6,6 +6,7 @@ import { withFormik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import Alert from '../components/alert'
 import LoginMutation from '../mutations/login'
+import updateNotification from "../mutations/updateNotification";
 
 const Login = ({values, handleSubmit, touched, errors}) => {
       return (
@@ -42,6 +43,7 @@ const Login = ({values, handleSubmit, touched, errors}) => {
 
 export default compose(
     graphql(LoginMutation),
+    graphql(updateNotification, {name: 'updateNotification'}),
     withFormik({
         mapPropsToValues: () => ({ username: '', password: '' }),
         validationSchema: Yup.object().shape({
@@ -51,14 +53,23 @@ export default compose(
         handleSubmit: (values, {props, resetForm, setErrors, setSubmitting}) => {
             props.mutate({variables: {username: values.username, password: values.password}})
             .then ((res) => {
+              props.updateNotification({variables: {
+                  message: <div className={style.message}><span><Icons.Bell width='18' height='18' color='white' /></span>Welcome :)</div>,
+                  type: 'success'
+              }
+              })
               localStorage.setItem('oce_token', res.data.createToken.token)
               localStorage.setItem('agent_id', res.data.createToken.id)
               props.history.replace('/')
             }, 
             (e) => {
                 const errors = e.graphQLErrors.map(error => error.message)
+                props.updateNotification({variables: {
+                    message: <div className={style.message}><span><Icons.Cross width='18' height='18' color='white' /></span>{errors}</div>,
+                    type: 'alert'
+                }
+                })
                 setSubmitting(false)
-                setErrors({ username: ' ', password: ' ', form: errors[0] })
              }
           )
         }

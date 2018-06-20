@@ -2,28 +2,28 @@ import {compose, withHandlers, withState} from 'recompose'
 import Component from './modalActivities'
 import {graphql} from 'react-apollo'
 import gql from 'graphql-tag'
-import {connect} from 'react-redux'
-import { actions as notifActions } from 'redux-notifications'
+// import {connect} from 'react-redux'
+// import { actions as notifActions } from 'redux-notifications'
 
-const mapStateToProps = (state) => {
-  return {
-    state: state
-  }
-}
+// const mapStateToProps = (state) => {
+//   return {
+//     state: state
+//   }
+// }
 
-const mapDispatchToProps = (dispatch) => {
-  const sendNotif = (id, message, kind, dismissAfter) => {
-    notifActions.notifSend({
-      message,
-      kind,
-      id: id,
-      dismissAfter: 2000
-    })(dispatch)
-  }
-  return {
-    sendNotif
-  }
-}
+// const mapDispatchToProps = (dispatch) => {
+//   const sendNotif = (id, message, kind, dismissAfter) => {
+//     notifActions.notifSend({
+//       message,
+//       kind,
+//       id: id,
+//       dismissAfter: 2000
+//     })(dispatch)
+//   }
+//   return {
+//     sendNotif
+//   }
+// }
 
 const deleteEvent = gql`
 mutation ($token: String!, $id: Int!) {
@@ -95,7 +95,7 @@ export default compose(
         activities: viewer ? viewer.commitment.fulfilledBy : null
       })
     }),
-    connect(mapStateToProps, mapDispatchToProps),
+    // connect(mapStateToProps, mapDispatchToProps),
     withState('deleteEventModal', 'toggleDeleteEvent', false),
     withState('idEventToDelete', 'setIdToDelete', ''),
     withState('editEventModal', 'toggleEditEvent', false),
@@ -109,7 +109,7 @@ export default compose(
         props.setIdToUpdate(id)
         props.toggleEditEvent(!status)
       },
-      deleteEvent: ({sendNotif, toggleDeleteEvent, deleteEventModal, mutate}) => (id) => {
+      deleteEvent: ({toggleDeleteEvent, deleteEventModal, mutate}) => (id) => {
         return (
           mutate({
             variables: {
@@ -118,10 +118,10 @@ export default compose(
             }
           })
           .then((data) => {
-            sendNotif(Math.random(), '✌️✌️✌️ Event deleted correctly', 'success', '5000')
+            // sendNotif(Math.random(), '✌️✌️✌️ Event deleted correctly', 'success', '5000')
             toggleDeleteEvent(!deleteEventModal)
           })
-          .catch(e => sendNotif(Math.random(), e.message, 'danger', '5000'))
+          .catch(e => console.log(e))
         )
       }
     })

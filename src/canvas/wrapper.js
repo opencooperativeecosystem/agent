@@ -44,7 +44,6 @@ const CanvasWrapper = ({
     }}
   >
     {({ loading, error, data }) => {
-      console.log(error)
       if (loading) return null;
       if (error) return <ErrorPlan />;
       return (

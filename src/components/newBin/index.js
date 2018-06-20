@@ -1,5 +1,5 @@
 import React from "react";
-import { NewBin, Input, Textarea, Select } from "oce-components/build";
+import { NewBin, Input, Icons, Textarea, Select } from "oce-components/build";
 import CreateProcess from "../../mutations/createProcess";
 import { compose, withState, withHandlers } from "recompose";
 import moment from "moment";
@@ -10,6 +10,7 @@ import * as Yup from 'yup'
 import DatePicker from "react-datepicker";
 import Alert from '../alert'
 import style from './style.css'
+import updateNotification from "../../mutations/updateNotification";
 require("react-datepicker/dist/react-datepicker-cssmodules.css");
 
 const Bin = ({
@@ -93,6 +94,7 @@ const StartDate = (props) => {
 export default compose(
   withState("clicked", "handleClicked", false),
   graphql(CreateProcess, { name: "createProcessMutation" }),
+  graphql(updateNotification, {name: 'updateNotification'}),
   withHandlers({
     toggleClicked: props => () => {
       props.handleClicked(!props.clicked);
@@ -135,11 +137,17 @@ export default compose(
             }
           })
           .then(data => {
-            console.log(data)
+            props.updateNotification({variables: {
+              message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Bell width='18' height='18' color='white' /></span>Process {data.data.createProcess.process.name} created successfully!</div>,
+              type: 'success'
+            }})
           }, (e) => {
             const errors = e.graphQLErrors.map(error => error.message)
             props.setSubmitting(false)
-            props.setErrors({ username: ' ', password: ' ', form: errors[0] })
+            props.updateNotification({variables: {
+              message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Cross width='18' height='18' color='white' /></span>{errors}</div>,
+              type: 'alert'
+            }})
          })
       }
   })

@@ -1,8 +1,57 @@
+import gql from 'graphql-tag';
+
 export const defaults = {
-    notification: {
-      __typename: 'Notification',
-      id: '0',
-      message: 'Sample message',
-      type: 'warning'
-    },
+    notifications: [],
   };
+
+
+let nextNotifId = 0;
+
+export const resolvers = {
+  Mutation: {
+    addNotification: (_, {message, type}, {cache}) => {
+      const query = gql`
+      query GetNotifications {
+        notifications @client {
+          __typename
+          id
+          message
+          type
+        }
+      }
+    `
+      const previousState = cache.readQuery({query})
+      const newNotif = {
+        id: nextNotifId++,
+        message,
+        type,
+        __typename: 'Notification'
+      }
+      const data = {
+        notifications: previousState.notifications.concat([newNotif])
+      }
+      cache.writeQuery({query, data: data})
+      return newNotif
+    },
+    deleteNotification: (_, {id}, {cache}) => {
+      const query = gql`
+      query GetNotifications {
+        notifications @client {
+          __typename
+          id
+          message
+          type
+        }
+      }
+    `
+      const previousState = cache.readQuery({query})
+      console.log(previousState.notifications)
+      const data = {
+        notifications: previousState.notifications.filter(item => item.id !== id)
+      }
+      console.log('now')
+      console.log(data)
+      cache.writeQuery({query, data})
+    }
+  }
+}

@@ -26,45 +26,14 @@ const cache = new InMemoryCache({
 const stateLink = withClientState({
   cache,
   defaults: defaults,
-  resolvers: {
-    Mutation: {
-      updateNotification: (_, {id, message, type}, {cache}) => {
-        const query = gql`
-        query GetNotification {
-          notification @client {
-            __typename
-            id
-            message
-            type
-          }
-        }
-      `
-        const previousState = cache.readQuery({query})
-        console.log(previousState)
-        previousState.notification.id = id
-        previousState.notification.message = message
-        previousState.notification.type = type
-        const data = {
-          ...previousState,
-          notification: {
-            id: id,
-            type: type,
-            message: message,
-            __typename: 'Notification'
-          }
-        }
-        cache.writeQuery({query, data})
-        console.log(cache)
-      }
-    }
-  }
+  resolvers: resolvers
 })
 
 const link = ApolloLink.from([
   stateLink,
   new HttpLink({
-  uri: 'https://ocp.freedomcoop.eu/api/graph'
-  // uri: 'https://testocp.freedomcoop.eu/api/graph'
+  // uri: 'https://ocp.freedomcoop.eu/api/graph'
+  uri: 'https://testocp.freedomcoop.eu/api/graph'
   })
 ])
 

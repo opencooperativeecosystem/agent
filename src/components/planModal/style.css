@@ -33,3 +33,12 @@
     border-radius: 4px;
     padding: 10px;
 }
+
+.message {
+    font-size: 14px;    
+  }
+  
+  .message span {
+  margin-right: 10px;
+  vertical-align: sub;
+  }

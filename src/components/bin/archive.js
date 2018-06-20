@@ -1,6 +1,6 @@
 import React from 'react'
 import style from './style.css'
-import { Textarea, Button } from 'oce-components/build'
+import { Textarea, Icons, Button } from 'oce-components/build'
 import { Form, Field, withFormik } from 'formik'
 import * as Yup from 'yup'
 import Alert from '../alert'
@@ -8,6 +8,7 @@ import Plan from "../../queries/getPlan";
 import deleteProcess from "../../mutations/deleteProcess";
 import { graphql, compose } from "react-apollo";
 import { withHandlers } from 'recompose';
+import updateNotification from "../../mutations/updateNotification";
 
 
 const ArchiveProcess = (props) => (
@@ -19,6 +20,8 @@ const ArchiveProcess = (props) => (
 
 export default compose(
     graphql(deleteProcess, { name: "deleteProcessMutation" }),
+    graphql(updateNotification, {name: 'updateNotification'}),
+
     withHandlers({
         deleteProcess: props => event => {
             event.preventDefault()
@@ -52,10 +55,17 @@ export default compose(
             })
                 .then(
                     data => {
-                        console.log(data);
+                        props.updateNotification({variables: {
+                        message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Bell width='18' height='18' color='white' /></span>Process archived successfully!</div>,
+                        type: 'success'
+                        }})
                     },
                     e => {
                         const errors = e.graphQLErrors.map(error => error.message);
+                        props.updateNotification({variables: {
+                        message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Cross width='18' height='18' color='white' /></span>{errors}</div>,
+                        type: 'alert'
+                        }})
                     }
                 );
         }

@@ -2,7 +2,7 @@ import gql from 'graphql-tag'
 
 export default gql`
   query {
-    notification @client {
+    notifications @client {
         id
         message
         type

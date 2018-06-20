@@ -14,6 +14,7 @@ import { PropsRoute } from "../../helpers/router";
 import Wallet from '../../wallet'
 import Validate from '../../validation_plan/wrapper'
 import updateNotification from "../../mutations/updateNotification";
+import deleteNotification from "../../mutations/deleteNotification";
 
 const AppTemplate = props => {
   return props.loading ? (
@@ -40,13 +41,17 @@ const AppTemplate = props => {
                       : style.container
                   }
                 >
-                  <button onClick={() => props.updateNotification({
+                  {/* <button onClick={() => props.updateNotification({
                     variables: {
-                      id: '1u892u89ue8',
                       message: 'ciaoooo',
                       type: 'danger'
                     }
                   })}>cliccami!</button>
+                  <button onClick={() => props.deleteNotification({
+                    variables: {
+                      id: 2
+                    }
+                  })}>cliccami!</button> */}
                   <PropsRoute
                     exact
                     path={props.match.path}
@@ -117,6 +122,7 @@ const App = withRouter(AppTemplate);
 
 export default compose(
   graphql(updateNotification, {name: 'updateNotification'}),
+  graphql(deleteNotification, {name: 'deleteNotification'}),
   graphql(agentPlans, {
     options: props => ({
       variables: {
