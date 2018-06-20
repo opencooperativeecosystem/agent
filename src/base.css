@@ -314,3 +314,12 @@ body {
     lost-column: 1/1;
   }
 }
+
+
+.genericAlert {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  z-index: 99999999999999999999999999999999;
+}
