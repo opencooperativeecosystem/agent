@@ -45,12 +45,9 @@ export const resolvers = {
       }
     `
       const previousState = cache.readQuery({query})
-      console.log(previousState.notifications)
       const data = {
         notifications: previousState.notifications.filter(item => item.id !== id)
       }
-      console.log('now')
-      console.log(data)
       cache.writeQuery({query, data})
     }
   }
