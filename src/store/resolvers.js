@@ -31,7 +31,6 @@ export const resolvers = {
         notifications: previousState.notifications.concat([newNotif])
       }
       cache.writeQuery({query, data: data})
-      return newNotif
     },
     deleteNotification: (_, {id}, {cache}) => {
       const query = gql`

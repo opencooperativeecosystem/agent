@@ -47,7 +47,6 @@ ReactDOM.render(
         <div>
           <Query query={getNotification}>
             {({ data: {notifications} }) => {
-              console.log(notifications)
               return (
                 <EhnanchedNotifications notifications={notifications}/>
             )}}

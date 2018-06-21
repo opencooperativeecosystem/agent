@@ -3,6 +3,9 @@ import Component from './logEvent'
 import {graphql} from 'react-apollo'
 import gql from 'graphql-tag'
 import moment from 'moment'
+import React from 'react'
+import {Icons} from 'oce-components/build'
+import updateNotification from "../../../mutations/updateNotification"
 // import {connect} from 'react-redux'
 // import { actions as notifActions } from 'redux-notifications'
 
@@ -231,6 +234,7 @@ mutation ($token: String!, $id: Int!, $start: String!, $requestDistribution: Boo
 const wrapperComponent = compose(
   graphql(createEvent, { name: 'createEventMutation' }),
   graphql(updateEvent, { name: 'updateEventMutation' }),
+  graphql(updateNotification, {name: 'updateNotification'}),
   withState('action', 'updateAction', 'work'),
   withState('note', 'updateNote', ''),
   withState('numericValue', 'updateNumericValue', '0'),
@@ -341,8 +345,17 @@ const wrapperComponent = compose(
           }
         })
         // })
-        .then((data) => console.log(data))
-        .catch((e) => console.log(e))
+        .then((data) => props.updateNotification({variables: {
+          message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Bell width='18' height='18' color='white' /></span>Event logged successfully!</div>,
+          type: 'success'
+        }}))
+        .catch((e) => {
+          const errors = e.graphQLErrors.map(error => error.message)
+            props.updateNotification({variables: {
+              message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Cross width='18' height='18' color='white' /></span>{errors}</div>,
+              type: 'alert'
+            }})
+        })
       )
     },
     update: props => (event) => {
@@ -439,8 +452,17 @@ const wrapperComponent = compose(
           }
         })
         //  })
-        .then((data) => console.log(data))
-        .catch((e) => console.log(e))
+        .then((data) => props.updateNotification({variables: {
+          message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Bell width='18' height='18' color='white' /></span>Event logged successfully!</div>,
+          type: 'success'
+        }}))
+        .catch((e) => {
+          const errors = e.graphQLErrors.map(error => error.message)
+            props.updateNotification({variables: {
+              message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Cross width='18' height='18' color='white' /></span>{errors}</div>,
+              type: 'alert'
+            }})
+        })
       )
     }
   })
