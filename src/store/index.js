@@ -27,8 +27,8 @@ const stateLink = withClientState({
 const link = ApolloLink.from([
   stateLink,
   new HttpLink({
-  // uri: 'https://ocp.freedomcoop.eu/api/graph'
-  uri: 'https://testocp.freedomcoop.eu/api/graph'
+  uri: 'https://ocp.freedomcoop.eu/api/graph'
+  // uri: 'https://testocp.freedomcoop.eu/api/graph'
   })
 ])
 
