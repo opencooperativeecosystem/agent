@@ -9,9 +9,10 @@ import {graphql} from 'react-apollo'
 import GetCommitment from '../../queries/getCommitment'
 import UpdateCommitmentStatus from '../../mutations/updateCommitmentStatus'
 import moment from 'moment'
+import Actions from './actions'
 import {Button, Icons} from 'oce-components/build'
 
-const CardModal = ({param, id, toggleActions, actionPopup, updateCommitment, allPlanAgents, units, updateProcess, loading, data, error, close, modalDescription}) => {
+const CardModal = ({param, id, processId, toggleActions, actionPopup, updateCommitment, allPlanAgents, units, updateProcess, loading, data, error, close, modalDescription}) => {
   return (
     loading ? <h1>loading...</h1> : (
     error ? <p style={{ color: '#ddd' }}>API error</p> : (
@@ -52,26 +53,7 @@ const CardModal = ({param, id, toggleActions, actionPopup, updateCommitment, all
         <h5 className={style.modalDescription_title}>Contributions</h5>
         <ModalActivities param={param} units={units} scopeId={data.scope.id} commitmentId={data.id} id={id} />
       </div>
-      <div className={style.content_buttons}>
-        <h2>Actions</h2>
-        <div className={style.buttons_list}>
-          <div className={style.list_single}>
-            <Button gray><span className={style.button_icon}><Icons.Activity width='14' height='14' color='#4c4c4c' /></span> Edit commitment</Button>
-          </div>
-          <div className={style.list_single}>
-            <Button gray><span className={style.button_icon}><Icons.Text width='14' height='14' color='#4c4c4c' /></span> Edit note</Button>
-          </div>
-          <div className={style.list_single}>
-            <Button gray><span className={style.button_icon}><Icons.Activity width='14' height='14' color='#4c4c4c' /></span> Edit due date</Button>
-          </div>
-          <div className={style.list_single}>
-            <Button gray>Set {data.isFinished ? 'Incompleted' : 'Completed'}</Button>
-          </div>
-          <div className={style.list_single}>
-            <Button primary><span className={style.button_icon}><Icons.Cross width='14' height='14' color='#fff' /></span> Delete</Button>
-          </div>
-        </div>
-      </div>
+      <Actions processId={processId} id={id} planId={param} data={data} />
     </section>
     ))
   )

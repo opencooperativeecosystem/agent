@@ -13,9 +13,12 @@ const CommitmentModal = ({
   units,
   modalDescription,
   allPlanAgents,
+  processId,
   closeModal,
   id
-}) => (
+}) => {
+  console.log(processId)
+  return (
   <Modal
     isOpen={modalIsOpen}
     toggleModal={closeModal}
@@ -27,11 +30,12 @@ const CommitmentModal = ({
       id={id}
       allPlanAgents={allPlanAgents}
       units={units}
+      processId={processId}
       data={commitment}
       close={closeModal}
       modalDescription={modalDescription}
     />
   </Modal>
-);
+)};
 
 export default CommitmentModal;

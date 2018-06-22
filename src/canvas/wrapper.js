@@ -46,6 +46,8 @@ const CanvasWrapper = ({
     {({ loading, error, data }) => {
       if (loading) return null;
       if (error) return <ErrorPlan />;
+      console.log('here')
+      console.log(processId)
       return (
         <div style={{ display: "initial" }}>
           <Panel
@@ -82,6 +84,7 @@ const CanvasWrapper = ({
             closeModal={closeModal}
             id={modalSelected}
             param={match.params.id}
+            processId={processId}
           />
           <PlanModal
             isOpen={planModalIsOpen}

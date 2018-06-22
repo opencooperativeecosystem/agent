@@ -158,8 +158,16 @@
   .header_icons {
     vertical-align: sub;
     margin-right: 10px;
-    
   }
+
+  .content_tooltip {
+    position: absolute;
+    z-index: 999999;
+  }
+
+.commitment {
+  top: 80px;
+}
 
   .content_header .header_sub {
     color: #444444;
@@ -522,13 +530,43 @@
   .content_buttons {
     float: right;
     width: 180px;
+    position: relative;
   }
 
+  .one {
+    top: 80px;
+  }
+  .two {
+    top: 125px;
+  }
+  .three {
+    top: 170px;
+  }
+  .four {
+    top: 260px;
+  }
+
+
+  .editWrapper h4 {
+    font-size: 14px;
+    margin: 0;
+    margin-bottom: 10px;
+
+  }
   .content_buttons h2 {
     font-size: 14px;
     font-weight: 400;
     margin-top: 8px;
     color: #828c91;
+  }
+
+  .editWrapper {
+    padding: 10px;
+  }
+
+  .editWrapperNote {
+    height: 100px;
+    margin-bottom: 10px;
   }
 
   .button_icon {
