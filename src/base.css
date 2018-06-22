@@ -12,10 +12,6 @@ body {
     background-color: #191B22 !important;
   }
 
-  html::selection {
-    color: white;
-    background: blue;
-  }
 
 /* LOGIN */
 

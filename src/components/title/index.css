@@ -6,6 +6,7 @@
     /* margin-left: 10px; */
     display: inline-block;
     width: 400px;
+    vertical-align: middle;
 }
 
 .header_title .content_icon {
