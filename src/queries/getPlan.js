@@ -39,13 +39,20 @@ query ($token: String, $planId: Int) {
             fulfilledBy {
               fulfilledQuantity {
                 numericValue
+                unit {
+                  name
+                }
               }
-              fulfills {
+              fulfilledBy {
                 action
-                fulfilledBy{
-                  fulfilledBy {
-                    requestDistribution
-                  }
+                requestDistribution
+                start
+                id
+                note
+                provider {
+                  name
+                  image
+                  id
                 }
               }
             }

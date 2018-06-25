@@ -13,7 +13,9 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
 })
 
 const cache = new InMemoryCache({
-  dataIdFromObject: object => object.key || null,
+  dataIdFromObject: object => {
+    const dataId = object.id ? `${object.__typename}-${object.id}` : null
+    return dataId},
   addTypename: true,
   fragmentMatcher
 })

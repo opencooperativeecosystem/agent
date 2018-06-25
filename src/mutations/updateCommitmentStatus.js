@@ -10,6 +10,9 @@ mutation ($token: String!, $id: Int!, $isFinished: Boolean ) {
       commitment {
         id
         isFinished
+        inputOf {
+          id
+        }
       }
     }
   }`

@@ -17,6 +17,7 @@ query ($token: String, $id: Int!) {
         }
         inputOf {
           name
+          id
         }
         due
         isFinished

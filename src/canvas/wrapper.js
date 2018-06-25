@@ -46,8 +46,6 @@ const CanvasWrapper = ({
     {({ loading, error, data }) => {
       if (loading) return null;
       if (error) return <ErrorPlan />;
-      console.log('here')
-      console.log(processId)
       return (
         <div style={{ display: "initial" }}>
           <Panel
@@ -77,7 +75,7 @@ const CanvasWrapper = ({
               openModal={openModal}
               closeModal={closeModal}
             />
-          </Panel>
+         </Panel>
           <CardModal
             allPlanAgents={data.viewer.plan.allPlanAgents}
             modalIsOpen={modalIsOpen}

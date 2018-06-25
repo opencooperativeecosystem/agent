@@ -2,25 +2,137 @@ import React from "react";
 import style from "../index.css";
 import { Button, Textarea, Icons, Tooltip } from "oce-components/build";
 import { compose, withState, withHandlers } from "recompose";
-import UpdateCommitmentStatus from "../../../mutations/updateCommitmentStatus";
-import GetPlan from '../../../queries/getPlan'
-import {graphql} from 'react-apollo'
+import UpdateCommitment from "../../../mutations/updateCommitment";
+import GetPlan from "../../../queries/getPlan";
+import { graphql } from "react-apollo";
+import gql from "graphql-tag";
+import updateNotification from "../../../mutations/updateNotification";
+import { Form, Field, withFormik } from "formik";
+import * as Yup from "yup";
+import Alert from '../../alert'
+import { Mutation } from "react-apollo";
+import DeleteCommitment from '../../../mutations/deleteCommitment'
 
-const EditNote = () => (
+const EditNote = compose(
+  graphql(UpdateCommitment, { name: "updateCommitmentMutation" }),
+  graphql(updateNotification, { name: "updateNotification" }),
+  withFormik({
+    mapPropsToValues: props => ({ note: "" }),
+    validationSchema: Yup.object().shape({
+      note: Yup.string().required()
+    }),
+    handleSubmit: (values, { props, resetForm, setErrors, setSubmitting }) => {
+      props
+          .updateCommitmentMutation({
+            variables: {
+              token: localStorage.getItem("oce_token"),
+              id: props.id,
+              note: values.note
+            },
+            update: (store, { data }) => {
+              const commitment = store.readFragment({
+                id: `${data.updateCommitment.commitment.__typename}-${
+                  data.updateCommitment.commitment.id
+                }`,
+                fragment: gql`
+                  fragment myCommitment on Commitment {
+                    id
+                    note
+                  }
+                `
+              });
+            }
+          })
+          .then(
+            data => {
+              props.updateNotification({variables: {
+                message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Bell width='18' height='18' color='white' /></span>Note updated successfully!</div>,
+                type: 'success'
+              }})
+            },
+            e => {
+              const errors = e.graphQLErrors.map(error => error.message);
+            props.updateNotification({variables: {
+              message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Cross width='18' height='18' color='white' /></span>{errors}</div>,
+              type: 'alert'
+            }})
+            }
+          );
+    }
+  })
+)(props => (
   <div className={style.editWrapper}>
-    <div className={style.editWrapperNote}>
-      <Textarea placeholder="Type the note..." />
+      <Form>
+        <span className={style.form_note}>
+          <Field name="note" render={({ field /* _form */ }) => (
+          <div className={style.editWrapperNote}>
+            <Textarea {...field} placeholder='Type the process note...' />
+          </div>
+          )} />
+          {props.errors.note && props.touched.note && <Alert>{props.errors.note}</Alert>}
+        </span>
+        <Button>Update note</Button>
+      </Form>
+  </div>
+));
+
+const DeleteNote = compose(
+  graphql(updateNotification, { name: "updateNotification" }),
+)((props) => (
+  <Mutation 
+    mutation={DeleteCommitment}
+    update={(cache, {data}) => {
+      let planCache = cache.readQuery({
+          query: GetPlan,
+          variables: {
+              token: localStorage.getItem("oce_token"),
+              planId: Number(props.planId)
+          }
+      });
+
+      const processToDeleteIndex = planCache.viewer.plan.planProcesses.findIndex(
+          proc => proc.id === props.processId
+      );
+      const commitmentToDeleteIndex = planCache.viewer.plan.planProcesses[processToDeleteIndex].committedInputs.findIndex(
+        proc => proc.id === props.id
+      );
+      planCache.viewer.plan.planProcesses[processToDeleteIndex].committedInputs.splice(commitmentToDeleteIndex, 1)
+      cache.writeQuery({
+          query: GetPlan,
+          variables: {
+              token: localStorage.getItem("oce_token"),
+              planId: Number(props.planId)
+          },
+          data: planCache
+      });
+    }}
+  >
+  {deleteCommitment => (
+    <div className={style.editWrapper}>
+      <h4>Are you sure to delete the commitment?</h4>
+      <Button onClick={() => {
+        deleteCommitment({variables: {token: localStorage.getItem("oce_token"), id: props.id}})
+        .then(
+          data => {
+              props.closeModal()
+              props.updateNotification({variables: {
+              message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Bell width='18' height='18' color='white' /></span>Commitment archived successfully!</div>,
+              type: 'success'
+              }})
+          },
+          e => {
+              const errors = e.graphQLErrors.map(error => error.message);
+              props.updateNotification({variables: {
+              message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Cross width='18' height='18' color='white' /></span>{errors}</div>,
+              type: 'alert'
+              }})
+          }
+      );
+      }} primary>Delete commitment</Button>
     </div>
-    <Button>Update note</Button>
-  </div>
-);
-
-const DeleteNote = () => (
-  <div className={style.editWrapper}>
-    <h4>Are you sure to delete the commitment?</h4>
-    <Button primary>Delete commitment</Button>
-  </div>
-);
+  )}
+  </Mutation>
+));
 
 const Standard = () => <h1>null</h1>;
 const Actions = props => {
@@ -50,7 +162,7 @@ const Actions = props => {
             handleActionsPopup={() => props.onhandleShowTooltip(props.content)}
             title={content}
           >
-            <Children />
+            <Children closeModal={props.close} planId={props.planId} id={props.id} processId={props.processId}/>
           </Tooltip>
         </div>
       ) : null}
@@ -81,7 +193,10 @@ const Actions = props => {
           </Button>
         </div>
         <div className={style.list_single}>
-          <Button gray onClick={() => props.updateCommitment(!props.data.isFinished)}>
+          <Button
+            gray
+            onClick={() => props.updateCommitment(!props.data.isFinished)}
+          >
             Set {props.data.isFinished ? "Incompleted" : "Completed"}
           </Button>
         </div>
@@ -101,7 +216,8 @@ const Actions = props => {
 export default compose(
   withState("showTooltip", "handleTooltip", false),
   withState("content", "handleContent", ""),
-  graphql(UpdateCommitmentStatus, {
+  graphql(updateNotification, { name: "updateNotification" }),
+  graphql(UpdateCommitment, {
     props: ({ mutate, ownProps: { id } }) => ({
       updateCommitmentMutation: mutate
     })
@@ -114,7 +230,12 @@ export default compose(
       props.handleContent(content);
       props.handleTooltip(true);
     },
-    updateCommitment: ({ updateCommitmentMutation, id , planId, processId}) => status => {
+    updateCommitment: ({
+      updateCommitmentMutation,
+      updateNotification,
+      id,
+      planId
+    }) => status => {
       return updateCommitmentMutation({
         variables: {
           token: localStorage.getItem("oce_token"),
@@ -122,32 +243,50 @@ export default compose(
           isFinished: status
         },
         update: (store, { data }) => {
-          let planCache = store.readQuery({
-            query: GetPlan,
-            variables: {
-              token: localStorage.getItem("oce_token"),
-              planId: Number(planId)
-            }
+          const commitment = store.readFragment({
+            id: `${data.updateCommitment.commitment.__typename}-${
+              data.updateCommitment.commitment.id
+            }`,
+            fragment: gql`
+              fragment myCommitment on Commitment {
+                id
+                isFinished
+                note
+              }
+            `
           });
-          console.log(planCache);
-          console.log(data);
-          console.log(processId)
-        let processIndex = planCache.viewer.plan.planProcesses
-        .findIndex(process => process.id == processId)
-        console.log(processIndex)
-
-        //   store.writeQuery({
-        //     query: GetCommitment,
-        //     variables: {
-        //       token: localStorage.getItem("oce_token"),
-        //       id: Number(id)
-        //     },
-        //     data: commitmentCache
-        //   });
         }
       })
-        .then(data => console.log("cancellados"))
-        .catch(e => console.log(e));
+        .then(data =>
+          updateNotification({
+            variables: {
+              message: (
+                <div style={{ fontSize: "14px" }}>
+                  <span style={{ marginRight: "10px", verticalAlign: "sub" }}>
+                    <Icons.Bell width="18" height="18" color="white" />
+                  </span>Process updated successfully!
+                </div>
+              ),
+              type: "success"
+            }
+          })
+        )
+        .catch(e => {
+          const errors = e.graphQLErrors.map(error => error.message);
+          updateNotification({
+            variables: {
+              message: (
+                <div style={{ fontSize: "14px" }}>
+                  <span style={{ marginRight: "10px", verticalAlign: "sub" }}>
+                    <Icons.Cross width="18" height="18" color="white" />
+                  </span>
+                  {errors}
+                </div>
+              ),
+              type: "alert"
+            }
+          });
+        });
     }
   })
 )(Actions);

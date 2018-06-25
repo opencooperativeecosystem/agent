@@ -13,9 +13,10 @@ import Actions from './actions'
 import {Button, Icons} from 'oce-components/build'
 
 const CardModal = ({param, id, processId, toggleActions, actionPopup, updateCommitment, allPlanAgents, units, updateProcess, loading, data, error, close, modalDescription}) => {
+  console.log(error)
   return (
     loading ? <h1>loading...</h1> : (
-    error ? <p style={{ color: '#ddd' }}>API error</p> : (
+    error ? <p style={{ color: '#ddd' }}>{error}</p> : (
     <section className={style.modal_content}>
       { actionPopup
       ? <div className={style.content_actions}>
@@ -24,7 +25,7 @@ const CardModal = ({param, id, processId, toggleActions, actionPopup, updateComm
         </div>
       </div>
        : ''}
-      <ModalTitle toggleActions={toggleActions} close={close} id={data.id} note={data.note} />
+      <ModalTitle toggleActions={toggleActions} id={data.id} note={data.note} />
       <div className={style.content_info}>
         <div className={style.content_module}>
           <div className={style.module_header}>
@@ -53,7 +54,7 @@ const CardModal = ({param, id, processId, toggleActions, actionPopup, updateComm
         <h5 className={style.modalDescription_title}>Contributions</h5>
         <ModalActivities param={param} units={units} scopeId={data.scope.id} commitmentId={data.id} id={id} />
       </div>
-      <Actions processId={processId} id={id} planId={param} data={data} />
+      <Actions close={close} processId={data.inputOf.id} id={id} planId={param} data={data} />
     </section>
     ))
   )
@@ -70,46 +71,11 @@ export default compose(
       units: viewer ? viewer.allUnits : null
     })
   }),
-  graphql(UpdateCommitmentStatus, {
-    props: ({mutate, ownProps: {id}}) => ({
-      updateCommitmentMutation: mutate
-    })
-  }),
   withState('modalDescription', 'handleModalDescription', null),
   withState('actionPopup', 'toggleActionPopup', false),
   withHandlers({
     toggleActions: (props) => (event) => {
       props.toggleActionPopup(!props.actionPopup)
-    },
-    updateCommitment: ({updateCommitmentMutation, id}) => (status) => {
-      return (
-        updateCommitmentMutation({
-          variables: {
-            token: localStorage.getItem('oce_token'),
-            id: id,
-            isFinished: status
-          },
-          update: (store, {data}) => {
-            let commitmentCache = store.readQuery({query: GetCommitment,
-              variables: {
-                token: localStorage.getItem('oce_token'),
-                id: Number(id)
-              }})
-            console.log(commitmentCache)
-            console.log(data)
-
-            commitmentCache.viewer.commitment.isFinished = data.updateCommitment.commitment.isFinished
-            store.writeQuery({ query: GetCommitment,
-              variables: {
-                token: localStorage.getItem('oce_token'),
-                id: Number(id)
-              },
-              data: commitmentCache })
-          }
-        })
-        .then((data) => console.log('cancellados'))
-        .catch((e) => console.log(e))
-      )
     }
   })
 )(CardModal)

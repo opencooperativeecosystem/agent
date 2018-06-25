@@ -28,7 +28,8 @@ const BinWrapper = ({name, note, openCardController, planId, plannedStart, id, u
     id={id}
     cardController={false}
   >
-    {cards.map((card, i) => (
+    {cards.map((card, i) => {
+      return (
       <Card
         key={card.id}
         id={card.id}
@@ -40,7 +41,7 @@ const BinWrapper = ({name, note, openCardController, planId, plannedStart, id, u
         due={moment(card.due).format("DD MMM YYYY")}
         members={card.members}
       />
-    ))}
+    )})}
   </Bin>
 )
 

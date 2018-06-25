@@ -6,210 +6,216 @@ import moment from 'moment'
 import React from 'react'
 import {Icons} from 'oce-components/build'
 import updateNotification from "../../../mutations/updateNotification"
+import GetCommitment from '../../../queries/getCommitment'
+import queryEvents from '../../../queries/getEvents'
+import plan from '../../../queries/getPlan'
+import createEvent from "../../../mutations/createEvent"
+import updateEvent from "../../../mutations/updateEvent"
 // import {connect} from 'react-redux'
 // import { actions as notifActions } from 'redux-notifications'
 
-const plan = gql`
-query ($token: String, $planId: Int) {
-    viewer(token: $token) {
-      plan(id: $planId) {
-        id
-        name
-        scope {
-          id
-          name
-        }
-        planProcesses {
-          note
-          id
-          name
-          plannedStart
-          committedOutputs {
-            id
-            committedQuantity {
-              unit {
-                name
-              }
-              numericValue
-            }
-            resourceClassifiedAs {
-              name
-            }
-          }
-          committedInputs {
-            action
-            id
-            note
-            fulfilledBy {
-              fulfills {
-                action
-                fulfilledBy{
-                  fulfilledBy {
-                    requestDistribution
-                  }
-                }
-              }
-            }
-            inputOf {
-              name
-            }
-            due
-            isFinished
-            involvedAgents {
-              image
-              id
-              name
-            }
-            committedQuantity {
-              unit {
-                name
-              }
-              numericValue
-            }
-            resourceClassifiedAs {
-              category
-              name
-            }
-          }
-          workingAgents {
-            name
-            id
-            image
-          }
-          inputs {
-            action
-            id
-            fulfills {
-              fulfilledBy {
-                requestDistribution
-                provider {
-                  name
-                  image
-                }
-                action
-                start
-                note
-                affects {
-                  trackingIdentifier
-                }
-              }
-              fulfilledQuantity {
-                unit {
-                  name
-                }
-                numericValue
-              }
-            }
-          }
-        }
-      }
-    }
-  } 
-`
+// const plan = gql`
+// query ($token: String, $planId: Int) {
+//     viewer(token: $token) {
+//       plan(id: $planId) {
+//         id
+//         name
+//         scope {
+//           id
+//           name
+//         }
+//         planProcesses {
+//           note
+//           id
+//           name
+//           plannedStart
+//           committedOutputs {
+//             id
+//             committedQuantity {
+//               unit {
+//                 name
+//               }
+//               numericValue
+//             }
+//             resourceClassifiedAs {
+//               name
+//             }
+//           }
+//           committedInputs {
+//             action
+//             id
+//             note
+//             fulfilledBy {
+//               fulfills {
+//                 action
+//                 fulfilledBy{
+//                   fulfilledBy {
+//                     requestDistribution
+//                   }
+//                 }
+//               }
+//             }
+//             inputOf {
+//               name
+//               id
+//             }
+//             due
+//             isFinished
+//             involvedAgents {
+//               image
+//               id
+//               name
+//             }
+//             committedQuantity {
+//               unit {
+//                 name
+//               }
+//               numericValue
+//             }
+//             resourceClassifiedAs {
+//               category
+//               name
+//             }
+//           }
+//           workingAgents {
+//             name
+//             id
+//             image
+//           }
+//           inputs {
+//             action
+//             id
+//             fulfills {
+//               fulfilledBy {
+//                 requestDistribution
+//                 provider {
+//                   name
+//                   image
+//                 }
+//                 action
+//                 start
+//                 note
+//                 affects {
+//                   trackingIdentifier
+//                 }
+//               }
+//               fulfilledQuantity {
+//                 unit {
+//                   name
+//                 }
+//                 numericValue
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   } 
+// `
 
-export const queryEvents = gql`
-query ($token: String!, $id: Int!) {
-    viewer(token: $token) {
-        commitment(id: $id) {
-          id
-          fulfilledBy {
-            fulfilledBy {
-              action
-              start
-              id
-              requestDistribution
-              note
-              provider {
-                id
-                name
-                image
-              }
-            }
-            fulfilledQuantity {
-              numericValue
-              unit {
-                name
-              }
-            }
-          }
-        }
-    }
-}
-`
+// export const queryEvents = gql`
+// query ($token: String!, $id: Int!) {
+//     viewer(token: $token) {
+//         commitment(id: $id) {
+//           id
+//           fulfilledBy {
+//             fulfilledBy {
+//               action
+//               start
+//               id
+//               requestDistribution
+//               note
+//               provider {
+//                 id
+//                 name
+//                 image
+//               }
+//             }
+//             fulfilledQuantity {
+//               numericValue
+//               unit {
+//                 name
+//               }
+//             }
+//           }
+//         }
+//     }
+// }
+// `
 
-const createEvent = gql`
-mutation ($token: String!, $action: String!, $requestDistribution: Boolean, $start: String, $scopeId: Int!, $commitmentId: Int!, $note: String, $affectedNumericValue: String!, $affectedUnitId: Int!  ) {
-  createEconomicEvent(
-    token: $token,
-    action: $action,
-    start: $start,
-    scopeId: $scopeId, 
-    requestDistribution: $requestDistribution, 
-    fulfillsCommitmentId: $commitmentId,
-    note: $note,
-    affectedNumericValue: $affectedNumericValue, 
-    affectedUnitId: $affectedUnitId, 
-    ) {
-    economicEvent {
-      action
-      note
-      start
-      id
-      requestDistribution
-      scope {
-        id
-      }
-      provider {
-        name
-        id
-        image
-      }
-      affectedQuantity {
-        unit {
-          name
-        }
-        numericValue
-      }
-    }
-  }
-}
-`
+// const createEvent = gql`
+// mutation ($token: String!, $action: String!, $requestDistribution: Boolean, $start: String, $scopeId: Int!, $commitmentId: Int!, $note: String, $affectedNumericValue: String!, $affectedUnitId: Int!  ) {
+//   createEconomicEvent(
+//     token: $token,
+//     action: $action,
+//     start: $start,
+//     scopeId: $scopeId, 
+//     requestDistribution: $requestDistribution, 
+//     fulfillsCommitmentId: $commitmentId,
+//     note: $note,
+//     affectedNumericValue: $affectedNumericValue, 
+//     affectedUnitId: $affectedUnitId, 
+//     ) {
+//     economicEvent {
+//       action
+//       note
+//       start
+//       id
+//       requestDistribution
+//       scope {
+//         id
+//       }
+//       provider {
+//         name
+//         id
+//         image
+//       }
+//       affectedQuantity {
+//         unit {
+//           name
+//         }
+//         numericValue
+//       }
+//     }
+//   }
+// }
+// `
 
-const updateEvent = gql`
-mutation ($token: String!, $id: Int!, $start: String!, $requestDistribution: Boolean, $scopeId: Int!, $note: String, $affectedNumericValue: String!, $affectedUnitId: Int! ) {
-  updateEconomicEvent(
-    token: $token,
-    id: $id,
-    start: $start,
-    scopeId: $scopeId, 
-    requestDistribution: $requestDistribution, 
-    note: $note,
-    affectedNumericValue: $affectedNumericValue,
-    affectedUnitId: $affectedUnitId,
-    ) {
-      economicEvent {
-        action
-        note
-        start
-        id
-        requestDistribution
-        scope {
-          id
-        }
-        provider {
-          name
-          id
-          image
-        }
-        affectedQuantity {
-          unit {
-            name
-          }
-          numericValue
-        }
-      }
-  }
-}`
+// const updateEvent = gql`
+// mutation ($token: String!, $id: Int!, $start: String!, $requestDistribution: Boolean, $scopeId: Int!, $note: String, $affectedNumericValue: String!, $affectedUnitId: Int! ) {
+//   updateEconomicEvent(
+//     token: $token,
+//     id: $id,
+//     start: $start,
+//     scopeId: $scopeId, 
+//     requestDistribution: $requestDistribution, 
+//     note: $note,
+//     affectedNumericValue: $affectedNumericValue,
+//     affectedUnitId: $affectedUnitId,
+//     ) {
+//       economicEvent {
+//         action
+//         note
+//         start
+//         id
+//         requestDistribution
+//         scope {
+//           id
+//         }
+//         provider {
+//           name
+//           id
+//           image
+//         }
+//         affectedQuantity {
+//           unit {
+//             name
+//           }
+//           numericValue
+//         }
+//       }
+//   }
+// }`
 
 // const mapStateToProps = (state) => {
 //   return {
@@ -289,46 +295,63 @@ const wrapperComponent = compose(
                 planId: Number(props.param)
               }}
             )
-            let agentEventsCache = store.readQuery({ query: queryEvents,
-              variables: {
-                token: localStorage.getItem('oce_token'),
-                id: Number(props.id)
-              }}
-            )
+            // let agentEventsCache = store.readQuery({ query: queryEvents,
+            //   variables: {
+            //     token: localStorage.getItem('oce_token'),
+            //     id: props.id
+            //   }}
+            // )
             
             let processIndex = agentPlanCache.viewer.plan.planProcesses.findIndex(process => process.committedInputs.some(item => Number(item.id) === Number(props.id)))
-            
+            console.log(data.createEconomicEvent.economicEvent.affectedQuantity)
             let commitmentUpdatedIndex = agentPlanCache.viewer.plan
               .planProcesses[processIndex]
               .committedInputs
               .findIndex(input => {
                 return Number(input.id) === Number(props.id)
               })
-    
+              console.log(agentPlanCache.viewer.plan.planProcesses[processIndex].committedInputs[commitmentUpdatedIndex]
+                .fulfilledBy)
             agentPlanCache.viewer.plan.planProcesses[processIndex].committedInputs[commitmentUpdatedIndex]
             .fulfilledBy.unshift({
-              fulfills: {
-                action: data.createEconomicEvent.economicEvent.action,
-                __typename: 'Commitment'
+              fulfilledQuantity: {
+                numericValue: data.createEconomicEvent.economicEvent.affectedQuantity.numericValue,
+                unit: {
+                  name: data.createEconomicEvent.economicEvent.affectedQuantity.unit.name,
+                  __typename: 'Unit'
+                },
+                __typename: 'QuantityValue'
               },
-              __typename: 'Fulfillment'
-            })
-    
-            agentEventsCache.viewer.commitment
-            .fulfilledBy.unshift({
               fulfilledBy: {
-                action: data.createEconomicEvent.economicEvent.action,
-                note: data.createEconomicEvent.economicEvent.note,
-                requestDistribution: data.createEconomicEvent.economicEvent.requestDistribution,
-                provider: data.createEconomicEvent.economicEvent.provider,
-                start: data.createEconomicEvent.economicEvent.start,
-                id: data.createEconomicEvent.economicEvent.id,
-                __typename: 'EconomicEvent'
+                  action: data.createEconomicEvent.economicEvent.action,
+                  requestDistribution: data.createEconomicEvent.economicEvent.requestDistribution,
+                  start: data.createEconomicEvent.economicEvent.start,
+                  id: data.createEconomicEvent.economicEvent.id,
+                  note: data.createEconomicEvent.economicEvent.note,
+                  provider: data.createEconomicEvent.economicEvent.provider,
+                  __typename: 'EconomicEvent'
               },
-              fulfilledQuantity: data.createEconomicEvent.economicEvent.affectedQuantity,
-              __typename: 'Fulfillment'
-            })
-    
+            __typename: 'Fulfillment'
+              })
+            // console.log(agentEventsCache.viewer.commitment)
+            // agentEventsCache.viewer.commitment
+            // .fulfilledBy.unshift({
+            //   fulfilledBy: {
+            //     action: data.createEconomicEvent.economicEvent.action,
+            //     requestDistribution: data.createEconomicEvent.economicEvent.requestDistribution,
+            //     start: data.createEconomicEvent.economicEvent.start,
+            //     id: data.createEconomicEvent.economicEvent.id,
+            //     note: data.createEconomicEvent.economicEvent.note,
+            //     provider: data.createEconomicEvent.economicEvent.provider,
+            //     __typename: 'EconomicEvent'
+            //   },
+            //   fulfilledQuantity: data.createEconomicEvent.economicEvent.affectedQuantity,
+            //   __typename: 'Fulfillment'
+            // })
+            
+            // let newdata = agentEventsCache
+            // console.log(newdata)
+            // console.log(agentEventsCache)
             store.writeQuery({ query: plan,
               variables: {
                 token: localStorage.getItem('oce_token'),
@@ -336,12 +359,12 @@ const wrapperComponent = compose(
               },
               data: agentPlanCache })
     
-            store.writeQuery({ query: queryEvents,
-              variables: {
-                token: localStorage.getItem('oce_token'),
-                id: props.id
-              },
-              data: agentEventsCache })
+            // store.writeQuery({ query: queryEvents,
+            //   variables: {
+            //     token: localStorage.getItem('oce_token'),
+            //     id: props.id
+            //   },
+            //   data: newdata })
           }
         })
         // })
@@ -350,6 +373,7 @@ const wrapperComponent = compose(
           type: 'success'
         }}))
         .catch((e) => {
+          console.log(e)
           const errors = e.graphQLErrors.map(error => error.message)
             props.updateNotification({variables: {
               message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Cross width='18' height='18' color='white' /></span>{errors}</div>,

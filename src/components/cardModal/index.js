@@ -17,7 +17,6 @@ const CommitmentModal = ({
   closeModal,
   id
 }) => {
-  console.log(processId)
   return (
   <Modal
     isOpen={modalIsOpen}
