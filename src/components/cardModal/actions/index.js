@@ -12,6 +12,9 @@ import * as Yup from "yup";
 import Alert from '../../alert'
 import { Mutation } from "react-apollo";
 import DeleteCommitment from '../../../mutations/deleteCommitment'
+import DatePicker from "react-datepicker";
+import moment from 'moment'
+require("react-datepicker/dist/react-datepicker-cssmodules.css");
 
 const EditNote = compose(
   graphql(UpdateCommitment, { name: "updateCommitmentMutation" }),
@@ -134,6 +137,85 @@ const DeleteNote = compose(
   </Mutation>
 ));
 
+
+const DueDate = (props) => {
+  const handleChange = value => {
+    props.onChange('due', value);
+  };
+  return (
+    <div className={style.dateWrapper}>
+      <DatePicker
+          selected={props.value}
+          onChange={handleChange}
+          dateFormatCalendar={'DD MMM YYYY'}
+      />
+    {props.error && props.touched && <Alert>{props.error}</Alert>}
+    </div>
+  )
+}
+
+const EditDate = compose(
+  graphql(UpdateCommitment, { name: "updateCommitmentMutation" }),
+  graphql(updateNotification, {name: 'updateNotification'}),
+    withFormik({
+      mapPropsToValues: (props) => ({ due: moment() }),
+      validationSchema: Yup.object().shape({
+         due: Yup.string().required()
+      }),
+      handleSubmit: (values, { props, resetForm, setErrors, setSubmitting }) => {
+        props
+        .updateCommitmentMutation({
+          variables: {
+            token: localStorage.getItem("oce_token"),
+            id: props.id,
+            due: moment(values.due).format("YYYY-MM-DD"),
+          },
+          update: (store, { data }) => {
+            const commitment = store.readFragment({
+              id: `${data.updateCommitment.commitment.__typename}-${
+                data.updateCommitment.commitment.id
+              }`,
+              fragment: gql`
+                fragment myCommitment on Commitment {
+                  id
+                  due
+                }
+              `
+            });
+          }
+        })
+        .then(
+          data => {
+            props.updateNotification({variables: {
+              message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Bell width='18' height='18' color='white' /></span>Note updated successfully!</div>,
+              type: 'success'
+            }})
+          },
+          e => {
+            const errors = e.graphQLErrors.map(error => error.message);
+          props.updateNotification({variables: {
+            message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Cross width='18' height='18' color='white' /></span>{errors}</div>,
+            type: 'alert'
+          }})
+          }
+        );
+      }
+    })
+)((props) => (
+  <div className={style.editWrapper}>
+    <Form>
+      <DueDate 
+          value={props.values.due}
+          onChange={props.setFieldValue}
+          onBlur={props.setFieldTouched}
+          error={props.errors.start}
+          touched={props.touched.start}
+      />
+      <Button>Update Due date</Button>
+    </Form>
+  </div>
+))
+
 const Standard = () => <h1>null</h1>;
 const Actions = props => {
   let content = "";
@@ -149,6 +231,7 @@ const Actions = props => {
   } else if (props.content == "due") {
     content = "Edit due";
     styled = style.three;
+    Children = EditDate
   } else if (props.content == "delete") {
     content = "Delete the commitment";
     styled = style.four;
