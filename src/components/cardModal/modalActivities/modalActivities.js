@@ -35,7 +35,7 @@ export default function ({param, units, scopeId, commitmentId, idEventToEdit, ed
                   <div className={style.desc}>{item.fulfilledBy.note} </div>
                 </div>
                 <div className={style.item_meta}>
-                  {moment(item.fulfilledBy.start).fromNow()}
+                  {moment(item.start).format("DD MMM YYYY")}
                   - <span id={item.id} onClick={() => toggleEditEvent(deleteEventModal, item.fulfilledBy.id)}>Edit</span>
                   - <span id={item.id} onClick={() => toggleDeleteEvent(deleteEventModal, item.fulfilledBy.id)}>Delete</span>
                 </div>

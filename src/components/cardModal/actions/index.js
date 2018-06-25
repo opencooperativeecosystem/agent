@@ -251,14 +251,14 @@ const Actions = props => {
       ) : null}
       <h2>Actions</h2>
       <div className={style.buttons_list}>
-        <div className={style.list_single}>
+        {/* <div className={style.list_single}>
           <Button gray onClick={() => props.onhandleShowTooltip("commitment")}>
             <span className={style.button_icon}>
               <Icons.Activity width="14" height="14" color="#4c4c4c" />
             </span>{" "}
             Edit commitment
           </Button>
-        </div>
+        </div> */}
         <div className={style.list_single}>
           <Button gray onClick={() => props.onhandleShowTooltip("note")}>
             <span className={style.button_icon}>
