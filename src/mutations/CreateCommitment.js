@@ -7,6 +7,11 @@ mutation ($token: String!, $inputOfId: Int, $outputOfId: Int, $committedUnitId:I
         action
         id
         note
+        fulfilledBy {
+          fulfilledQuantity {
+            numericValue
+          }
+        }
         inputOf {
           id
           name
