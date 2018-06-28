@@ -1,0 +1,16 @@
+.wrapper {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.wrapperLoader h1 {
+    display: inline-block;
+    margin-left: 10px;
+    color: #606984;
+    font-size: 16px;
+    vertical-align: middle;
+}
+
+.loaderIcon {
+    vertical-align: sub;
+}
