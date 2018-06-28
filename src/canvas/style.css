@@ -5,7 +5,7 @@
 }
 
 .wrapperContainer {
-  user-select: none;
+  user-select: text;
   white-space: nowrap;
   overflow-x: auto;
   overflow-y: hidden;
