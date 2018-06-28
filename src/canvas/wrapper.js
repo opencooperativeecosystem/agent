@@ -9,6 +9,7 @@ import style from "./style.css";
 import CardModal from "../components/cardModal";
 import NewCommitmentModal from "../components/newCommitmentModal/wrapper";
 import PlanModal from '../components/planModal'
+import { LoadingMini } from "../components/loading";
 
 const ErrorPlan = () => (
   <div className={style.errorWrapper}>
@@ -44,7 +45,7 @@ const CanvasWrapper = ({
     }}
   >
     {({ loading, error, data }) => {
-      if (loading) return null;
+      if (loading) return <LoadingMini />;
       if (error) return <ErrorPlan />;
       return (
         <div style={{ display: "initial" }}>

@@ -2,12 +2,13 @@ import React from 'react'
 import { graphql } from 'react-apollo'
 import Component from './index'
 import plansQuery from '../queries/getPlans'
+import {LoadingMini} from '../components/loading'
 
 class AgentWrapper extends React.Component {
   render () {
     const {loading, error, data} = this.props
     return (
-      loading ? <strong>Loading...</strong> : (
+      loading ? <LoadingMini /> : (
         error ? <p style={{ color: '#F00' }}>API error</p> : (
           <Component data={data} {...this.props} />
       ))

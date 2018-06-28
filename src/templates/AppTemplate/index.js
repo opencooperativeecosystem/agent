@@ -15,10 +15,11 @@ import Wallet from '../../wallet'
 import Validate from '../../validation_plan/wrapper'
 import updateNotification from "../../mutations/updateNotification";
 import deleteNotification from "../../mutations/deleteNotification";
+import {LoadingMini} from '../../components/loading'
 
 const AppTemplate = props => {
   return props.loading ? (
-    <strong>Loading...</strong>
+    <LoadingMini />
   ) : props.error ? (
     <p style={{ color: "#F00" }}>API error</p>
   ) : (
@@ -33,6 +34,7 @@ const AppTemplate = props => {
                   panel={props.panel}
                   data={props.data}
                   agents={props.data.agentRelationships}
+                  history={props.history}
                 />
                 <div
                   className={

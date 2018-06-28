@@ -7,15 +7,13 @@ import LogEvent from './logEvent'
 import { compose, withState, withHandlers } from 'recompose'
 import {graphql} from 'react-apollo'
 import GetCommitment from '../../queries/getCommitment'
-import UpdateCommitmentStatus from '../../mutations/updateCommitmentStatus'
 import moment from 'moment'
 import Actions from './actions'
-import {Button, Icons} from 'oce-components/build'
+import {LoadingMini} from '../loading'
 
 const CardModal = ({param, id, processId, toggleActions, actionPopup, updateCommitment, allPlanAgents, units, updateProcess, loading, data, error, close, modalDescription}) => {
-  console.log(data)
   return (
-    loading ? <h1>loading...</h1> : (
+    loading ? <LoadingMini /> : (
     error ? <p style={{ color: '#ddd' }}>{error}</p> : (
     <section className={style.modal_content}>
       { actionPopup
