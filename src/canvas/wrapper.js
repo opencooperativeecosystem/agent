@@ -53,6 +53,9 @@ const CanvasWrapper = ({
             large
             icon={<Icons.Globe width="18" color="#f0f0f0" />}
             title={data.viewer.plan.name}
+            navigation
+            back={() => history.goBack()}
+            forward={() => history.goForward()}
             actions={
               <div>
               <Button small onClick={onTogglePlanModal}><span className={style.buttonIcon}><Icons.Edit width='16' height='16' color='#fff' /></span> Edit Plan</Button>
