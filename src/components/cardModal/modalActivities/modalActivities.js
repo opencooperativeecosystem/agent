@@ -6,8 +6,6 @@ import {Icons} from 'oce-components/build'
 
 import LogEvent from '../logEvent'
 export default function ({param, units, scopeId, commitmentId, idEventToEdit, editEventModal, toggleEditEvent, idEventToDelete, deleteEventModal, toggleDeleteEvent, activities, id, date, deleteEvent, editEvent, loading, error, refetchData}) {
-  console.log('activities')
-  console.log(activities)
   return (
     <div className={style.activities_list}>
       {loading ? 'loading' : (

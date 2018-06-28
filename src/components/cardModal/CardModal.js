@@ -13,7 +13,7 @@ import Actions from './actions'
 import {Button, Icons} from 'oce-components/build'
 
 const CardModal = ({param, id, processId, toggleActions, actionPopup, updateCommitment, allPlanAgents, units, updateProcess, loading, data, error, close, modalDescription}) => {
-  console.log(error)
+  console.log(data)
   return (
     loading ? <h1>loading...</h1> : (
     error ? <p style={{ color: '#ddd' }}>{error}</p> : (
@@ -50,11 +50,11 @@ const CardModal = ({param, id, processId, toggleActions, actionPopup, updateComm
             <h4>{data.action + ' ' + data.committedQuantity.numericValue + ' ' + data.committedQuantity.unit.name + ' of ' + data.resourceClassifiedAs.name}</h4>
           </div>
         </div>
-        <LogEvent param={param} id={id} units={units} scopeId={data.scope.id} commitmentId={data.id} />
+        <LogEvent param={param} id={id} units={units} scopeId={data.scope ? data.scope.id : ''} commitmentId={data.id} />
         <h5 className={style.modalDescription_title}>Contributions</h5>
-        <ModalActivities param={param} units={units} scopeId={data.scope.id} commitmentId={data.id} id={id} />
+        <ModalActivities param={param} units={units} scopeId={data.scope ? data.scope.id : ''} commitmentId={data.id} id={id} />
       </div>
-      <Actions close={close} processId={data.inputOf.id} id={id} planId={param} data={data} />
+      <Actions close={close} processId={data.inputOf.id} scopeId={data.scope ? data.scope.id : ''} id={id} planId={param} data={data} />
     </section>
     ))
   )

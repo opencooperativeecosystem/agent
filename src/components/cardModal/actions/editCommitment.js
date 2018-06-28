@@ -1,19 +1,17 @@
 import React from "react";
-import { SupTitle, Wrapper, Input, Textarea, Button, Select, Icons } from "oce-components/build";
-import { graphql } from "react-apollo";
+import { SupTitle, Input, Button, Select, Icons } from "oce-components/build";
+import { graphql, ApolloConsumer } from "react-apollo";
 import { compose, withState, withHandlers } from "recompose";
-import moment from "moment";
-import getResourcesQuery from "../../queries/getResources";
-import getUnitsQuery from "../../queries/getUnits";
-import DatePicker from "react-datepicker";
-import style from './style.css'
-import Plan from "../../queries/getPlan";
-import CreateCommitment from '../../mutations/CreateCommitment'
+import getResourcesQuery from "../../../queries/getResources";
+import getUnitsQuery from "../../../queries/getUnits";
+import style from '../index.css'
+import Plan from "../../../queries/getPlan";
+import CreateCommitment from '../../../mutations/CreateCommitment'
 import {Form, withFormik, Field} from 'formik' 
 import * as Yup from 'yup'
-import updateNotification from "../../mutations/updateNotification";
-import Alert from '../alert'
-import 'react-toastify/dist/ReactToastify.css';
+import updateNotification from "../../../mutations/updateNotification";
+import Alert from '../../alert'
+import updateCommitment from "../../../mutations/updateCommitment";
 require("react-datepicker/dist/react-datepicker-cssmodules.css");
 
 const events = [
@@ -54,6 +52,7 @@ const NewCommModal = ({
   values,
   client,
   resources,
+  dueDate,
   units
 }) => {
   let resourcesOptions = resources.map((ev, i) => (
@@ -78,7 +77,7 @@ const NewCommModal = ({
   );
   return (
     <Form>
-    <Wrapper>
+    <div style={{padding: '10px'}}>
         <SupTitle dark icon={<Icons.Text widht='18' height='18' color='#383C39' />} text='New commitment' />
         <div className={style.commitmentWrapper}>
             <div className={style.commInput}>
@@ -97,7 +96,7 @@ const NewCommModal = ({
             <Field
               name="resource"
               render={({ field /* _form */ }) => (
-                <Select name={field.name} onChange={field.onChange}>{resourcesOptions.map((opt) => opt)}</Select>
+                <Select type={'gray'} name={field.name} onChange={field.onChange}>{resourcesOptions.map((opt) => opt)}</Select>
               )}
             />
             {errors.resource && touched.resource && <Alert>{errors.resource}</Alert>}
@@ -106,7 +105,7 @@ const NewCommModal = ({
               <Field
                 name="qty"
                 render={({ field /* _form */ }) => (
-                  <Input name={field.name} onChange={field.onChange} placeholder='00.00' />
+                  <Input type={'gray'} name={field.name} onChange={field.onChange} placeholder='00.00' />
                 )}
               />
               {errors.qty && touched.qty && <Alert>{errors.qty}</Alert>}
@@ -115,33 +114,17 @@ const NewCommModal = ({
               <Field
                 name="unit"
                 render={({ field /* _form */ }) => (
-                  <Select name={field.name} onChange={field.onChange}>{unitsOptions.map((opt) => opt)}</Select>
+                  <Select type={'gray'} name={field.name} onChange={field.onChange}>{unitsOptions.map((opt) => opt)}</Select>
                 )}
               />
               {errors.unit && touched.unit && <Alert>{errors.unit}</Alert>}
             </div>
         </div>
-        <div>
-            <StartDate 
-              value={values.date}
-              onChange={setFieldValue}
-              onBlur={setFieldTouched}
-              error={errors.start}
-              touched={touched.start}
-            />
-        </div>
-        <div style={{height: '150px', marginTop: '8px', marginBottom: '8px'}}>
-        <Field
-          name="note"
-          render={({ field /* _form */ }) => (
-            <Textarea name={field.name} onChange={field.onChange} placeholder='Write some note' />
-          )}
-        />
-        </div>
+        
         <div>
             <Button>Publish</Button>
         </div>
-    </Wrapper>
+    </div>
     </Form>
      
   );
@@ -161,23 +144,6 @@ const EventSelect = (props) => {
   )
 }
 
-const StartDate = (props) => {
-  const handleChange = value => {
-    props.onChange('date', value);
-  };
-  return (
-    <div className={style.dateWrapper}>
-      <h5 className={style.dateName}>Due</h5>
-      <DatePicker
-      selected={props.value}
-      onChange={handleChange}
-      dateFormatCalendar={'DD MMM YYYY'}
-      withPortal
-    />
-    {props.error && props.touched && <Alert>{props.error}</Alert>}
-    </div>
-  )
-}
 
 
 
@@ -187,49 +153,41 @@ export default compose(
   withState("units", "onUnitsArray", []),
   graphql(updateNotification, {name: 'updateNotification'}),
   withFormik({
-    mapPropsToValues: () => ({ event: '', note: '', resource: '', qty: '', unit: '', date: moment() }),
+    mapPropsToValues: () => ({ event: '', resource: '', qty: '', unit: ''}),
     validationSchema: Yup.object().shape({
       event: Yup.string().required(),
-      note: Yup.string(),
       resource: Yup.string().required(),
       qty: Yup.number().required(),
       unit: Yup.string().required(),
-      date: Yup.string()
     }),
     handleSubmit: (values, {props, resetForm, setErrors, setSubmitting}) => {
-      let date = moment(props.date).format("YYYY-MM-DD")
       return props.client.mutate({
-          mutation: CreateCommitment,
+          mutation: updateCommitment,
           variables: {
               token: localStorage.getItem("oce_token"),
+              id: props.id,
               action: values.event.toLowerCase(),
-              due: date,
-              note: values.note,
               committedResourceClassifiedAsId: values.resource,
               committedUnitId: values.unit,
               committedNumericValue: values.qty,
-              inputOfId: props.processId,
-              outputOfId: props.processId,
-              planId: props.planId,
-              scopeId: props.scopeId
           },
-          update: (cache, {data: {createCommitment}}) => {
+          update: (cache, {data: {updateCommitment}}) => {
             const data = cache.readQuery({query: Plan, variables: {
               token: localStorage.getItem('oce_token'),
               planId: Number(props.planId)
           }})
           const processIndex = data.viewer.plan.planProcesses.findIndex(process => Number(process.id) === Number(props.processId))
-          if (createCommitment.commitment.action === 'work') {
-              data.viewer.plan.planProcesses[processIndex].committedInputs.push(createCommitment.commitment)
+          if (updateCommitment.commitment.action == 'work') {
+              data.viewer.plan.planProcesses[processIndex].committedInputs.push(updateCommitment.commitment)
             } else {
-                data.viewer.plan.planProcesses[processIndex].committedOutputs.push(createCommitment.commitment)
+                data.viewer.plan.planProcesses[processIndex].committedOutputs.push(updateCommitment.commitment)
           }
             cache.writeQuery({
                 query: Plan,
                 data,
                 variables: {
                   token: localStorage.getItem("oce_token"),
-                  planId: Number(props.match.params.id)
+                  planId: Number(props.planId)
                 }
             })
         }
@@ -240,7 +198,6 @@ export default compose(
       }}))
       .catch(e => {
       const errors = e.graphQLErrors.map(error => error.message)
-      props.setSubmitting(false)
       props.updateNotification({variables: {
         message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Cross width='18' height='18' color='white' /></span>{errors}</div>,
         type: 'alert'

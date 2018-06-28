@@ -11,6 +11,64 @@
   outline: none;
 }
 
+.dateWrapper {
+  display: inline-block;
+  width: 180px;
+  height: 32px;
+  border: none;
+  margin-top: 5px;
+  background: #6bccab;
+  border-radius: 4px;
+  color: white;
+  font-weight: 500;
+  line-height: 32px;
+}
+
+.dateName {
+  margin: 0;
+  float: left;
+  margin-left: 10px;
+  padding-right: 10px;
+  border-right: 1px solid #ffffff52;
+  line-height: 32px;
+  font-weight: 500;
+  color: white;
+  letter-spacing: .5px;
+}
+
+.dateWrapper > div:first-of-type {
+  float: left;
+  width: 125px;
+  border: none;
+}
+
+.dateWrapper div input {
+  height: 29px;
+  border: none;
+  padding: 0;
+  background: none;
+  text-indent: 10px;
+  font-size: 14px;
+  color: white;
+}
+
+
+.commInput select {
+  background: #efefef;
+}
+
+.containerTextarea textarea {
+  background: #efefef;
+}
+
+.commInput {
+  margin-bottom: 8px;
+}
+
+.commInput input {
+  background: #efefef;
+}
+
 .content_actions {
   position: absolute;
   right: -140px;

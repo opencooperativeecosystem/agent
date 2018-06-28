@@ -1,13 +1,43 @@
-import gql from 'graphql-tag'
+import gql from "graphql-tag";
 
 const updateCommitment = gql`
-mutation ($token: String!, $id: Int!, $note: String, $due: String, $isFinished: Boolean ) {
-    updateCommitment(token: $token, note: $note, id: $id, due: $due, isFinished:$isFinished ) {
+  mutation(
+    $token: String!
+    $id: Int!
+    $note: String
+    $due: String
+    $committedResourceClassifiedAsId: Int
+    $committedUnitId: Int
+    $committedNumericValue: String
+    $action: String
+    $isFinished: Boolean
+  ) {
+    updateCommitment(
+      token: $token
+      note: $note
+      id: $id
+      due: $due
+      isFinished: $isFinished
+      action: $action
+      committedResourceClassifiedAsId: $committedResourceClassifiedAsId
+      committedUnitId: $committedUnitId
+      committedNumericValue: $committedNumericValue
+    ) {
       commitment {
         id
         note
-        isFinished,
+        isFinished
         due
+        committedQuantity {
+          unit {
+            name
+          }
+          numericValue
+        }
+        resourceClassifiedAs {
+          category
+          name
+        }
         fulfilledBy {
           fulfilledBy {
             action
@@ -28,6 +58,6 @@ mutation ($token: String!, $id: Int!, $note: String, $due: String, $isFinished: 
       }
     }
   }
-`
+`;
 
-export default updateCommitment
+export default updateCommitment;
