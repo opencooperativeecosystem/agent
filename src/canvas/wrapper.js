@@ -21,7 +21,6 @@ const ErrorPlan = () => (
 )
 
 
-
 const CanvasWrapper = ({
   match,
   toggleNewCommitmentModal,
@@ -32,6 +31,7 @@ const CanvasWrapper = ({
   processId,
   history,
   openModal,
+  toggleModal,
   scopeId,
   closeModal,
   onTogglePlanModal,
@@ -84,6 +84,7 @@ const CanvasWrapper = ({
             allPlanAgents={data.viewer.plan.allPlanAgents}
             modalIsOpen={modalIsOpen}
             closeModal={closeModal}
+            toggleModal={toggleModal}
             id={modalSelected}
             param={match.params.id}
             processId={processId}

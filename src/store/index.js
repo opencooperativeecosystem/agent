@@ -5,8 +5,6 @@ import introspectionQueryResultData from '../fragmentTypes.json'
 import { defaults, resolvers } from "./resolvers";
 import {withClientState} from 'apollo-link-state'
 import {ApolloLink} from 'apollo-link'
-import getNotifications from '../queries/getNotifications';
-import gql from 'graphql-tag'
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({
   introspectionQueryResultData

@@ -15,12 +15,13 @@ const CommitmentModal = ({
   allPlanAgents,
   processId,
   closeModal,
+  toggleModal,
   id
 }) => {
   return (
   <Modal
     isOpen={modalIsOpen}
-    toggleModal={closeModal}
+    toggleModal={toggleModal}
     >
    <CardModal
       param={param}
@@ -31,7 +32,7 @@ const CommitmentModal = ({
       units={units}
       processId={processId}
       data={commitment}
-      close={closeModal}
+      close={toggleModal}
       modalDescription={modalDescription}
     />
   </Modal>
