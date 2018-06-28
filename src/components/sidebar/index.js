@@ -36,7 +36,7 @@ export default compose(
             message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Bell width='18' height='18' color='white' /></span>Plan {data.data.createPlan.plan.name} created successfully!</div>,
             type: 'success'
           }})
-          return props.history.push(`canvas/${data.data.createPlan.plan.id}`);
+           return props.history.push(`/canvas/${data.data.createPlan.plan.id}`);
         }, (e) => {
           const errors = e.graphQLErrors.map(error => error.message)
           props.updateNotification({variables: {
