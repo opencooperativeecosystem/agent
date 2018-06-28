@@ -1,6 +1,4 @@
 import React from "react";
-import styled from "styled-components";
-import {clearFix} from 'polished'
 import {Icons} from 'oce-components/build'
 import style from './style.css'
 

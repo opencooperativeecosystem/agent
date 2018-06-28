@@ -1,7 +1,7 @@
 import React from 'react'
 import style from './style.css'
-import {Textarea, Icons, Button} from 'oce-components/build'
-import {Form, Field, withFormik } from 'formik'
+import {Icons, Button} from 'oce-components/build'
+import {Form, withFormik } from 'formik'
 import * as Yup from 'yup'
 import Alert from '../alert'
 import updateNotification from "../../mutations/updateNotification";

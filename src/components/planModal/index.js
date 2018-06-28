@@ -1,12 +1,10 @@
 import React from "react";
 import Component from "./PlanModal";
 import Modal from "../modal";
-import { ApolloConsumer } from "react-apollo";
 
 const PlanModal = ({
   toggleModal,
   isOpen,
-  closeModal,
   planId,
   match,
   scopeId,

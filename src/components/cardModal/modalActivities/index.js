@@ -1,75 +1,8 @@
 import {compose, withHandlers, withState} from 'recompose'
 import Component from './modalActivities'
 import {graphql} from 'react-apollo'
-import gql from 'graphql-tag'
 import queryEvents from '../../../queries/getEvents'
 import deleteEvent from '../../../mutations/deleteEvent'
-// import {connect} from 'react-redux'
-// import { actions as notifActions } from 'redux-notifications'
-
-// const mapStateToProps = (state) => {
-//   return {
-//     state: state
-//   }
-// }
-
-// const mapDispatchToProps = (dispatch) => {
-//   const sendNotif = (id, message, kind, dismissAfter) => {
-//     notifActions.notifSend({
-//       message,
-//       kind,
-//       id: id,
-//       dismissAfter: 2000
-//     })(dispatch)
-//   }
-//   return {
-//     sendNotif
-//   }
-// }
-
-// const deleteEvent = gql`
-// mutation ($token: String!, $id: Int!) {
-//     deleteEconomicEvent(
-//       token: $token,
-//       id: $id
-//     ) {
-//       economicEvent {
-//         action
-//         start
-//       }
-//     }
-// }
-// `
-
-// export const queryEvents = gql`
-// query ($token: String!, $id: Int!) {
-//     viewer(token: $token) {
-//         commitment(id: $id) {
-//           id
-//           fulfilledBy {
-//             fulfilledBy {
-//               action
-//               requestDistribution
-//               start
-//               id
-//               note
-//               provider {
-//                 name
-//                 image
-//                 id
-//               }
-//             }
-//             fulfilledQuantity {
-//               numericValue
-//               unit {
-//                 name
-//               }
-//             }
-//           }
-//         }
-//     }
-// }
-// `
 
 export default compose(
     graphql(deleteEvent, {

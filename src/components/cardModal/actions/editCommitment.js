@@ -1,12 +1,11 @@
 import React from "react";
 import { SupTitle, Input, Button, Select, Icons } from "oce-components/build";
-import { graphql, ApolloConsumer } from "react-apollo";
+import { graphql } from "react-apollo";
 import { compose, withState, withHandlers } from "recompose";
 import getResourcesQuery from "../../../queries/getResources";
 import getUnitsQuery from "../../../queries/getUnits";
 import style from '../index.css'
 import Plan from "../../../queries/getPlan";
-import CreateCommitment from '../../../mutations/CreateCommitment'
 import {Form, withFormik, Field} from 'formik' 
 import * as Yup from 'yup'
 import updateNotification from "../../../mutations/updateNotification";

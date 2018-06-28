@@ -1,7 +1,7 @@
 import React from 'react'
 import { graphql, compose } from 'react-apollo'
 import style from '../base.css'
-import {Icons, Panel, Notification} from 'oce-components/build'
+import {Icons, Panel} from 'oce-components/build'
 import { withFormik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import Alert from '../components/alert'

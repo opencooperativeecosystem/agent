@@ -7,10 +7,9 @@ import {BrowserRouter as Router,
   Route,
   Switch
 } from 'react-router-dom'
-import { compose, withHandlers, withState } from "recompose";
+import { compose } from "recompose";
 import {ApolloProvider} from 'react-apollo'
 import {client} from './store'
-import { Provider } from 'react-redux'
 import AppTemplate from './templates/AppTemplate'
 import style from './base.css'
 import {PrivateRoute} from './helpers/router'

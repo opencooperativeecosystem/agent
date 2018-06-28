@@ -1,8 +1,6 @@
 import React from 'react'
 import style from './style.css'
-import { Textarea, Icons, Button } from 'oce-components/build'
-import * as Yup from 'yup'
-import Alert from '../alert'
+import { Icons, Button } from 'oce-components/build'
 import Plan from "../../queries/getPlan";
 import deleteProcess from "../../mutations/deleteProcess";
 import { graphql, compose } from "react-apollo";

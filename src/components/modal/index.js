@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Modal from "./modal";
-const appRoot = document.getElementById('root');
 const modalRoot = document.getElementById('modal');
 
 class Portal extends React.Component {

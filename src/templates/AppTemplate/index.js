@@ -6,12 +6,10 @@ import { Route, withRouter } from "react-router-dom";
 import Sidebar from "../../components/sidebar";
 import { compose, withHandlers, withState } from "recompose";
 import Canvas from "../../canvas/wrapper";
-import Plan from "../../plan/wrapper";
 import Settings from "../../settings/wrapper";
 import Agent from "../../agent/wrapper";
 import Overview from "../../overview/wrapper";
 import { PropsRoute } from "../../helpers/router";
-import Wallet from '../../wallet'
 import Validate from '../../validation_plan/wrapper'
 import updateNotification from "../../mutations/updateNotification";
 import deleteNotification from "../../mutations/deleteNotification";
@@ -43,17 +41,6 @@ const AppTemplate = props => {
                       : style.container
                   }
                 >
-                  {/* <button onClick={() => props.updateNotification({
-                    variables: {
-                      message: 'ciaoooo',
-                      type: 'danger'
-                    }
-                  })}>cliccami!</button>
-                  <button onClick={() => props.deleteNotification({
-                    variables: {
-                      id: 2
-                    }
-                  })}>cliccami!</button> */}
                   <PropsRoute
                     exact
                     path={props.match.path}
@@ -66,12 +53,6 @@ const AppTemplate = props => {
                     data={props}
                   />
                   <PropsRoute
-                    path="/plans"
-                    component={Plan}
-                    relationships={props.data.agentRelationships}
-                  />
-                  <PropsRoute path="/validate" component={Validate} />
-                  <PropsRoute
                     exact
                     path="/canvas/:id"
                     component={Canvas}
@@ -83,7 +64,6 @@ const AppTemplate = props => {
                     relationships={props.data.agentRelationships}
                   />
                   <Route path="/settings" component={Settings} />
-                  <Route path="/wallet" component={Wallet} />
                 </div>
               </div>
             </div>
