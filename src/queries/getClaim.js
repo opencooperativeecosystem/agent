@@ -40,6 +40,7 @@ query ($token: String, $id: Int) {
               }
               start
               inputOf {
+                id
                 name
               }
               affectedQuantity {
