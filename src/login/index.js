@@ -13,7 +13,7 @@ const Login = ({values, handleSubmit, touched, errors}) => {
           <div className={style.login_wrapper}>
             <div className={style.wrapper_title}>
               <h3><span aria-label='emoji' role='img'>🧙</span> agent.</h3>
-              <h4>Your events - networked</h4>
+              <h4 data-testid='desc'>Your events - networked</h4>
             </div>
             <div className={style.login_container}>
             <Panel title='login' icon={<Icons.Power width='18' height='18' color='#f0f0f0' />}>

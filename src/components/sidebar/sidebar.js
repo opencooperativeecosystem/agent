@@ -57,7 +57,7 @@ const Sidebar = (props) => {
             <div className={style.data_image}>
               <img alt='profile' src={props.data.image} />
             </div>
-            <h3>{props.data.name}</h3>
+            <h3 data-testid='agent-name'>{props.data.name}</h3>
           </NavLink>
         </div>
         <div className={style.section_planCreation}>

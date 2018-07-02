@@ -77,15 +77,19 @@
     "postcss-nested": "^2.1.2",
     "postcss-simple-vars": "^4.1.0",
     "postcss-utilities": "^0.7.0",
-    "style-loader": "0.18.2"
+    "style-loader": "0.18.2",
+    "faker": "4.1.0",
+    "puppeteer": "1.5.0"
   },
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom",
+    "test": "jest",
+    "debug": "NODE_ENV=development npm test",
     "deploy": "npm run build&&gh-pages -d build"
   },
   "jest": {
+    "verbose": true,
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"
     ],
@@ -94,7 +98,8 @@
     ],
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.js?(x)",
-      "<rootDir>/src/**/?(*.)(spec|test).js?(x)"
+      "<rootDir>/src/**/?(*.)(spec|test).js?(x)",
+      "<rootDir>/?(*.)(spec|test).js?(x)"
     ],
     "testEnvironment": "node",
     "testURL": "http://localhost",
@@ -121,6 +126,9 @@
   "babel": {
     "presets": [
       "react-app"
+    ],
+    "plugins": [
+      "transform-es2015-modules-commonjs"
     ]
   },
   "eslintConfig": {
