@@ -6,6 +6,7 @@ Collaborate together in a value network.
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+nd. Agent consumes data from 2 possible endpoints, both used in the faircoop ecosystem. If you want to install Agent locally and you're not part of faircoop, [you need to install also the backend locally](https://github.com/FreedomCoop/valuenetwork/blob/master/INSTALL.md)
 
 ### Prerequisites
 
