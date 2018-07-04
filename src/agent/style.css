@@ -120,6 +120,7 @@
     height: 80px;
     border-radius: 2px;
     display: block;
+    background-size: cover;
 }
 
 .info_note {

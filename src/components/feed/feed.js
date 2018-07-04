@@ -9,7 +9,7 @@ export default function ({feed}) {
           <div key={i} className={style.list_item}>
             <div className={style.members}>
               <span className={style.members_item}>
-                <img alt='provider' src={item.provider.image} />
+                <span style={{backgroundImage: item.provider.image ? `url(${item.provider.image})` : ''}} />
               </span>
             </div>
             <div className={style.item_desc}>

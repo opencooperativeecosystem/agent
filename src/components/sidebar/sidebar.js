@@ -49,13 +49,13 @@ const Sidebar = (props) => {
         <span className={props.panel ? style.menu_icon + ' ' + style.icon_active : style.menu_icon} onClick={() => props.handleTogglePanel()}><Icons.Menu color='#99ADC6' width='18' /></span>
         <span className={style.menu_icon}><NavLink to={'/'}><Icons.User color='#99ADC6' width='18' /></NavLink></span>
         <span className={style.menu_icon}><NavLink to={'/settings'}><Icons.Settings color='#99ADC6' width='18' /></NavLink></span>
-        <span onClick={props.logout} className={style.menu_icon}><Icons.Power color='#99ADC6' width='18' /></span>
+        <span data-testid='log-out' onClick={props.logout} className={style.menu_icon}><Icons.Power color='#99ADC6' width='18' /></span>
       </header>
       <div className={style.sidebar_header}>
         <div className={style.header_profile}>
           <NavLink to={'/'}>
             <div className={style.data_image}>
-              <img alt='profile' src={props.data.image} />
+              <img alt='profile' src={props.data.image ? props.data.image : '../../images/sample.png' } />
             </div>
             <h3 data-testid='agent-name'>{props.data.name}</h3>
           </NavLink>

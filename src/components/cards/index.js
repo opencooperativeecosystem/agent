@@ -11,7 +11,7 @@ const Cards = ({data, link, match, location}) => {
       .sort((a, b) => b.date - a.date)
       .map((org, i) => (
         <div key={i} className={style.lists_item}>
-          <Link key={i} to={link + '/' + org.id} className={style.link}>
+          <Link key={'plan_' + i} to={link + '/' + org.id} className={style.link}>
             <h4 className={style.item_title}>{org.name.length > 0 ? org.name : org.planProcesses[0].name}</h4>
             <h5 className={style.plan_scope}>{org.note}</h5>
             <div className={style.item_info}>

@@ -12,6 +12,9 @@ body {
     background-color: #191B22 !important;
   }
 
+  img{
+    text-indent:-9999px
+  }
 
 /* LOGIN */
 

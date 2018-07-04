@@ -22,11 +22,11 @@ const Login = ({values, handleSubmit, touched, errors}) => {
                       <Field placeholder='Insert your username' name='username' />
                       { touched.username && errors.username && <Alert>{errors.username}</Alert> }
                   </div>
-                  <div>
+                   <div>
                       <Field placeholder='Insert your password' name='password' type='password' />
                       { touched.password && errors.password && <Alert>{errors.password}</Alert> }
                   </div>
-              <button>login</button>
+              <button data-testid='login'>login</button>
               </Form>
               <a href='https://ocp.freedomcoop.eu/account/password/reset/' target='blank' className={style.wrapper_lost}>Password lost?</a>
               <h5>Useful links</h5>
@@ -54,7 +54,7 @@ export default compose(
             props.mutate({variables: {username: values.username, password: values.password}})
             .then ((res) => {
               props.updateNotification({variables: {
-                  message: <div className={style.message}><span><Icons.Bell width='18' height='18' color='white' /></span>Welcome :)</div>,
+                  message: <div data-testid='success' className={style.message}><span><Icons.Bell width='18' height='18' color='white' /></span>Welcome :)</div>,
                   type: 'success'
               }
               })
@@ -65,7 +65,7 @@ export default compose(
             (e) => {
                 const errors = e.graphQLErrors.map(error => error.message)
                 props.updateNotification({variables: {
-                    message: <div className={style.message}><span><Icons.Cross width='18' height='18' color='white' /></span>{errors}</div>,
+                    message: <div data-testid='error' className={style.message}><span><Icons.Cross width='18' height='18' color='white' /></span>{errors}</div>,
                     type: 'alert'
                 }
                 })

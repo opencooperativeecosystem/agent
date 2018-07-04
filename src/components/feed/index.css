@@ -51,7 +51,7 @@
 }
 
   .item_desc {
-    margin-left: 50px;
+    margin-left: 40px;
     
   }
 
@@ -81,7 +81,7 @@
     z-index: 0;
   }
 
-  .members_item img {
+  .members_item span {
     width: 32px;
     height: 32px;
     display: block;
@@ -93,6 +93,7 @@
     max-width: 32px;
     max-height: 32px;
     text-overflow: ellipsis;
+    background-size: cover;
   }
   
 
