@@ -8,6 +8,7 @@ const PlanModal = ({
   planId,
   match,
   scopeId,
+  isDeletable,
   title,
   note,
   history
@@ -20,6 +21,7 @@ const PlanModal = ({
       title={title}
       note={note}
       history={history}
+      isDeletable={isDeletable}
     />
   </Modal>
 );

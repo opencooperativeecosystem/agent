@@ -101,7 +101,7 @@ export default compose(
     },
   }),
   withFormik({
-      mapPropsToValues: () => ({ name: '', note: '', scope: '', start: moment() }),
+      mapPropsToValues: (props) => ({ name: '', note: '', scope: props.relationships[0].props.value, start: moment() }),
       validationSchema: Yup.object().shape({
           name: Yup.string().required(),
           note: Yup.string(),

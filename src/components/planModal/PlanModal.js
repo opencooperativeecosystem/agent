@@ -46,11 +46,14 @@ const PlanModal = props => (
       <Button>Update Plan</Button>
     </Form>
     </div>
+    {props.isDeletable ?
     <div className={style.deletePlanWrapper}>
-    <h3 className={style.archiveTitle}>Do you want to archive the plan?</h3>
-    <h5 className={style.archiveDesc}>If there are events logged, it will not be possible to archive it</h5>
-    <Button primary onClick={props.deletePlan}>Archive</Button>
+      <h3 className={style.archiveTitle}>Do you want to delete the plan?</h3>
+      <h5 className={style.archiveDesc}>If there are events logged, it will not be possible to delete it</h5>
+      <Button primary onClick={props.deletePlan}>Delete</Button>
     </div>
+    : null
+    }
   </div>
 );
 
@@ -89,7 +92,6 @@ export default compose(
         })
             .then(
                 data => {
-                  console.log(data)
                   props.updateNotification({variables: {
                       message: <div className={style.message}><span><Icons.Bell width='18' height='18' color='white' /></span>Plan {data.data.deletePlan.plan.name} deleted successfully!</div>,
                       type: 'success'

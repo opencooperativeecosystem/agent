@@ -25,7 +25,6 @@ const StartDate = (props) => {
 }
 
 const DueDate = (props) => {
-  console.log(props.value)
   const handleChange = value => {
     props.onChange('due', value);
   };
@@ -65,7 +64,7 @@ const Sidebar = (props) => {
         <h4 className={style.planCreation_title}>Create a new plan</h4>
         <Form>
           <div className={style.form_input}>
-            <Field name="name" render={({ field /* _form */ }) => (<Input type={'dark'} {...field} placeholder='Type the plan name' />)} />
+            <Field name="name" render={({ field /* _form */ }) => (<Input {...field} placeholder='Type the plan name' />)} />
             {props.errors.name && props.touched.name && <Alert>{props.errors.name}</Alert>}
           </div>
           <div className={style.formPlanWrapper}>
