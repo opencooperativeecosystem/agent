@@ -14,6 +14,7 @@ mutation ($token: String!, $planId: Int! $name: String!, $planned: String!, $dur
         id
         name
         note
+        isDeletable
         plannedStart
         isFinished
         scope {

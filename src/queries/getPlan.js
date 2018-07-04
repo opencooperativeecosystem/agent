@@ -6,6 +6,7 @@ query ($token: String, $planId: Int) {
       plan(id: $planId) {
         id
         name
+        isDeletable
         scope {
           id
           name
@@ -15,6 +16,7 @@ query ($token: String, $planId: Int) {
           id
           isFinished
           name
+          isDeletable
           plannedStart
           scope {
             id

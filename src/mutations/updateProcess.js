@@ -10,6 +10,7 @@ export const UpdateProcess = gql`
         id
         name
         note
+        isDeletable
         plannedStart
         isFinished
       }
