@@ -20,6 +20,7 @@ const EditStart = (props) => (
         onBlur={props.setFieldTouched}
         error={props.errors.start}
         touched={props.touched.start}
+        start={props.start}
     />
     <Button>Update Start</Button>
   </Form>
@@ -47,7 +48,7 @@ export default compose(
     graphql(UpdateProcess, { name: "updateProcessMutation" }),
     graphql(updateNotification, {name: 'updateNotification'}),
     withFormik({
-      mapPropsToValues: (props) => ({ start: moment() }),
+      mapPropsToValues: (props) => ({ start: moment(props.start) }),
       validationSchema: Yup.object().shape({
          start: Yup.string().required()
       }),

@@ -20,7 +20,7 @@ const BinWrapper = ({name, note, openCardController, planId, plannedStart, id, u
     infoNote={note}
     Titleform={<EditTitle id={id} planId={planId}/>}
     Noteform={<EditNote id={id} planId={planId} />}
-    Startform={<EditStart id={id} planId={planId} />}
+    Startform={<EditStart id={id} planId={planId} start={plannedStart}/>}
     Archive={<Archive id={id} planId={planId} />}
     plannedStart={moment(plannedStart).format("DD MMM YYYY")}
     outputs={outputs}
