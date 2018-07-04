@@ -1,6 +1,7 @@
 @import "../mixins.css";
 body {
     font-family: 'Fira Sans';
+    background-color: #191B22 !important;
 }
 .settings {
     lost-utility:clearfix;
