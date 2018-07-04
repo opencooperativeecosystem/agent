@@ -16,7 +16,7 @@ const StartDate = (props) => {
       <DatePicker
       selected={props.value}
       onChange={handleChange}
-      dateFormatCalendar={'DD MMM YYYY'}
+      dateFormat={'DD MMM YYYY'}
       withPortal
     />
     {props.error && props.touched && <Alert>{props.error}</Alert>}
@@ -25,6 +25,7 @@ const StartDate = (props) => {
 }
 
 const DueDate = (props) => {
+  console.log(props.value)
   const handleChange = value => {
     props.onChange('due', value);
   };
@@ -33,7 +34,7 @@ const DueDate = (props) => {
     <DatePicker
       selected={props.value}
       onChange={handleChange}
-      dateFormatCalendar={'DD MMM YYYY'}
+      dateFormat={'DD MMM YYYY'}
       withPortal
     />
     {props.error && props.touched && <Alert>{props.error}</Alert>}

@@ -35,7 +35,7 @@ const StartDate = (props) => {
         <DatePicker
             selected={props.value}
             onChange={handleChange}
-            dateFormatCalendar={'DD MMM YYYY'}
+            dateFormat={'DD MMM YYYY'}
         />
       {props.error && props.touched && <Alert>{props.error}</Alert>}
       </div>

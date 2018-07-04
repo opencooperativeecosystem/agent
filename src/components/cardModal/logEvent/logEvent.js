@@ -27,7 +27,7 @@ export default function LogEvent ({previousEvent, updateEvent, eventId, update, 
                     <DatePicker
                       selected={previousEvent ? moment(previousEvent.fulfilledBy.start) : startDate}
                       onChange={addDate}
-                      dateFormatCalendar={'DD MMM YYYY'}
+                      dateFormat={'DD MMM YYYY'}
                     />
                 </div>
             </div>
