@@ -10,8 +10,12 @@ import updateNotification from "../../mutations/updateNotification";
 
 const ArchiveProcess = (props) => (
     <div>
-        <h5 className={style.h5}>Are you sure to archive the process?</h5>
-        <Button primary onClick={props.deleteProcess}>Archive</Button>
+        {props.isDeletable
+        ? <div> <h5 className={style.h5}>Are you sure to delete the process?</h5>
+        <Button primary onClick={props.deleteProcess}>Delete</Button></div>
+        : <h5 className={style.h5}>The process is not deletable since events are already logged on.</h5>
+        }
+        
     </div>
 )
 

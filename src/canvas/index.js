@@ -52,6 +52,7 @@ const Canvas = ({
           agents={list.workingAgents}
           name={list.name}
           planId={param}
+          isDeletable={list.isDeletable}
           openModal={openModal}
           openCardController={() => toggleNewCommitmentModal(list.id, list.scope.id)}
         />
