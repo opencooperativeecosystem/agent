@@ -23,6 +23,8 @@ const Bin = ({
   setFieldValue,
   setFieldTouched,
   errors,
+  startDate,
+  due,
   touched
 }) => {
   return (
@@ -64,6 +66,8 @@ const Bin = ({
             onBlur={setFieldTouched}
             error={errors.start}
             touched={touched.start}
+            startDate={startDate}
+            due={due}
           />
         </NewBin>
       </Form>
@@ -83,6 +87,8 @@ const StartDate = (props) => {
       selected={props.value}
       onChange={handleChange}
       dateFormat={'DD MMM YYYY'}
+      minDate={moment(props.startDate)}
+      maxDate={moment(props.due)}
       withPortal
     />
     {props.error && props.touched && <Alert>{props.error}</Alert>}
@@ -103,7 +109,7 @@ export default compose(
     },
   }),
   withFormik({
-      mapPropsToValues: (props) => ({ name: '', note: '', scope: props.relationships[0].props.value, start: moment() }),
+      mapPropsToValues: (props) => ({ name: '', note: '', scope: props.relationships[0].props.value, start: moment(props.startDate) }),
       validationSchema: Yup.object().shape({
           name: Yup.string().required(),
           note: Yup.string(),

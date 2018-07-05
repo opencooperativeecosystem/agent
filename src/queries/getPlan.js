@@ -7,6 +7,8 @@ query ($token: String, $planId: Int) {
         id
         name
         note
+        due
+        plannedOn
         isDeletable
         scope {
           id

@@ -22,6 +22,8 @@ const EditStart = (props) => (
         error={props.errors.start}
         touched={props.touched.start}
         start={props.start}
+        planStart={props.planStart}
+        planDue={props.planDue}
     />
     <Button>Update Start</Button>
   </Form>
@@ -38,6 +40,8 @@ const StartDate = (props) => {
             selected={props.value}
             onChange={handleChange}
             dateFormat={'DD MMM YYYY'}
+            minDate={moment(props.planStart)}
+            maxDate={moment(props.planDue)}
         />
       {props.error && props.touched && <Alert>{props.error}</Alert>}
       </div>

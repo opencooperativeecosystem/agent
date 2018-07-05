@@ -45,6 +45,7 @@ const CanvasWrapper = ({
     }}
   >
     {({ loading, error, data }) => {
+      console.log(data)
       if (loading) return <LoadingMini />;
       if (error) return <ErrorPlan />;
       return (

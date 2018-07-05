@@ -13,7 +13,7 @@ import updateNotification from "../../mutations/updateNotification";
 import deleteNotification from "../../mutations/deleteNotification";
 import gql from 'graphql-tag';
 
-const BinWrapper = ({name, note, openCardController, planId, plannedStart, id, updateProcess, cards, outputs, status, openModal}) => (
+const BinWrapper = ({name, note, openCardController, planId, plannedStart, id, updateProcess, cards, outputs, status, planDueDate, planStartDate, openModal}) => (
   <Bin
     openCardController={openCardController}
     updateProcess={updateProcess}
@@ -22,7 +22,7 @@ const BinWrapper = ({name, note, openCardController, planId, plannedStart, id, u
     infoNote={note}
     Titleform={<EditTitle title={name} id={id} planId={planId}/>}
     Noteform={<EditNote note={note} id={id} planId={planId} />}
-    Startform={<EditStart id={id} planId={planId} start={plannedStart}/>}
+    Startform={<EditStart planStart={planStartDate} planDue={planDueDate} id={id} planId={planId} start={plannedStart}/>}
     Archive={<Archive id={id} planId={planId} />}
     plannedStart={moment(plannedStart).format("DD MMM YYYY")}
     outputs={outputs}

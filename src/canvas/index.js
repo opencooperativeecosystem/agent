@@ -55,6 +55,9 @@ const Canvas = ({
           isDeletable={list.isDeletable}
           openModal={openModal}
           openCardController={() => toggleNewCommitmentModal(list.id, list.scope.id)}
+          
+          planStartDate={data.plannedOn}
+          planDueDate={data.due}
         />
       ))}
       <NewBin
@@ -64,6 +67,8 @@ const Canvas = ({
           </option>
         ))}
         param={param}
+        startDate={data.plannedOn}
+        due={data.due}
       />
     </div>
   </section>
