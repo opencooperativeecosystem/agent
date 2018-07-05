@@ -11,6 +11,7 @@ import DatePicker from "react-datepicker";
 import Alert from '../alert'
 import style from './style.css'
 import updateNotification from "../../mutations/updateNotification";
+import deleteNotification from "../../mutations/deleteNotification";
 require("react-datepicker/dist/react-datepicker-cssmodules.css");
 
 const Bin = ({
@@ -95,6 +96,7 @@ export default compose(
   withState("clicked", "handleClicked", false),
   graphql(CreateProcess, { name: "createProcessMutation" }),
   graphql(updateNotification, {name: 'updateNotification'}),
+  graphql(deleteNotification, {name: 'deleteNotification'}),
   withHandlers({
     toggleClicked: props => () => {
       props.handleClicked(!props.clicked);
@@ -141,6 +143,11 @@ export default compose(
               message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Bell width='18' height='18' color='white' /></span>Process {data.data.createProcess.process.name} created successfully!</div>,
               type: 'success'
             }})
+            .then(res => {
+              setTimeout(() => {
+               props.deleteNotification({variables: {id: res.data.addNotification.id}})
+             }, 1000);
+            })
           }, (e) => {
             const errors = e.graphQLErrors.map(error => error.message)
             props.setSubmitting(false)
@@ -148,6 +155,11 @@ export default compose(
               message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Cross width='18' height='18' color='white' /></span>{errors}</div>,
               type: 'alert'
             }})
+            .then(res => {
+              setTimeout(() => {
+               props.deleteNotification({variables: {id: res.data.addNotification.id}})
+             }, 1000);
+            })
          })
       }
   })

@@ -5,6 +5,7 @@ import {Form, withFormik } from 'formik'
 import * as Yup from 'yup'
 import Alert from '../alert'
 import updateNotification from "../../mutations/updateNotification";
+import deleteNotification from "../../mutations/deleteNotification";
 import Plan from "../../queries/getPlan";
 import UpdateProcess from "../../mutations/updateProcess";
 import { graphql, compose } from "react-apollo";
@@ -47,6 +48,7 @@ const StartDate = (props) => {
 export default compose(
     graphql(UpdateProcess, { name: "updateProcessMutation" }),
     graphql(updateNotification, {name: 'updateNotification'}),
+    graphql(deleteNotification, {name: 'deleteNotification'}),
     withFormik({
       mapPropsToValues: (props) => ({ start: moment(props.start) }),
       validationSchema: Yup.object().shape({
@@ -92,6 +94,11 @@ export default compose(
                 message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Bell width='18' height='18' color='white' /></span>Date updated successfully!</div>,
                 type: 'success'
               }})
+              .then(res => {
+                setTimeout(() => {
+                 props.deleteNotification({variables: {id: res.data.addNotification.id}})
+               }, 1000);
+              })
             },
             e => {
               const errors = e.graphQLErrors.map(error => error.message);
@@ -99,6 +106,11 @@ export default compose(
                 message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Cross width='18' height='18' color='white' /></span>{errors}</div>,
                 type: 'alert'
               }})
+              .then(res => {
+                setTimeout(() => {
+                 props.deleteNotification({variables: {id: res.data.addNotification.id}})
+               }, 1000);
+              })
             }
           );
       }

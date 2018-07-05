@@ -11,6 +11,7 @@ import updatePlan from '../../mutations/updatePlan'
 import deletePlan from '../../mutations/deletePlan'
 import {withHandlers} from 'recompose'
 import updateNotification from "../../mutations/updateNotification";
+import deleteNotification from "../../mutations/deleteNotification";
 
 const PlanModal = props => (
   <div className={style.planModal}>
@@ -61,6 +62,7 @@ export default compose(
   graphql(updatePlan, { name: "updatePlanMutation" }),
   graphql(deletePlan, { name: "deletePlanMutation" }),
   graphql(updateNotification, {name: 'updateNotification'}),
+  graphql(deleteNotification, {name: 'deleteNotification'}),
   withHandlers({
     deletePlan: props => event => {
         event.preventDefault()
@@ -97,6 +99,11 @@ export default compose(
                       type: 'success'
                     }
                   })
+                  .then(res => {
+                    setTimeout(() => {
+                     props.deleteNotification({variables: {id: res.data.addNotification.id}})
+                   }, 1000);
+                  })
                   props.history.replace('/')
                 },
                 e => {
@@ -105,6 +112,11 @@ export default compose(
                       message: <div className={style.message}><span><Icons.Cross width='18' height='18' color='white' /></span>{errors}</div>,
                       type: 'alert'
                     }
+                  })
+                  .then(res => {
+                    setTimeout(() => {
+                     props.deleteNotification({variables: {id: res.data.addNotification.id}})
+                   }, 1000);
                   })
                 }
             );
@@ -120,7 +132,7 @@ export default compose(
       title: Yup.string(),
       note: Yup.string(),
     }),
-    handleSubmit: (values, { props, resetForm, setErrors, setSubmitting }) => {
+    handleSubmit: (values, { props }) => {
       props
         .updatePlanMutation({
           variables: {
@@ -158,6 +170,11 @@ export default compose(
               type: 'success'
             }
           })
+          .then(res => {
+            setTimeout(() => {
+             props.deleteNotification({variables: {id: res.data.addNotification.id}})
+           }, 1000);
+          })
           },
           e => {
             const errors = e.graphQLErrors.map(error => error.message);
@@ -165,6 +182,11 @@ export default compose(
               message: <div className={style.message}><span><Icons.Cross width='18' height='18' color='white' /></span>{errors}</div>,
               type: 'alert'
             }})
+            .then(res => {
+              setTimeout(() => {
+               props.deleteNotification({variables: {id: res.data.addNotification.id}})
+             }, 1000);
+            })
             props.setSubmitting(false);
           }
         );

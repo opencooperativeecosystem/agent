@@ -7,6 +7,7 @@ import * as Yup from 'yup'
 import Alert from '../components/alert'
 import LoginMutation from '../mutations/login'
 import updateNotification from "../mutations/updateNotification";
+import deleteNotification from "../mutations/deleteNotification";
 
 const Login = ({values, handleSubmit, touched, errors}) => {
       return (
@@ -44,6 +45,7 @@ const Login = ({values, handleSubmit, touched, errors}) => {
 export default compose(
     graphql(LoginMutation),
     graphql(updateNotification, {name: 'updateNotification'}),
+    graphql(deleteNotification, {name: 'deleteNotification'}),
     withFormik({
         mapPropsToValues: () => ({ username: '', password: '' }),
         validationSchema: Yup.object().shape({
@@ -52,14 +54,19 @@ export default compose(
         }),
         handleSubmit: (values, {props, resetForm, setErrors, setSubmitting}) => {
             props.mutate({variables: {username: values.username, password: values.password}})
-            .then ((res) => {
+            .then ((data) => {
               props.updateNotification({variables: {
                   message: <div data-testid='success' className={style.message}><span><Icons.Bell width='18' height='18' color='white' /></span>Welcome :)</div>,
                   type: 'success'
               }
               })
-              localStorage.setItem('oce_token', res.data.createToken.token)
-              localStorage.setItem('agent_id', res.data.createToken.id)
+              .then(res => {
+                setTimeout(() => {
+                 props.deleteNotification({variables: {id: res.data.addNotification.id}})
+               }, 1000);
+              })
+              localStorage.setItem('oce_token', data.data.createToken.token)
+              localStorage.setItem('agent_id', data.data.createToken.id)
               props.history.replace('/')
             }, 
             (e) => {
@@ -69,6 +76,11 @@ export default compose(
                     type: 'alert'
                 }
                 })
+                .then(res => {
+                    setTimeout(() => {
+                     props.deleteNotification({variables: {id: res.data.addNotification.id}})
+                   }, 1000);
+                  })
                 setSubmitting(false)
              }
           )

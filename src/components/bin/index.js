@@ -10,8 +10,10 @@ import EditNote from './editNote'
 import Archive from './archive'
 import moment from 'moment'
 import updateNotification from "../../mutations/updateNotification";
+import deleteNotification from "../../mutations/deleteNotification";
+import gql from 'graphql-tag';
 
-const BinWrapper = ({name, note, openCardController, planId, plannedStart, id, updateProcess, actionPopup, actionPopupId, toggleActions, cards, outputs, status, openModal}) => (
+const BinWrapper = ({name, note, openCardController, planId, plannedStart, id, updateProcess, cards, outputs, status, openModal}) => (
   <Bin
     openCardController={openCardController}
     updateProcess={updateProcess}
@@ -47,7 +49,7 @@ const BinWrapper = ({name, note, openCardController, planId, plannedStart, id, u
 const enhancedList = compose(
     graphql(UpdateProcess, { name: 'updateProcessMutation' }),
     graphql(updateNotification, {name: 'updateNotification'}),
-    withState('processStatus', 'toggleProcessStatus', props => props.status),
+    graphql(deleteNotification, {name: 'deleteNotification'}),
     withHandlers({
       updateProcess: props => event => {
         return (
@@ -58,33 +60,59 @@ const enhancedList = compose(
               isFinished: !props.status
             },
             update: (store, {data}) => {
-              let planProcessesCache = store.readQuery({query: Plan, 
-                variables: {
-                  token: localStorage.getItem('oce_token'),
-                  planId: Number(props.planId)
-                }})
-              
-              const processToUpdateIndex = planProcessesCache.viewer.plan.planProcesses.findIndex(proc => proc.id === data.updateProcess.process.id)
-              planProcessesCache.viewer.plan.planProcesses[processToUpdateIndex].isFinished = data.updateProcess.process.isFinished
-              store.writeQuery({ query: Plan,
-                variables: {
-                  token: localStorage.getItem('oce_token'),
-                  planId: Number(props.planId)
+              store.writeFragment({
+                id: data.updateProcess.process.id,
+                fragment: gql`
+                  fragment myProcess on Process {
+                    isFinished
+                    __typename
+                  }
+                `,
+                data: {
+                  isFinished: data.updateProcess.process.isFinished,
+                  __typename: 'Process'
                 },
-                data: planProcessesCache })
+              });
+              // let planProcessesCache = store.readQuery({query: Plan, 
+              //   variables: {
+              //     token: localStorage.getItem('oce_token'),
+              //     planId: Number(props.planId)
+              //   }})
+              
+              // const processToUpdateIndex = planProcessesCache.viewer.plan.planProcesses.findIndex(proc => proc.id === data.updateProcess.process.id)
+              // planProcessesCache.viewer.plan.planProcesses[processToUpdateIndex].isFinished = data.updateProcess.process.isFinished
+              // store.writeQuery({ query: Plan,
+              //   variables: {
+              //     token: localStorage.getItem('oce_token'),
+              //     planId: Number(props.planId)
+              //   },
+              //   data: planProcessesCache })
             }
           })
           .then((data) => props.updateNotification({variables: {
             message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Bell width='18' height='18' color='white' /></span>Process updated successfully!</div>,
             type: 'success'
-          }}))
+          }})
+          .then(res => {
+            setTimeout(() => {
+             props.deleteNotification({variables: {id: res.data.addNotification.id}})
+           }, 1000);
+          })
+        )
+          
           .catch((e) => {
             const errors = e.graphQLErrors.map(error => error.message);
           props.setSubmitting(false);
           props.updateNotification({variables: {
             message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Cross width='18' height='18' color='white' /></span>{errors}</div>,
             type: 'alert'
-          }})})
+          }})
+          .then(res => {
+            setTimeout(() => {
+             props.deleteNotification({variables: {id: res.data.addNotification.id}})
+           }, 1000);
+          })
+        })
         )
       }
     })

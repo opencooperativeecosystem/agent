@@ -7,6 +7,7 @@ import GetPlan from "../../../queries/getPlan";
 import { graphql, Mutation, ApolloConsumer } from "react-apollo";
 import gql from "graphql-tag";
 import updateNotification from "../../../mutations/updateNotification";
+import deleteNotification from "../../../mutations/deleteNotification";
 import { Form, Field, withFormik } from "formik";
 import * as Yup from "yup";
 import Alert from "../../alert";
@@ -19,6 +20,7 @@ require("react-datepicker/dist/react-datepicker-cssmodules.css");
 const EditNote = compose(
   graphql(UpdateCommitment, { name: "updateCommitmentMutation" }),
   graphql(updateNotification, { name: "updateNotification" }),
+  graphql(deleteNotification, { name: "deleteNotification" }),
   withFormik({
     mapPropsToValues: props => ({ note: "" }),
     validationSchema: Yup.object().shape({
@@ -59,7 +61,12 @@ const EditNote = compose(
                 ),
                 type: "success"
               }
-            });
+            })
+            .then(res => {
+              setTimeout(() => {
+               props.deleteNotification({variables: {id: res.data.addNotification.id}})
+             }, 1000);
+            })
           },
           e => {
             const errors = e.graphQLErrors.map(error => error.message);
@@ -75,7 +82,12 @@ const EditNote = compose(
                 ),
                 type: "alert"
               }
-            });
+            })
+            .then(res => {
+              setTimeout(() => {
+               props.deleteNotification({variables: {id: res.data.addNotification.id}})
+             }, 1000);
+            })
           }
         );
     }
@@ -101,7 +113,8 @@ const EditNote = compose(
 ));
 
 const DeleteNote = compose(
-  graphql(updateNotification, { name: "updateNotification" })
+  graphql(updateNotification, { name: "updateNotification" }),
+  graphql(deleteNotification, { name: "deleteNotification" })
 )(props => (
   <Mutation
     mutation={DeleteCommitment}
@@ -159,7 +172,12 @@ const DeleteNote = compose(
                     ),
                     type: "success"
                   }
-                });
+                })
+                .then(res => {
+                  setTimeout(() => {
+                   props.deleteNotification({variables: {id: res.data.addNotification.id}})
+                 }, 1000);
+                })
               },
               e => {
                 const errors = e.graphQLErrors.map(error => error.message);
@@ -177,7 +195,12 @@ const DeleteNote = compose(
                     ),
                     type: "alert"
                   }
-                });
+                })
+                .then(res => {
+                  setTimeout(() => {
+                   props.deleteNotification({variables: {id: res.data.addNotification.id}})
+                 }, 1000);
+                })
               }
             );
           }}
@@ -209,6 +232,7 @@ const DueDate = props => {
 const EditDate = compose(
   graphql(UpdateCommitment, { name: "updateCommitmentMutation" }),
   graphql(updateNotification, { name: "updateNotification" }),
+  graphql(deleteNotification, { name: "deleteNotification" }),
   withFormik({
     mapPropsToValues: props => ({ due: moment() }),
     validationSchema: Yup.object().shape({
@@ -249,7 +273,12 @@ const EditDate = compose(
                 ),
                 type: "success"
               }
-            });
+            })
+            .then(res => {
+              setTimeout(() => {
+               props.deleteNotification({variables: {id: res.data.addNotification.id}})
+             }, 1000);
+            })
           },
           e => {
             const errors = e.graphQLErrors.map(error => error.message);
@@ -265,7 +294,12 @@ const EditDate = compose(
                 ),
                 type: "alert"
               }
-            });
+            })
+            .then(res => {
+              setTimeout(() => {
+               props.deleteNotification({variables: {id: res.data.addNotification.id}})
+             }, 1000);
+            })
           }
         );
     }
@@ -390,6 +424,7 @@ export default compose(
   withState("showTooltip", "handleTooltip", false),
   withState("content", "handleContent", ""),
   graphql(updateNotification, { name: "updateNotification" }),
+  graphql(deleteNotification, { name: "deleteNotification" }),
   graphql(UpdateCommitment, {
     props: ({ mutate, ownProps: { id } }) => ({
       updateCommitmentMutation: mutate
@@ -406,6 +441,7 @@ export default compose(
     updateCommitment: ({
       updateCommitmentMutation,
       updateNotification,
+      deleteNotification,
       id,
       planId
     }) => status => {
@@ -443,6 +479,11 @@ export default compose(
               type: "success"
             }
           })
+          .then(res => {
+            setTimeout(() => {
+             deleteNotification({variables: {id: res.data.addNotification.id}})
+           }, 1000);
+          })
         )
         .catch(e => {
           const errors = e.graphQLErrors.map(error => error.message);
@@ -458,7 +499,12 @@ export default compose(
               ),
               type: "alert"
             }
-          });
+          })
+          .then(res => {
+            setTimeout(() => {
+             deleteNotification({variables: {id: res.data.addNotification.id}})
+           }, 1000);
+          })
         });
     }
   })

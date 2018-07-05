@@ -5,6 +5,7 @@ import moment from 'moment'
 import React from 'react'
 import {Icons} from 'oce-components/build'
 import updateNotification from "../../../mutations/updateNotification"
+import deleteNotification from "../../../mutations/deleteNotification"
 import queryEvents from '../../../queries/getEvents'
 import plan from '../../../queries/getPlan'
 import createEvent from "../../../mutations/createEvent"
@@ -14,6 +15,7 @@ const wrapperComponent = compose(
   graphql(createEvent, { name: 'createEventMutation' }),
   graphql(updateEvent, { name: 'updateEventMutation' }),
   graphql(updateNotification, {name: 'updateNotification'}),
+  graphql(deleteNotification, {name: 'deleteNotification'}),
   withState('action', 'updateAction', 'work'),
   withState('note', 'updateNote', ''),
   withState('numericValue', 'updateNumericValue', '0'),
@@ -76,15 +78,12 @@ const wrapperComponent = compose(
             // )
             
             let processIndex = agentPlanCache.viewer.plan.planProcesses.findIndex(process => process.committedInputs.some(item => Number(item.id) === Number(props.id)))
-            console.log(data.createEconomicEvent.economicEvent.affectedQuantity)
             let commitmentUpdatedIndex = agentPlanCache.viewer.plan
               .planProcesses[processIndex]
               .committedInputs
               .findIndex(input => {
                 return Number(input.id) === Number(props.id)
               })
-              console.log(agentPlanCache.viewer.plan.planProcesses[processIndex].committedInputs[commitmentUpdatedIndex]
-                .fulfilledBy)
             agentPlanCache.viewer.plan.planProcesses[processIndex].committedInputs[commitmentUpdatedIndex]
             .fulfilledBy.unshift({
               fulfilledQuantity: {
@@ -117,13 +116,24 @@ const wrapperComponent = compose(
         .then((data) => props.updateNotification({variables: {
           message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Bell width='18' height='18' color='white' /></span>Event logged successfully!</div>,
           type: 'success'
-        }}))
+        }})
+        .then(res => {
+          setTimeout(() => {
+           props.deleteNotification({variables: {id: res.data.addNotification.id}})
+         }, 1000);
+        })
+      )
         .catch((e) => {
           const errors = e.graphQLErrors.map(error => error.message)
             props.updateNotification({variables: {
               message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Cross width='18' height='18' color='white' /></span>{errors}</div>,
               type: 'alert'
             }})
+            .then(res => {
+              setTimeout(() => {
+               props.deleteNotification({variables: {id: res.data.addNotification.id}})
+             }, 1000);
+            })
         })
       )
     },
@@ -208,13 +218,24 @@ const wrapperComponent = compose(
         .then((data) => props.updateNotification({variables: {
           message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Bell width='18' height='18' color='white' /></span>Event logged successfully!</div>,
           type: 'success'
-        }}))
+        }})
+        .then(res => {
+          setTimeout(() => {
+           props.deleteNotification({variables: {id: res.data.addNotification.id}})
+         }, 1000);
+        })
+      )
         .catch((e) => {
           const errors = e.graphQLErrors.map(error => error.message)
             props.updateNotification({variables: {
               message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Cross width='18' height='18' color='white' /></span>{errors}</div>,
               type: 'alert'
             }})
+            .then(res => {
+              setTimeout(() => {
+               props.deleteNotification({variables: {id: res.data.addNotification.id}})
+             }, 1000);
+            })
         })
       )
     }
