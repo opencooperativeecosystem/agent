@@ -72,7 +72,7 @@ const Sidebar = (props) => {
             <Field name="note" render={({ field /* _form */ }) => (<Textarea {...field} placeholder='What is the plan about' />)} />
           </div>
           <div className={style.dates}>
-            <div className={style.dateWrapper}>
+            {/* <div className={style.dateWrapper}>
               <h5 className={style.dateName}><span style={{verticalAlign: 'sub'}}><Icons.Calendar width='16' height='16' color='#707BA0' /></span> Start</h5>
               <StartDate
                 value={props.values.start}
@@ -81,7 +81,7 @@ const Sidebar = (props) => {
                 error={props.errors.start}
                 touched={props.touched.start}
               />
-            </div>
+            </div> */}
             <div className={style.dateWrapper}>
               <h5 className={style.dateName}><span style={{verticalAlign: 'sub'}}><Icons.Calendar width='16' height='16' color='#707BA0' /></span> Due</h5>
               <DueDate

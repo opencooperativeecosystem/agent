@@ -42,3 +42,51 @@
   margin-right: 10px;
   vertical-align: sub;
   }
+
+
+
+.dates {
+    background: #ebebeb;
+    height: 50px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.dateWrapper {
+   margin-top: 6px;
+   margin-left: 5px;
+   display: inline-block;
+  }
+  
+  .dateName {
+    margin: 0;
+    /* float: left; */
+    margin-left: 5px;
+    padding-right: 0px;
+    /* border-right: 1px solid rgba(255, 255, 255, .32157); */
+    /* line-height: 40px; */
+    font-weight: 400;
+    color: #707b97;
+    letter-spacing: .5px;
+    font-size: 13px;
+  }
+  
+  .dateWrapper > div:first-of-type {
+    float: left;
+    border: none;
+  }
+  
+  .dateWrapper div input {
+    border: none;
+    background: none;
+    text-indent: 10px;
+    font-size: 13px;
+    color: #707b97;
+    font-weight: 600;
+    text-align: left;
+    width: 100px;
+    padding: 0;
+    margin: 0;
+    text-indent: 0;
+    margin-left: 5px;
+  }

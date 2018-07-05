@@ -99,6 +99,8 @@ const CanvasWrapper = ({
             planId={match.params.id}
             history={history}
             isDeletable={data.viewer.plan.isDeletable}
+            due={data.viewer.plan.due}
+            start={data.viewer.plan.plannedOn}
           />
           <NewCommitmentModal
             modalIsOpen={newCommitmentIsOpen}

@@ -11,7 +11,9 @@ const PlanModal = ({
   isDeletable,
   title,
   note,
-  history
+  history,
+  due,
+  start
 }) =>  (
   <Modal isOpen={isOpen} toggleModal={toggleModal}>
     <Component
@@ -22,6 +24,8 @@ const PlanModal = ({
       note={note}
       history={history}
       isDeletable={isDeletable}
+      due={due}
+      start={start}
     />
   </Modal>
 );

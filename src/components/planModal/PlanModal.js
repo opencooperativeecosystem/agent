@@ -12,6 +12,9 @@ import deletePlan from '../../mutations/deletePlan'
 import {withHandlers} from 'recompose'
 import updateNotification from "../../mutations/updateNotification";
 import deleteNotification from "../../mutations/deleteNotification";
+import DatePicker from 'react-datepicker'
+import moment from 'moment'
+require("react-datepicker/dist/react-datepicker-cssmodules.css")
 
 const PlanModal = props => (
   <div className={style.planModal}>
@@ -38,6 +41,30 @@ const PlanModal = props => (
         {props.errors.title &&
           props.touched.title && <Alert>{props.errors.title}</Alert>}
       </div>
+      <div className={style.dates}>
+        {/* <div className={style.dateWrapper}>
+          <h5 className={style.dateName}><span style={{verticalAlign: 'sub'}}><Icons.Calendar width='16' height='16' color='#707BA0' /></span> Start</h5>
+          <StartDate
+            value={props.values.start}
+            onChange={props.setFieldValue}
+            onBlur={props.setFieldTouched}
+            error={props.errors.start}
+            touched={props.touched.start}
+            start={props.start}
+          />
+        </div> */}
+        <div className={style.dateWrapper}>
+          <h5 className={style.dateName}><span style={{verticalAlign: 'sub'}}><Icons.Calendar width='16' height='16' color='#707BA0' /></span> Due</h5>
+          <DueDate
+            value={props.values.due}
+            onChange={props.setFieldValue}
+            onBlur={props.setFieldTouched}
+            error={props.errors.due}
+            touched={props.touched.due}
+            due={props.due}
+          />
+        </div>
+      </div>
       {/* <div className={style.form_note}>
       <label>
         <Field type="checkbox" name="status" checked={props.values.status}/>
@@ -57,6 +84,41 @@ const PlanModal = props => (
     }
   </div>
 );
+
+
+// const StartDate = (props) => {
+//   const handleChange = value => {
+//     props.onChange('start', value);
+//   };
+//   return (
+//     <div>
+//       <DatePicker
+//       selected={props.value}
+//       onChange={handleChange}
+//       dateFormat={'DD MMM YYYY'}
+//       withPortal
+//     />
+//     {props.error && props.touched && <Alert>{props.error}</Alert>}
+//     </div>
+//   )
+// }
+
+const DueDate = (props) => {
+  const handleChange = value => {
+    props.onChange('due', value);
+  };
+  return (
+    <div>
+    <DatePicker
+      selected={props.value}
+      onChange={handleChange}
+      dateFormat={'DD MMM YYYY'}
+      withPortal
+    />
+    {props.error && props.touched && <Alert>{props.error}</Alert>}
+    </div>
+  )
+}
 
 export default compose(
   graphql(updatePlan, { name: "updatePlanMutation" }),
@@ -127,10 +189,12 @@ export default compose(
       title: props.title || "",
       note: props.note || "",
       status: props.status || false,
+      due: moment(props.due) || moment()
     }),
     validationSchema: Yup.object().shape({
       title: Yup.string(),
       note: Yup.string(),
+      due: Yup.string()
     }),
     handleSubmit: (values, { props }) => {
       props
@@ -140,6 +204,7 @@ export default compose(
             id: props.planId,
             name: values.title,
             note: values.note,
+            due: moment(values.due).format("YYYY-MM-DD")
           },
           update: (store, { data }) => {
             let planCache = store.readQuery({
@@ -152,6 +217,8 @@ export default compose(
 
             planCache.viewer.plan.name = data.updatePlan.plan.name;
             planCache.viewer.plan.note = data.updatePlan.plan.note;
+            planCache.viewer.plan.plannedOn = data.updatePlan.plan.plannedOn;
+            planCache.viewer.plan.due = data.updatePlan.plan.due;
             planCache.viewer.plan.isFinished = data.updatePlan.plan.isFinished;
             store.writeQuery({
               query: Plan,
