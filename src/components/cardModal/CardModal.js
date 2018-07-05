@@ -11,7 +11,8 @@ import moment from 'moment'
 import Actions from './actions'
 import {LoadingMini} from '../loading'
 
-const CardModal = ({param, id, processId, toggleActions, actionPopup, updateCommitment, allPlanAgents, units, updateProcess, loading, data, error, close, modalDescription}) => {
+const CardModal = ({param, id, toggleActions, actionPopup, updateCommitment, allPlanAgents, units, loading, data, error, close, modalDescription}) => {
+  console.log(data)
   return (
     loading ? <LoadingMini /> : (
     error ? <p style={{ color: '#ddd' }}>{error}</p> : (

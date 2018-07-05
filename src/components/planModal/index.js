@@ -12,7 +12,7 @@ const PlanModal = ({
   title,
   note,
   history
-}) => (
+}) =>  (
   <Modal isOpen={isOpen} toggleModal={toggleModal}>
     <Component
       planId={planId}

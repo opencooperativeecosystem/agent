@@ -22,7 +22,7 @@ const EditNote = compose(
   graphql(updateNotification, { name: "updateNotification" }),
   graphql(deleteNotification, { name: "deleteNotification" }),
   withFormik({
-    mapPropsToValues: props => ({ note: "" }),
+    mapPropsToValues: props => ({ note: props.note || "" }),
     validationSchema: Yup.object().shape({
       note: Yup.string().required()
     }),
@@ -234,7 +234,7 @@ const EditDate = compose(
   graphql(updateNotification, { name: "updateNotification" }),
   graphql(deleteNotification, { name: "deleteNotification" }),
   withFormik({
-    mapPropsToValues: props => ({ due: moment() }),
+    mapPropsToValues: props => ({ due: moment(props.dueDate) }),
     validationSchema: Yup.object().shape({
       due: Yup.string().required()
     }),
@@ -361,6 +361,7 @@ const Actions = props => {
                   processId={props.processId}
                   dueDate={props.data.due}
                   scopeId={props.scopeId}
+                  note={props.data.note}
                 />
               </Tooltip>
             </div>

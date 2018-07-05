@@ -25,7 +25,7 @@ export default compose(
     graphql(updateNotification, {name: 'updateNotification'}),
     graphql(deleteNotification, {name: 'deleteNotification'}),
     withFormik({
-      mapPropsToValues: (props) => ({ note: '' }),
+      mapPropsToValues: (props) => ({ note: props.note || '' }),
       validationSchema: Yup.object().shape({
          note: Yup.string().required()
       }),

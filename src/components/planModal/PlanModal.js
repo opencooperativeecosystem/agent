@@ -32,7 +32,7 @@ const PlanModal = props => (
         <Field
           name="note"
           render={({ field /* _form */ }) => (
-            <Textarea {...field} placeholder="Type the process note..." />
+            <Textarea {...field} value={field.value} placeholder="Type the process note..." />
           )}
         />
         {props.errors.title &&

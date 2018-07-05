@@ -54,7 +54,7 @@ export default compose(
       validationSchema: Yup.object().shape({
          start: Yup.string().required()
       }),
-      handleSubmit: (values, { props, resetForm, setErrors, setSubmitting }) => {
+      handleSubmit: (values, { props }) => {
         props
           .updateProcessMutation({
             variables: {

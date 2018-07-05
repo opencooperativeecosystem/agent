@@ -31,7 +31,7 @@ export default compose(
   graphql(updateNotification, {name: 'updateNotification'}),
   graphql(deleteNotification, {name: 'deleteNotification'}),
   withFormik({
-    mapPropsToValues: props => ({ title: "" }),
+    mapPropsToValues: props => ({ title: props.title || "" }),
     validationSchema: Yup.object().shape({
       title: Yup.string().required()
     }),

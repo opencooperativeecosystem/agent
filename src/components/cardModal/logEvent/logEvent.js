@@ -7,7 +7,7 @@ import ToggleButton from 'react-toggle-button'
 import moment from 'moment'
 require('react-datepicker/dist/react-datepicker-cssmodules.css')
 
-export default function LogEvent ({previousEvent, updateEvent, eventId, update, toggle, units, requestPayment, startDate, addPayment, addDate, commitmentId, scopeId, log, note, addNote, addAction, addNumericValue, numericValue, addUnitId}) {
+export default function LogEvent ({previousEvent, updateEvent, update, toggle, units, requestPayment, startDate, addPayment, addDate, log, addNote, addAction, addNumericValue, addUnitId}) {
     return (
     <div className={style.content_module}>
         <div className={style.content_log}>
@@ -37,7 +37,7 @@ export default function LogEvent ({previousEvent, updateEvent, eventId, update, 
                       onToggle={(value) => addPayment(value)} />
                     <label>Request payment</label>
                 </div>
-                <TextArea action={addNote} placeholder={previousEvent ? previousEvent.fulfilledBy.note : 'Add a more detailed description...'} />
+                <TextArea action={addNote} value={previousEvent || ''} placeholder={'Add a more detailed description...'} />
                 {updateEvent
                 ? <div className={style.event_actions}>
                   <Button action={update} type={'good'} title='Update Event' />
