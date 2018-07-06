@@ -10,6 +10,7 @@ const Canvas = ({
   openModal,
   toggleNewCommitmentModal
 }) => {
+  console.log(data)
   return (
   <section className={style.canvasWrapper}>
     <div className={style.wrapperContainer}>
@@ -55,9 +56,15 @@ const Canvas = ({
           isDeletable={list.isDeletable}
           openModal={openModal}
           openCardController={() => toggleNewCommitmentModal(list.id, list.scope.id)}
-          
+          scope={list.scope.name}
+          scopeId={list.scope.id}
           planStartDate={data.plannedOn}
           planDueDate={data.due}
+          relationships={relationships.map((rel, i) => (
+            <option key={i} value={rel.object.id}>
+              {rel.object.name}
+            </option>
+          ))}
         />
       ))}
       <NewBin
