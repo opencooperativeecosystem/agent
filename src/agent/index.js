@@ -23,16 +23,7 @@ const Agent = ({data, match}) => {
           : <div className={style.emptyBox}>No item in this section :(</div>}
         </div>
       </Panel>
-      <Panel data-testid='plans' icon={<Icons.Card width='18' color='#f0f0f0' />} title='Plans'>
-        {data.agentPlans.length > 0
-          ? <Cards
-            data={data.agentPlans}
-            link='/canvas'
-          />
-          : <div className={style.emptyBox}>No item in this section :(</div>
-        }
-      </Panel>
-      <Panel data-testid='network' icon={<Icons.Globe width='18' color='#f0f0f0' />} title='Network'>
+      <Panel data-testid='network' icon={<Icons.Globe width='18' color='#f0f0f0' />} title={data.type === 'Person' ? 'Network' : 'Participants'}>
         <div className={style.agent_list}>
           {data.type === 'Person' 
           ? data.agentRelationships.map((item, i) => (
@@ -47,6 +38,15 @@ const Agent = ({data, match}) => {
           )) }
           
         </div>
+      </Panel>
+      <Panel data-testid='plans' icon={<Icons.Card width='18' color='#f0f0f0' />} title='Plans'>
+        {data.agentPlans.length > 0
+          ? <Cards
+            data={data.agentPlans}
+            link='/canvas'
+          />
+          : <div className={style.emptyBox}>No item in this section :(</div>
+        }
       </Panel>
       <Panel data-testid='inventory' icon={<Icons.Inventory width='18' color='#f0f0f0' />} title='Inventory'>
         <div className={style.resources_list}>
