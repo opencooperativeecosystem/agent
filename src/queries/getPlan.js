@@ -27,6 +27,22 @@ query ($token: String, $planId: Int) {
           }
           committedOutputs {
             id
+            action
+            note
+            due
+            involvedAgents {
+              image
+              id
+              name
+            }
+            inputOf {
+              id
+              name
+            }
+            outputOf {
+              id
+              name
+            }
             committedQuantity {
               unit {
                 name

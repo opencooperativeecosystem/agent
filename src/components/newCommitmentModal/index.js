@@ -40,14 +40,7 @@ options.unshift(
 );
 
 const NewCommModal = ({
-  match,
-  scopeId,
-  planId,
-  processId,
-  modalIsOpen,
-  toggleNewCommitmentModal,
   handleEvent,
-  handleSubmit,
   setFieldValue,
   setFieldTouched,
   errors,
@@ -81,7 +74,7 @@ const NewCommModal = ({
     <Form>
     <Wrapper>
         <SupTitle dark icon={<Icons.Text widht='18' height='18' color='#383C39' />} text='New commitment' />
-        <div className={style.commitmentWrapper}>
+          <div className={style.commitmentWrapper}>
             <div className={style.commInput}>
               <EventSelect 
                 value={values.event}

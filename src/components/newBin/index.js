@@ -60,7 +60,7 @@ const Bin = ({
           />
           {errors.scope && touched.scope && <Alert>{errors.scope}</Alert>}
           </div>
-          <StartDate 
+          {/* <StartDate 
             value={values.start}
             onChange={setFieldValue}
             onBlur={setFieldTouched}
@@ -68,7 +68,29 @@ const Bin = ({
             touched={touched.start}
             startDate={startDate}
             due={due}
-          />
+          /> */}
+          <div className={style.dates}>
+            <div className={style.dateWrapper}>
+              <h5 className={style.dateName}><span style={{verticalAlign: 'sub'}}><Icons.Calendar width='16' height='16' color='#707BA0' /></span> Start</h5>
+              <StartDate
+                value={values.start}
+                onChange={setFieldValue}
+                onBlur={setFieldTouched}
+                error={errors.start}
+                touched={touched.start}
+              />
+            </div>
+            <div className={style.dateWrapper}>
+              <h5 className={style.dateName}><span style={{verticalAlign: 'sub'}}><Icons.Calendar width='16' height='16' color='#707BA0' /></span> Due</h5>
+              <DueDate
+                value={values.due}
+                onChange={setFieldValue}
+                onBlur={setFieldTouched}
+                error={errors.due}
+                touched={touched.due}
+              />
+            </div>
+          </div>
         </NewBin>
       </Form>
     </span>
@@ -81,8 +103,7 @@ const StartDate = (props) => {
     props.onChange('start', value);
   };
   return (
-    <div className={style.dateWrapper}>
-      <h5 className={style.dateName}>Start</h5>
+    <div>
       <DatePicker
       selected={props.value}
       onChange={handleChange}
@@ -96,6 +117,22 @@ const StartDate = (props) => {
   )
 }
 
+const DueDate = (props) => {
+  const handleChange = value => {
+    props.onChange('due', value);
+  };
+  return (
+    <div>
+    <DatePicker
+      selected={props.value}
+      onChange={handleChange}
+      dateFormat={'DD MMM YYYY'}
+      withPortal
+    />
+    {props.error && props.touched && <Alert>{props.error}</Alert>}
+    </div>
+  )
+}
 
 
 export default compose(
@@ -109,12 +146,13 @@ export default compose(
     },
   }),
   withFormik({
-      mapPropsToValues: (props) => ({ name: '', note: '', scope: props.relationships[0].props.value, start: moment(props.startDate) }),
+      mapPropsToValues: (props) => ({ name: '', note: '', scope: props.relationships[0].props.value, start: moment(props.startDate), due: moment(props.startDate) }),
       validationSchema: Yup.object().shape({
           name: Yup.string().required(),
           note: Yup.string(),
           scope: Yup.string().required(),
           start: Yup.string(),
+          due: Yup.string(),
       }),
       handleSubmit: (values, {props, resetForm, setErrors, setSubmitting}) => {
         props
