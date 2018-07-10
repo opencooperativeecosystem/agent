@@ -13,6 +13,7 @@ import moment from "moment";
 import updateNotification from "../../mutations/updateNotification";
 import deleteNotification from "../../mutations/deleteNotification";
 import gql from "graphql-tag";
+import style from "./style.css";
 
 const BinWrapper = ({
   name,
@@ -27,53 +28,121 @@ const BinWrapper = ({
   updateProcess,
   cards,
   outputs,
+  inputs,
+  out,
   status,
   planDueDate,
   planStartDate,
   openModal
-}) => (
-  <Bin
-    openCardController={openCardController}
-    updateProcess={updateProcess}
-    name={name}
-    status={status}
-    scope={scope}
-    infoNote={note}
-    Scopeform={<EditScope relationships={relationships} id={id} scope={scopeId} planId={planId}/>}
-    Titleform={<EditTitle title={name} id={id} planId={planId} />}
-    Noteform={<EditNote note={note} id={id} planId={planId} />}
-    Startform={
-      <EditStart
-        planStart={planStartDate}
-        planDue={planDueDate}
-        id={id}
-        planId={planId}
-        start={plannedStart}
-      />
+}) => {
+  let newtipe = cards.reduce(function(r, a, i) {
+    if (!i || r[r.length - 1][0].action !== a.action) {
+      return r.concat([[a]]);
     }
-    Archive={<Archive id={id} planId={planId} />}
-    plannedStart={moment(plannedStart).format("DD MMM YYYY")}
-    outputs={outputs}
-    id={id}
-    cardController={false}
-  >
-    {cards.map((card, i) => {
-      return (
-        <Card
-          key={card.id}
-          id={card.id}
-          listId={id}
-          status={card.isFinished}
-          openCard={() => openModal(id, card.id)}
-          percentage={card.percentage}
-          note={card.note || card.title}
-          due={moment(card.due).format("DD MMM YYYY")}
-          members={card.members}
+    r[r.length - 1].push(a);
+    return r;
+  }, []);
+  let newoutputs = outputs.reduce(function(r, a, i) {
+    if (!i || r[r.length - 1][0].action !== a.action) {
+      return r.concat([[a]]);
+    }
+    r[r.length - 1].push(a);
+    return r;
+  }, []);
+  console.log(newoutputs);
+  return (
+    <Bin
+      openCardController={openCardController}
+      updateProcess={updateProcess}
+      name={name}
+      status={status}
+      scope={scope}
+      infoNote={note}
+      Scopeform={
+        <EditScope
+          relationships={relationships}
+          id={id}
+          scope={scopeId}
+          planId={planId}
         />
-      );
-    })}
-  </Bin>
-);
+      }
+      Titleform={<EditTitle title={name} id={id} planId={planId} />}
+      Noteform={<EditNote note={note} id={id} planId={planId} />}
+      Startform={
+        <EditStart
+          planStart={planStartDate}
+          planDue={planDueDate}
+          id={id}
+          planId={planId}
+          start={plannedStart}
+        />
+      }
+      Archive={<Archive id={id} planId={planId} />}
+      plannedStart={moment(plannedStart).format("DD MMM")}
+      outputs={newoutputs}
+      id={id}
+      cardController={false}
+    >
+      <div>
+        {newtipe.map((type, i) => (
+          <div key={i}>
+            <h4 className={style.inputTitle}>{type[0].action}</h4>
+            <div>
+              {type.map(card => {
+                let duration = moment
+                  .duration(moment(card.due).diff(moment()))
+                  .asHours();
+                return (
+                  <Card
+                    key={card.id}
+                    id={card.id}
+                    listId={id}
+                    status={card.isFinished}
+                    openCard={() => openModal(id, card.id)}
+                    percentage={card.percentage}
+                    title={card.title}
+                    note={card.note}
+                    deadline={duration < 0 ? 'expired' : duration < 48 ? 'soon' : ''}
+                    due={moment(card.due).format("DD MMM")}
+                    members={card.members}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        ))}
+        {newoutputs.map((type, i) => (
+          type ?
+          <div key={i + 100}>
+            <h4 className={style.inputTitle}>{type[0].action}</h4>
+            <div>
+              {type.map(card => {
+                let duration = moment
+                .duration(moment(card.due).diff(moment()))
+                .asHours();
+                return (
+                <Card
+                  key={card.id}
+                  id={card.id}
+                  listId={id}
+                  status={card.isFinished}
+                  openCard={() => openModal(id, card.id)}
+                  percentage={card.percentage}
+                  title={card.title}
+                  note={card.note}
+                  deadline={duration < 0 ? 'expired' : duration < 48 ? 'soon' : ''}
+                  due={moment(card.due).format("DD MMM")}
+                  members={card.members}
+                />
+              )})}
+             </div>
+          </div>
+        : null
+      ))}
+      </div>
+    </Bin>
+  );
+};
 
 const enhancedList = compose(
   graphql(UpdateProcess, { name: "updateProcessMutation" }),
