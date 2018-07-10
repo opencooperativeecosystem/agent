@@ -1,7 +1,7 @@
 .canvasWrapper {
   position: relative;
   min-height: 100vh;
-  margin: 10px;
+  margin-bottom: 20px;
 }
 
 .wrapperContainer {
