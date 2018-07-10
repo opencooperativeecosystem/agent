@@ -29,13 +29,16 @@ export default function ({param, units, scopeId, commitmentId, idEventToEdit, ed
                   </span>
                 </div>
                 <div className={style.item_desc}>
-                  <span>{item.fulfilledBy.provider.name}</span> {item.fulfilledBy.action + ' ' + item.fulfilledQuantity.numericValue + ' ' + item.fulfilledQuantity.unit.name } {item.fulfilledBy.requestDistribution ? <span className={style.desc_payment + ' ' + style.desc_payed}>Payed</span> : <span className={style.desc_payment + ' ' + style.desc_voluntary}>Voluntary</span>}
+                  <span>{item.fulfilledBy.provider.name}</span> {item.fulfilledBy.action + ' ' + item.fulfilledQuantity.numericValue + ' ' + item.fulfilledQuantity.unit.name } 
                   <div className={style.desc}>{item.fulfilledBy.note} </div>
+                </div>
+                <div className={style.item_payed}>
+                  {item.fulfilledBy.requestDistribution ? <span className={style.desc_payment + ' ' + style.desc_payed}>Payed</span> : <span className={style.desc_payment + ' ' + style.desc_voluntary}>Voluntary</span>}
                 </div>
                 <div className={style.item_meta}>
                   {moment(item.start).format("DD MMM YYYY")}
-                  - <span id={item.id} onClick={() => toggleEditEvent(deleteEventModal, item.fulfilledBy.id)}>Edit</span>
-                  - <span id={item.id} onClick={() => toggleDeleteEvent(deleteEventModal, item.fulfilledBy.id)}>Delete</span>
+                  <span id={item.id} onClick={() => toggleEditEvent(deleteEventModal, item.fulfilledBy.id)}>-<span className={style.meta_icon}><Icons.Edit2 width='14' height='14' color='#525561' /></span> <i>Edit</i></span>
+                  <span id={item.id} onClick={() => toggleDeleteEvent(deleteEventModal, item.fulfilledBy.id)}>-<span className={style.meta_icon}><Icons.Trash width='14' height='14' color='#525561' /></span><i>Delete</i></span>
                 </div>
               </div>
               <div className={editEventModal && idEventToEdit === item.fulfilledBy.id ? style.edit_activity : style.edit_activity + ' ' + style.hidden}>
