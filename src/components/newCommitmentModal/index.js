@@ -72,7 +72,7 @@ const NewCommModal = ({
   );
   return (
     <Form>
-    <Wrapper>
+    <div style={{padding: '16px'}}>
         <SupTitle dark icon={<Icons.Text widht='18' height='18' color='#383C39' />} text='New commitment' />
           <div className={style.commitmentWrapper}>
             <div className={style.commInput}>
@@ -135,7 +135,7 @@ const NewCommModal = ({
         <div>
             <Button>Publish</Button>
         </div>
-    </Wrapper>
+    </div>
     </Form>
      
   );
