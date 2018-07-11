@@ -36,7 +36,7 @@ export default function ({param, units, scopeId, commitmentId, idEventToEdit, ed
                   {item.fulfilledBy.requestDistribution ? <span className={style.desc_payment + ' ' + style.desc_payed}>Payed</span> : <span className={style.desc_payment + ' ' + style.desc_voluntary}>Voluntary</span>}
                 </div>
                 <div className={style.item_meta}>
-                  {moment(item.start).format("DD MMM YYYY")}
+                  {moment(item.fulfilledBy.start).format("DD MMM")}
                   <span id={item.id} onClick={() => toggleEditEvent(deleteEventModal, item.fulfilledBy.id)}>-<span className={style.meta_icon}><Icons.Edit2 width='14' height='14' color='#525561' /></span> <i>Edit</i></span>
                   <span id={item.id} onClick={() => toggleDeleteEvent(deleteEventModal, item.fulfilledBy.id)}>-<span className={style.meta_icon}><Icons.Trash width='14' height='14' color='#525561' /></span><i>Delete</i></span>
                 </div>

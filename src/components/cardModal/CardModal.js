@@ -30,7 +30,7 @@ const CardModal = ({param, id, toggleActions, actionPopup, updateCommitment, all
           </div>
           <ModalNote note={data.note} />
         </div>
-        <LogEvent option={data.action} param={param} id={id} units={units} scopeId={data.scope ? data.scope.id : ''} commitmentId={data.id} />
+        <LogEvent action={data.action} param={param} id={id} units={units} scopeId={data.scope ? data.scope.id : ''} commitmentId={data.id} />
         <h5 className={style.modalDescription_title}>Contributions</h5>
         <ModalActivities param={param} units={units} scopeId={data.scope ? data.scope.id : ''} commitmentId={data.id} id={id} />
       </div>

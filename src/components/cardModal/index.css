@@ -703,8 +703,8 @@
   }
   
   .item_sencence input {
-    width: auto;
-
+    border-radius: 0;
+    width: 100px;
   }
   .customdate {
     height: 40px;
