@@ -164,7 +164,7 @@ export default compose(
               planId: props.param,
               note: values.note,
               scope: Number(values.scope),
-              duration: 9
+              plannedFinish: moment(values.due).format("YYYY-MM-DD")
             },
             update: (cache, {data: {createProcess}}) => {
                 const data = cache.readQuery({query: Plan, variables: {
