@@ -2,12 +2,14 @@ import React from 'react'
 import style from '../index.css'
 import moment from 'moment'
 import {Icons, Button} from 'oce-components/build'
+import {LoadingMini} from '../../loading'
 
 import LogEvent from '../logEvent'
+
 export default function ({param, units, scopeId, commitmentId, idEventToEdit, editEventModal, toggleEditEvent, idEventToDelete, deleteEventModal, toggleDeleteEvent, activities, id, date, deleteEvent, editEvent, loading, error, refetchData}) {
   return (
     <div className={style.activities_list}>
-      {loading ? 'loading' : (
+      {loading ? <LoadingMini /> : (
         <div>
           <div className={deleteEventModal ? style.delete + ' ' + style.popup : style.delete + ' ' + style.popup + ' ' + style.hidden}>
             <div className={style.popup_header}>

@@ -36,6 +36,10 @@
   vertical-align: sub;
 }
 
+.headerLink {
+  color: #f0f0f0;
+}
+
 .buttonIcon {
   line-height: 28px;
   vertical-align: sub;

@@ -48,13 +48,12 @@ const CanvasWrapper = ({
     {({ loading, error, data }) => {
       if (loading) return <LoadingMini />;
       if (error) return <ErrorPlan />;
-      console.log(data)
       return (
         <div style={{ display: "initial" }}>
           <Panel
             large
             icon={<Icons.Globe width="18" color="#f0f0f0" />}
-            title={data.viewer.plan.name}
+            title={<div><Link className={style.headerLink} to={`/agent/${data.viewer.plan.scope[0].id}`}>{data.viewer.plan.scope[0].name}</Link> > {data.viewer.plan.name}</div>}
             navigation
             back={() => history.goBack()}
             forward={() => history.goForward()}
