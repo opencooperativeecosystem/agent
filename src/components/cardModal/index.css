@@ -551,6 +551,10 @@
     float: left;
     line-height: 40px;
     margin-right: 10px;
+    max-width: 170px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 
   .log_item textarea {
@@ -640,7 +644,7 @@
     padding: 8px 10px 9pt;
     position: relative;
     width: 465px;
-    z-index: 0;
+    z-index: 999999999999999;
   }
 
   .content_buttons {

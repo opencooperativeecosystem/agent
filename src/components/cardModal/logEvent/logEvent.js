@@ -1,10 +1,8 @@
 import React from "react";
 import style from "../index.css";
 import { Button, Input, Textarea } from "oce-components/build";
-import TextArea from "../../textarea";
 import DatePicker from "react-datepicker";
 import ToggleButton from "react-toggle-button";
-import moment from "moment";
 import { Form, Field } from "formik";
 import Alert from "../../alert";
 require("react-datepicker/dist/react-datepicker-cssmodules.css");
@@ -36,7 +34,6 @@ export default function LogEvent({
   unit,
   units
 }) {
-  console.log(units);
   return (
     <Form>
       <div className={style.content_module}>
