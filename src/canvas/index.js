@@ -59,6 +59,7 @@ const Canvas = ({
           key={i}
           note={list.note}
           plannedStart={list.plannedStart}
+          plannedFinish={list.plannedFinish}
           agents={list.workingAgents}
           name={list.name}
           planId={param}

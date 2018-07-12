@@ -35,7 +35,8 @@ const CanvasWrapper = ({
   scopeId,
   closeModal,
   onTogglePlanModal,
-  planModalIsOpen
+  planModalIsOpen,
+  agentId
 }) => (
   <Query
     query={Plan}
@@ -47,6 +48,7 @@ const CanvasWrapper = ({
     {({ loading, error, data }) => {
       if (loading) return <LoadingMini />;
       if (error) return <ErrorPlan />;
+      console.log(data)
       return (
         <div style={{ display: "initial" }}>
           <Panel
@@ -88,6 +90,7 @@ const CanvasWrapper = ({
             id={modalSelected}
             param={match.params.id}
             processId={processId}
+            agentId={agentId}
           />
           <PlanModal
             isOpen={planModalIsOpen}
