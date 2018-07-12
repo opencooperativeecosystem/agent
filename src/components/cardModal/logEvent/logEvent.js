@@ -32,9 +32,11 @@ export default function LogEvent({
   setFieldValue,
   errors,
   touched,
-  setFieldTouched
+  setFieldTouched,
+  unit,
+  units
 }) {
-  console.log(values);
+  console.log(units);
   return (
     <Form>
       <div className={style.content_module}>
@@ -58,7 +60,8 @@ export default function LogEvent({
                   />
                 )}
               />
-              <h5 className={style.sentence_action}>Hours</h5>
+              {errors.numericValue && touched.numericValue && <Alert>{errors.numericValue}</Alert>}
+              <h5 className={style.sentence_action}>{unit}</h5>
               <StartDate
                 value={values.date}
                 onChange={setFieldValue}

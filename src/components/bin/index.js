@@ -31,6 +31,7 @@ const BinWrapper = ({
   inputs,
   out,
   status,
+  plannedFinish,
   planDueDate,
   planStartDate,
   openModal
@@ -49,7 +50,7 @@ const BinWrapper = ({
     r[r.length - 1].push(a);
     return r;
   }, []);
-  console.log(newoutputs);
+  console.log(plannedFinish);
   return (
     <Bin
       openCardController={openCardController}
@@ -79,6 +80,7 @@ const BinWrapper = ({
       }
       Archive={<Archive id={id} planId={planId} />}
       plannedStart={moment(plannedStart).format("DD MMM")}
+      plannedFinish={moment(plannedFinish).format("DD MMM")}
       outputs={newoutputs}
       id={id}
       cardController={false}

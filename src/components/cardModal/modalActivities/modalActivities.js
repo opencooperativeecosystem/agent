@@ -1,8 +1,7 @@
 import React from 'react'
 import style from '../index.css'
 import moment from 'moment'
-import Button from '../../button'
-import {Icons} from 'oce-components/build'
+import {Icons, Button} from 'oce-components/build'
 
 import LogEvent from '../logEvent'
 export default function ({param, units, scopeId, commitmentId, idEventToEdit, editEventModal, toggleEditEvent, idEventToDelete, deleteEventModal, toggleDeleteEvent, activities, id, date, deleteEvent, editEvent, loading, error, refetchData}) {
@@ -17,7 +16,7 @@ export default function ({param, units, scopeId, commitmentId, idEventToEdit, ed
             </div>
             <div className={style.popup_content}>
               <h5 className={style.content_description}>Are you sure to delete this event?</h5>
-              <Button title={'Delete'} action={() => deleteEvent(idEventToDelete)} type={'negate'} />
+              <Button onClick={() => deleteEvent(idEventToDelete)} primary>Delete</Button>
             </div>
           </div>
           {activities.map((item, i) => (
@@ -41,13 +40,13 @@ export default function ({param, units, scopeId, commitmentId, idEventToEdit, ed
                   <span id={item.id} onClick={() => toggleDeleteEvent(deleteEventModal, item.fulfilledBy.id)}>-<span className={style.meta_icon}><Icons.Trash width='14' height='14' color='#525561' /></span><i>Delete</i></span>
                 </div>
               </div>
-              <div className={editEventModal && idEventToEdit === item.fulfilledBy.id ? style.edit_activity : style.edit_activity + ' ' + style.hidden}>
+              {/* <div className={editEventModal && idEventToEdit === item.fulfilledBy.id ? style.edit_activity : style.edit_activity + ' ' + style.hidden}>
                 <div className={style.activity_header}>
                   <h5>Update Event</h5>
                   <span className={style.icon_delete} onClick={() => toggleEditEvent(editEventModal)}><Icons.Cross width={20} height={20} color={'#999'}/></span>
                   <LogEvent previousEvent={item} eventId={item.fulfilledBy.id} param={param} id={id} units={units} scopeId={scopeId} commitmentId={commitmentId} updateEvent toggle={() => toggleEditEvent(editEventModal)} />
                 </div>
-              </div>
+              </div> */}
             </div>
           ))}
         </div>

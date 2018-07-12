@@ -13,6 +13,7 @@ const CommitmentModal = ({
   units,
   modalDescription,
   allPlanAgents,
+  agentId,
   processId,
   closeModal,
   toggleModal,
@@ -30,6 +31,7 @@ const CommitmentModal = ({
       id={id}
       allPlanAgents={allPlanAgents}
       units={units}
+      agentId={agentId}
       processId={processId}
       data={commitment}
       close={toggleModal}
