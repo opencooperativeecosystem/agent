@@ -50,7 +50,6 @@ const BinWrapper = ({
     r[r.length - 1].push(a);
     return r;
   }, []);
-  console.log(plannedFinish);
   return (
     <Bin
       openCardController={openCardController}

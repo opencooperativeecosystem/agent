@@ -706,6 +706,19 @@
     width: 24%;
   }
   
+
+.expired {
+  color: #ffffff;
+  background: #ff5630;
+}
+
+
+.soon {
+  color: #ffffff;
+  background: #ffab00;
+}
+
+
   .item_sencence input {
     border-radius: 0;
     width: 100px;
