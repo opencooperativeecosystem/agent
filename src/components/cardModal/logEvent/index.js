@@ -34,6 +34,7 @@ const wrapperComponent = compose(
             token: localStorage.getItem('oce_token'),
             id: props.id,
             providerId: props.agentId,
+            receiverId: props.scopeId,
             action: props.action,
             scopeId: props.scopeId,
             requestDistribution: values.requestPayment,

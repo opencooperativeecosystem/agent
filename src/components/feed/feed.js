@@ -3,6 +3,7 @@ import style from './index.css'
 import moment from 'moment'
 
 export default function ({feed}) {
+  console.log(feed)
   return (
     <div className={style.activities_list}>
       {feed.map((item, i) => (
