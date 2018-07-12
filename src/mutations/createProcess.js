@@ -1,12 +1,12 @@
 import gql from 'graphql-tag'
 
 const createProcess = gql`
-mutation ($token: String!, $planId: Int! $name: String!, $planned: String!, $duration: Int!, $scope: Int!, $note: String ) {
+mutation ($token: String!, $planId: Int! $name: String!, $planned: String!, $plannedFinish: String!, $scope: Int!, $note: String ) {
     createProcess(
         token: $token,
         name: $name,
         plannedStart: $planned,
-        plannedDuration: $duration,
+        plannedFinish: $plannedFinish,
         scopeId: $scope,
         planId: $planId,
         note: $note) {
@@ -16,6 +16,7 @@ mutation ($token: String!, $planId: Int! $name: String!, $planned: String!, $dur
         note
         isDeletable
         plannedStart
+        plannedFinish
         isFinished
         scope {
           id

@@ -10,6 +10,7 @@ query ($token: String, $id: Int!) {
         scope {
           id
         }
+        
         provider {
           id
           name

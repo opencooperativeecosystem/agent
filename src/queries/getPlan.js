@@ -21,6 +21,7 @@ query ($token: String, $planId: Int) {
           name
           isDeletable
           plannedStart
+          plannedFinish
           scope {
             id
             name
@@ -57,26 +58,6 @@ query ($token: String, $planId: Int) {
             action
             id
             note
-            fulfilledBy {
-              fulfilledQuantity {
-                numericValue
-                unit {
-                  name
-                }
-              }
-              fulfilledBy {
-                action
-                requestDistribution
-                start
-                id
-                note
-                provider {
-                  name
-                  image
-                  id
-                }
-              }
-            }
             inputOf {
               id
               name
@@ -101,36 +82,6 @@ query ($token: String, $planId: Int) {
             resourceClassifiedAs {
               category
               name
-            }
-          }
-          workingAgents {
-            name
-            id
-            image
-          }
-          inputs {
-            action
-            id
-            fulfills {
-              fulfilledBy {
-                requestDistribution
-                provider {
-                  name
-                  image
-                }
-                action
-                start
-                note
-                affects {
-                  trackingIdentifier
-                }
-              }
-              fulfilledQuantity {
-                unit {
-                  name
-                }
-                numericValue
-              }
             }
           }
         }
