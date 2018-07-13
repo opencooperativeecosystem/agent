@@ -272,7 +272,8 @@ export default compose(
             });
           }
         })
-        .then(data =>
+        .then(data => {
+          props.toggleModal()
           props
             .updateNotification({
               variables: {
@@ -293,8 +294,10 @@ export default compose(
                 });
               }, 1000);
             })
+          }
         )
         .catch(e => {
+          props.toggleModal()
           const errors = e.graphQLErrors.map(error => error.message);
           props.setSubmitting(false);
           props
