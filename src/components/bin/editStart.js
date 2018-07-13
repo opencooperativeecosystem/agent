@@ -40,8 +40,8 @@ const StartDate = (props) => {
             selected={props.value}
             onChange={handleChange}
             dateFormat={'DD MMM YYYY'}
-            minDate={moment(props.planStart)}
-            maxDate={moment(props.planDue)}
+            minDate={moment(props.planStart, moment.ISO_8601)}
+            maxDate={moment(props.planDue, moment.ISO_8601)}
         />
       {props.error && props.touched && <Alert>{props.error}</Alert>}
       </div>

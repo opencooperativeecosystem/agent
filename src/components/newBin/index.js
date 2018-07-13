@@ -78,6 +78,8 @@ const Bin = ({
                 onBlur={setFieldTouched}
                 error={errors.start}
                 touched={touched.start}
+                startDate={startDate}
+                due={due}
               />
             </div>
             <div className={style.dateWrapper}>
@@ -88,6 +90,8 @@ const Bin = ({
                 onBlur={setFieldTouched}
                 error={errors.due}
                 touched={touched.due}
+                startDate={startDate}
+                due={due}
               />
             </div>
           </div>
@@ -108,8 +112,8 @@ const StartDate = (props) => {
       selected={props.value}
       onChange={handleChange}
       dateFormat={'DD MMM YYYY'}
-      minDate={moment(props.startDate)}
-      maxDate={moment(props.due)}
+      minDate={moment(props.startDate, moment.ISO_8601)}
+      maxDate={moment(props.due, moment.ISO_8601)}
       withPortal
     />
     {props.error && props.touched && <Alert>{props.error}</Alert>}
@@ -127,6 +131,8 @@ const DueDate = (props) => {
       selected={props.value}
       onChange={handleChange}
       dateFormat={'DD MMM YYYY'}
+      minDate={moment(props.startDate, moment.ISO_8601)}
+      maxDate={moment(props.due, moment.ISO_8601)}
       withPortal
     />
     {props.error && props.touched && <Alert>{props.error}</Alert>}
