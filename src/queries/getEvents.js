@@ -21,6 +21,7 @@ query ($token: String!, $id: Int!) {
             fulfilledQuantity {
               numericValue
               unit {
+                id
                 name
               }
             }

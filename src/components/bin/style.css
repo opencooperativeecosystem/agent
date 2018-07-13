@@ -9,3 +9,13 @@
     margin: 0;
     margin-bottom: 10px;
 }
+
+.inputTitle {
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: .5;
+    margin-top: 16px;
+    color: #99ADC6;
+    margin-bottom: 8px;
+    text-transform: capitalize;
+}

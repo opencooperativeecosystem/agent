@@ -120,6 +120,7 @@
     height: 80px;
     border-radius: 2px;
     display: block;
+    background-size: cover;
 }
 
 .info_note {
@@ -180,7 +181,7 @@
 }
 
 .agent_list {
-    margin: 10px;
+    
 }
 
 .list_item {
@@ -218,5 +219,4 @@
 }
 
 .resources_list {
-    padding: 10px;
 }

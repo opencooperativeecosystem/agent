@@ -1,4 +1,4 @@
-button {
+/* button {
     background: -webkit-linear-gradient(top,#fff 0,#F8F9F9 100%);
     background: linear-gradient(to bottom,#fff 0,#F8F9F9 100%);
     -moz-box-sizing: border-box;
@@ -19,9 +19,9 @@ button {
     text-decoration: none;
     outline: 0;
     width: 100%;
-}
+} */
 
-.good {
+/* .good {
   background: #5AAC44 !important;
   border-color: 0 1px 0 #519839 !important;
   color: #fff !important;
@@ -37,4 +37,4 @@ button {
 
 .inline {
   display: inline-block;
-}
+} */

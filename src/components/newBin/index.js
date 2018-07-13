@@ -11,6 +11,7 @@ import DatePicker from "react-datepicker";
 import Alert from '../alert'
 import style from './style.css'
 import updateNotification from "../../mutations/updateNotification";
+import deleteNotification from "../../mutations/deleteNotification";
 require("react-datepicker/dist/react-datepicker-cssmodules.css");
 
 const Bin = ({
@@ -22,6 +23,8 @@ const Bin = ({
   setFieldValue,
   setFieldTouched,
   errors,
+  startDate,
+  due,
   touched
 }) => {
   return (
@@ -57,13 +60,41 @@ const Bin = ({
           />
           {errors.scope && touched.scope && <Alert>{errors.scope}</Alert>}
           </div>
-          <StartDate 
+          {/* <StartDate 
             value={values.start}
             onChange={setFieldValue}
             onBlur={setFieldTouched}
             error={errors.start}
             touched={touched.start}
-          />
+            startDate={startDate}
+            due={due}
+          /> */}
+          <div className={style.dates}>
+            <div className={style.dateWrapper}>
+              <h5 className={style.dateName}><span style={{verticalAlign: 'sub'}}><Icons.Calendar width='16' height='16' color='#707BA0' /></span> Start</h5>
+              <StartDate
+                value={values.start}
+                onChange={setFieldValue}
+                onBlur={setFieldTouched}
+                error={errors.start}
+                touched={touched.start}
+                startDate={startDate}
+                due={due}
+              />
+            </div>
+            <div className={style.dateWrapper}>
+              <h5 className={style.dateName}><span style={{verticalAlign: 'sub'}}><Icons.Calendar width='16' height='16' color='#707BA0' /></span> Due</h5>
+              <DueDate
+                value={values.due}
+                onChange={setFieldValue}
+                onBlur={setFieldTouched}
+                error={errors.due}
+                touched={touched.due}
+                startDate={startDate}
+                due={due}
+              />
+            </div>
+          </div>
         </NewBin>
       </Form>
     </span>
@@ -76,12 +107,32 @@ const StartDate = (props) => {
     props.onChange('start', value);
   };
   return (
-    <div className={style.dateWrapper}>
-      <h5 className={style.dateName}>Start</h5>
+    <div>
       <DatePicker
       selected={props.value}
       onChange={handleChange}
-      dateFormatCalendar={'DD MMM YYYY'}
+      dateFormat={'DD MMM YYYY'}
+      minDate={moment(props.startDate, moment.ISO_8601)}
+      maxDate={moment(props.due, moment.ISO_8601)}
+      withPortal
+    />
+    {props.error && props.touched && <Alert>{props.error}</Alert>}
+    </div>
+  )
+}
+
+const DueDate = (props) => {
+  const handleChange = value => {
+    props.onChange('due', value);
+  };
+  return (
+    <div>
+    <DatePicker
+      selected={props.value}
+      onChange={handleChange}
+      dateFormat={'DD MMM YYYY'}
+      minDate={moment(props.startDate, moment.ISO_8601)}
+      maxDate={moment(props.due, moment.ISO_8601)}
       withPortal
     />
     {props.error && props.touched && <Alert>{props.error}</Alert>}
@@ -90,23 +141,24 @@ const StartDate = (props) => {
 }
 
 
-
 export default compose(
   withState("clicked", "handleClicked", false),
   graphql(CreateProcess, { name: "createProcessMutation" }),
   graphql(updateNotification, {name: 'updateNotification'}),
+  graphql(deleteNotification, {name: 'deleteNotification'}),
   withHandlers({
     toggleClicked: props => () => {
       props.handleClicked(!props.clicked);
     },
   }),
   withFormik({
-      mapPropsToValues: () => ({ name: '', note: '', scope: '', start: moment() }),
+      mapPropsToValues: (props) => ({ name: '', note: '', scope: props.relationships[0].props.value, start: moment(props.startDate), due: moment(props.startDate) }),
       validationSchema: Yup.object().shape({
           name: Yup.string().required(),
           note: Yup.string(),
           scope: Yup.string().required(),
           start: Yup.string(),
+          due: Yup.string(),
       }),
       handleSubmit: (values, {props, resetForm, setErrors, setSubmitting}) => {
         props
@@ -118,7 +170,7 @@ export default compose(
               planId: props.param,
               note: values.note,
               scope: Number(values.scope),
-              duration: 9
+              plannedFinish: moment(values.due).format("YYYY-MM-DD")
             },
             update: (cache, {data: {createProcess}}) => {
                 const data = cache.readQuery({query: Plan, variables: {
@@ -141,6 +193,11 @@ export default compose(
               message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Bell width='18' height='18' color='white' /></span>Process {data.data.createProcess.process.name} created successfully!</div>,
               type: 'success'
             }})
+            .then(res => {
+              setTimeout(() => {
+               props.deleteNotification({variables: {id: res.data.addNotification.id}})
+             }, 1000);
+            })
           }, (e) => {
             const errors = e.graphQLErrors.map(error => error.message)
             props.setSubmitting(false)
@@ -148,6 +205,11 @@ export default compose(
               message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Cross width='18' height='18' color='white' /></span>{errors}</div>,
               type: 'alert'
             }})
+            .then(res => {
+              setTimeout(() => {
+               props.deleteNotification({variables: {id: res.data.addNotification.id}})
+             }, 1000);
+            })
          })
       }
   })

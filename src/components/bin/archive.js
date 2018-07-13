@@ -6,18 +6,24 @@ import deleteProcess from "../../mutations/deleteProcess";
 import { graphql, compose } from "react-apollo";
 import { withHandlers } from 'recompose';
 import updateNotification from "../../mutations/updateNotification";
+import deleteNotification from "../../mutations/deleteNotification";
 
 
 const ArchiveProcess = (props) => (
     <div>
-        <h5 className={style.h5}>Are you sure to archive the process?</h5>
-        <Button primary onClick={props.deleteProcess}>Archive</Button>
+        {props.isDeletable
+        ? <div> <h5 className={style.h5}>Are you sure to delete the process?</h5>
+        <Button primary onClick={props.deleteProcess}>Delete</Button></div>
+        : <h5 className={style.h5}>The process is not deletable since events are already logged on.</h5>
+        }
+        
     </div>
 )
 
 export default compose(
     graphql(deleteProcess, { name: "deleteProcessMutation" }),
     graphql(updateNotification, {name: 'updateNotification'}),
+    graphql(deleteNotification, {name: 'deleteNotification'}),
 
     withHandlers({
         deleteProcess: props => event => {
@@ -56,6 +62,11 @@ export default compose(
                         message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Bell width='18' height='18' color='white' /></span>Process archived successfully!</div>,
                         type: 'success'
                         }})
+                        .then(res => {
+                        setTimeout(() => {
+                            props.deleteNotification({variables: {id: res.data.addNotification.id}})
+                        }, 1000);
+                        })
                     },
                     e => {
                         const errors = e.graphQLErrors.map(error => error.message);
@@ -63,6 +74,11 @@ export default compose(
                         message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Cross width='18' height='18' color='white' /></span>{errors}</div>,
                         type: 'alert'
                         }})
+                        .then(res => {
+                            setTimeout(() => {
+                             props.deleteNotification({variables: {id: res.data.addNotification.id}})
+                           }, 1000);
+                          })
                     }
                 );
         }

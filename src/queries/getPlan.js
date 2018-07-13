@@ -6,6 +6,10 @@ query ($token: String, $planId: Int) {
       plan(id: $planId) {
         id
         name
+        note
+        due
+        plannedOn
+        isDeletable
         scope {
           id
           name
@@ -15,16 +19,35 @@ query ($token: String, $planId: Int) {
           id
           isFinished
           name
+          isDeletable
           plannedStart
+          plannedFinish
           scope {
             id
             name
           }
           committedOutputs {
             id
+            action
+            note
+            due
+            involvedAgents {
+              image
+              id
+              name
+            }
+            inputOf {
+              id
+              name
+            }
+            outputOf {
+              id
+              name
+            }
             committedQuantity {
               unit {
                 name
+                id
               }
               numericValue
             }
@@ -36,26 +59,6 @@ query ($token: String, $planId: Int) {
             action
             id
             note
-            fulfilledBy {
-              fulfilledQuantity {
-                numericValue
-                unit {
-                  name
-                }
-              }
-              fulfilledBy {
-                action
-                requestDistribution
-                start
-                id
-                note
-                provider {
-                  name
-                  image
-                  id
-                }
-              }
-            }
             inputOf {
               id
               name
@@ -73,6 +76,7 @@ query ($token: String, $planId: Int) {
             }
             committedQuantity {
               unit {
+                id
                 name
               }
               numericValue
@@ -80,36 +84,6 @@ query ($token: String, $planId: Int) {
             resourceClassifiedAs {
               category
               name
-            }
-          }
-          workingAgents {
-            name
-            id
-            image
-          }
-          inputs {
-            action
-            id
-            fulfills {
-              fulfilledBy {
-                requestDistribution
-                provider {
-                  name
-                  image
-                }
-                action
-                start
-                note
-                affects {
-                  trackingIdentifier
-                }
-              }
-              fulfilledQuantity {
-                unit {
-                  name
-                }
-                numericValue
-              }
             }
           }
         }

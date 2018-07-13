@@ -1,11 +1,13 @@
 import gql from 'graphql-tag';
 
 export default gql`
-mutation ($token: String!, $action: String!, $requestDistribution: Boolean, $start: String, $scopeId: Int!, $commitmentId: Int!, $note: String, $affectedNumericValue: String!, $affectedUnitId: Int!  ) {
+mutation ($token: String!, $providerId: Int, $receiverId: Int, $action: String!, $requestDistribution: Boolean, $start: String, $scopeId: Int!, $commitmentId: Int!, $note: String, $affectedNumericValue: String!, $affectedUnitId: Int!  ) {
   createEconomicEvent(
     token: $token,
     action: $action,
     start: $start,
+    providerId: $providerId,
+    receiverId: $receiverId,
     scopeId: $scopeId, 
     requestDistribution: $requestDistribution, 
     fulfillsCommitmentId: $commitmentId,
@@ -15,23 +17,24 @@ mutation ($token: String!, $action: String!, $requestDistribution: Boolean, $sta
     ) {
     economicEvent {
       action
-      note
+      requestDistribution
       start
       id
-      requestDistribution
+      note
+      provider {
+        name
+        image
+        id
+      }
       scope {
         id
       }
-      provider {
-        name
-        id
-        image
-      }
       affectedQuantity {
+        numericValue
         unit {
+          id
           name
         }
-        numericValue
       }
     }
   }

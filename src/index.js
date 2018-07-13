@@ -7,7 +7,7 @@ import {BrowserRouter as Router,
   Route,
   Switch
 } from 'react-router-dom'
-import { compose } from "recompose";
+import { compose, withHandlers } from "recompose";
 import {ApolloProvider} from 'react-apollo'
 import {client} from './store'
 import AppTemplate from './templates/AppTemplate'

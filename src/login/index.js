@@ -7,13 +7,14 @@ import * as Yup from 'yup'
 import Alert from '../components/alert'
 import LoginMutation from '../mutations/login'
 import updateNotification from "../mutations/updateNotification";
+import deleteNotification from "../mutations/deleteNotification";
 
 const Login = ({values, handleSubmit, touched, errors}) => {
       return (
           <div className={style.login_wrapper}>
             <div className={style.wrapper_title}>
               <h3><span aria-label='emoji' role='img'>🧙</span> agent.</h3>
-              <h4>Your events - networked</h4>
+              <h4 data-testid='desc'>Your events - networked</h4>
             </div>
             <div className={style.login_container}>
             <Panel title='login' icon={<Icons.Power width='18' height='18' color='#f0f0f0' />}>
@@ -22,11 +23,11 @@ const Login = ({values, handleSubmit, touched, errors}) => {
                       <Field placeholder='Insert your username' name='username' />
                       { touched.username && errors.username && <Alert>{errors.username}</Alert> }
                   </div>
-                  <div>
+                   <div>
                       <Field placeholder='Insert your password' name='password' type='password' />
                       { touched.password && errors.password && <Alert>{errors.password}</Alert> }
                   </div>
-              <button>login</button>
+              <button data-testid='login'>login</button>
               </Form>
               <a href='https://ocp.freedomcoop.eu/account/password/reset/' target='blank' className={style.wrapper_lost}>Password lost?</a>
               <h5>Useful links</h5>
@@ -44,6 +45,7 @@ const Login = ({values, handleSubmit, touched, errors}) => {
 export default compose(
     graphql(LoginMutation),
     graphql(updateNotification, {name: 'updateNotification'}),
+    graphql(deleteNotification, {name: 'deleteNotification'}),
     withFormik({
         mapPropsToValues: () => ({ username: '', password: '' }),
         validationSchema: Yup.object().shape({
@@ -52,23 +54,33 @@ export default compose(
         }),
         handleSubmit: (values, {props, resetForm, setErrors, setSubmitting}) => {
             props.mutate({variables: {username: values.username, password: values.password}})
-            .then ((res) => {
+            .then ((data) => {
               props.updateNotification({variables: {
-                  message: <div className={style.message}><span><Icons.Bell width='18' height='18' color='white' /></span>Welcome :)</div>,
+                  message: <div data-testid='success' className={style.message}><span><Icons.Bell width='18' height='18' color='white' /></span>Welcome :)</div>,
                   type: 'success'
               }
               })
-              localStorage.setItem('oce_token', res.data.createToken.token)
-              localStorage.setItem('agent_id', res.data.createToken.id)
+              .then(res => {
+                setTimeout(() => {
+                 props.deleteNotification({variables: {id: res.data.addNotification.id}})
+               }, 1000);
+              })
+              localStorage.setItem('oce_token', data.data.createToken.token)
+              localStorage.setItem('agent_id', data.data.createToken.id)
               props.history.replace('/')
             }, 
             (e) => {
                 const errors = e.graphQLErrors.map(error => error.message)
                 props.updateNotification({variables: {
-                    message: <div className={style.message}><span><Icons.Cross width='18' height='18' color='white' /></span>{errors}</div>,
+                    message: <div data-testid='error' className={style.message}><span><Icons.Cross width='18' height='18' color='white' /></span>{errors}</div>,
                     type: 'alert'
                 }
                 })
+                .then(res => {
+                    setTimeout(() => {
+                     props.deleteNotification({variables: {id: res.data.addNotification.id}})
+                   }, 1000);
+                  })
                 setSubmitting(false)
              }
           )

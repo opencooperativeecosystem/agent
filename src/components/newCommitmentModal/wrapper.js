@@ -16,6 +16,7 @@ const NCModal = ({toggleNewCommitmentModal, modalIsOpen, closeModal, planId, mat
         match={match}
         scopeId={scopeId}
         client={client}
+        toggleModal={toggleNewCommitmentModal}
       />
     )}
     </ApolloConsumer>

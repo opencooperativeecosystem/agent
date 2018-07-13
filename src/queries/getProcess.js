@@ -33,6 +33,7 @@ const getProcess = gql`
           }
           committedQuantity {
             unit {
+              id
               name
             }
             numericValue

@@ -5,12 +5,14 @@ import {withFormik} from 'formik'
 import * as Yup from 'yup'
 import createPlan from '../mutations/CreatePlan'
 import updateNotification from "../mutations/updateNotification";
+import deleteNotification from "../mutations/deleteNotification";
 import {Icons} from 'oce-components/build'
 import React from 'react'
 
 export default compose(
   graphql(createPlan, { name: "createPlanMutation" }),
   graphql(updateNotification, {name: 'updateNotification'}),
+  graphql(deleteNotification, {name: 'deleteNotification'}),
   withFormik({
     mapPropsToValues: (props) => ({ name: '', note: '', start: moment(), due: moment() }),
     validationSchema: Yup.object().shape({
@@ -35,6 +37,11 @@ export default compose(
             message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Bell width='18' height='18' color='white' /></span>Plan {data.data.createPlan.plan.name} created successfully!</div>,
             type: 'success'
           }})
+          .then(res => {
+            setTimeout(() => {
+             props.deleteNotification({variables: {id: res.data.addNotification.id}})
+           }, 1000);
+          })
           return props.history.push(`canvas/${data.data.createPlan.plan.id}`);
         }, (e) => {
           const errors = e.graphQLErrors.map(error => error.message)
@@ -42,6 +49,11 @@ export default compose(
             message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Cross width='18' height='18' color='white' /></span>{errors}</div>,
             type: 'alert'
           }})
+          .then(res => {
+            setTimeout(() => {
+             props.deleteNotification({variables: {id: res.data.addNotification.id}})
+           }, 1000);
+          })
           props.setSubmitting(false)
        })
     }

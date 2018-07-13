@@ -53,6 +53,7 @@
     height: 40px;
     border-radius: 100%;
     display: block;
+    background-size: cover;
 }
 
 .info_title {

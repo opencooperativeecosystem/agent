@@ -1,7 +1,7 @@
 .canvasWrapper {
   position: relative;
   min-height: 100vh;
-  margin: 10px;
+  margin-bottom: 20px;
 }
 
 .wrapperContainer {
@@ -34,6 +34,10 @@
 .right_button span {
   margin-right: 5px;
   vertical-align: sub;
+}
+
+.headerLink {
+  color: #f0f0f0;
 }
 
 .buttonIcon {

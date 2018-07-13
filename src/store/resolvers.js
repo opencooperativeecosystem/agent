@@ -10,6 +10,7 @@ let nextNotifId = 0;
 export const resolvers = {
   Mutation: {
     addNotification: (_, {message, type}, {cache}) => {
+      let newId = nextNotifId++
       const query = gql`
       query GetNotifications {
         notifications @client {
@@ -22,7 +23,7 @@ export const resolvers = {
     `
       const previousState = cache.readQuery({query})
       const newNotif = {
-        id: nextNotifId++,
+        id: newId,
         message,
         type,
         __typename: 'Notification'
@@ -31,6 +32,7 @@ export const resolvers = {
         notifications: previousState.notifications.concat([newNotif])
       }
       cache.writeQuery({query, data: data})
+      return newNotif
     },
     deleteNotification: (_, {id}, {cache}) => {
       const query = gql`
@@ -48,6 +50,7 @@ export const resolvers = {
         notifications: previousState.notifications.filter(item => item.id !== id)
       }
       cache.writeQuery({query, data})
+      return data
     }
   }
 }

@@ -24,27 +24,32 @@
   }
 
   .dateWrapper {
-    display: inline-block;
-    width: 180px;
-    height: 32px;
+    height: 36px;
     border: none;
-    margin-top: 5px;
-    background: #6bccab;
     border-radius: 4px;
-    color: white;
+    color: #606884;
     font-weight: 500;
-    line-height: 32px;
+    line-height: 36px;
+    float: left;
+}
+
+.commTitle {
+    font-size: 18px;
+    color: #525561;
+    letter-spacing: .5px;
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
 .dateName {
     margin: 0;
     float: left;
     margin-left: 10px;
-    padding-right: 10px;
-    border-right: 1px solid #ffffff52;
-    line-height: 32px;
-    font-weight: 500;
-    color: white;
+    padding-right: 5px;
+    line-height: 37px;
+    font-weight: 400;
+    font-size: 14px;
+    color: #606884;
     letter-spacing: .5px;
 }
 
@@ -59,20 +64,47 @@
     border: none;
     padding: 0;
     background: none;
-    text-indent: 10px;
+    font-weight: 500;
+    text-decoration: underline;
     font-size: 14px;
-    color: white;
+    color: #606884;
 }
 
+.textareaWrapper textarea {
+  border-radius: 0 !important;
+
+}
 
 .commitmentWrapper {
     lost-utility: clearfix;
-    margin-bottom: 10px;
-    margin-top: 20px;
+    margin-top: 10px;
+    background: #fafafa;
+    border-bottom: 1px solid rgba(54, 54, 54, .1);
+}
+
+.footer {
+    background: #E5E5E5;
+    lost-utility: clearfix;
+}
+
+
+.footer:hafter {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.footer button {
+    float: right;
+    border-radius: 0;
 }
 
 .commInput {
     float: left;
     margin-right: 1%;
     width: 24%
+}
+
+.qtyInput {
+    width: 50px;
 }

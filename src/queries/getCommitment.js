@@ -10,6 +10,7 @@ query ($token: String, $id: Int!) {
         scope {
           id
         }
+        
         provider {
           id
           name
@@ -29,6 +30,7 @@ query ($token: String, $id: Int!) {
         committedQuantity {
           unit {
             name
+            id
           }
           numericValue
         }

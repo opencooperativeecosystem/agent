@@ -10,7 +10,6 @@ import {PropsRoute} from '../helpers/router'
 import AgentPlans from '../agentPlans/wrapper'
 
 const Work = (props) => {
-  console.log(props)
   return (
     <Router>
       <div className={style.container}>

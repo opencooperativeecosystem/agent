@@ -5,6 +5,7 @@ body {
     margin: 0;
     padding: 10px;
     font-family: 'Fira Sans';
+    background-color: #191B22 !important;
     /* lost-utility: edit;  */
   }
 
@@ -12,6 +13,9 @@ body {
     background-color: #191B22 !important;
   }
 
+  img{
+    text-indent:-9999px
+  }
 
 /* LOGIN */
 
@@ -315,7 +319,7 @@ body {
 .genericAlert {
   position: fixed;
   top: 10px;
-  left: 10px;
+  width: 320px;
   right: 10px;
   z-index: 99999999999999999999999999999999;
 }

@@ -57,6 +57,7 @@ const AppTemplate = props => {
                     path="/canvas/:id"
                     component={Canvas}
                     relationships={props.data.agentRelationships}
+                    agentId={props.data.id}
                   />
                   <PropsRoute
                     path="/canvas/:id/validate"

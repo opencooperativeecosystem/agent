@@ -18,6 +18,7 @@ const Canvas = ({
           cards={list.committedInputs
             // .filter(comm => comm.action === "work")
             .map((task, j) => ({
+              action: task.action,
               id: Number(task.id),
               title:
                 task.action +
@@ -33,27 +34,46 @@ const Canvas = ({
               due: task.due,
               note: task.note,
               isFinished: task.isFinished,
-              percentage:
-                task.fulfilledBy
-                  .map(i => i.fulfilledQuantity.numericValue)
-                  .reduce(
-                    (accumulator, currentValue) => accumulator + currentValue,
-                    null
-                  ) *
-                100 /
-                task.committedQuantity.numericValue
             }))}
-          outputs={list.committedOutputs}
+          outputs={list.committedOutputs.map((task, j) => ({
+            action: task.action,
+            id: Number(task.id),
+            title:
+              task.action +
+              " " +
+              task.committedQuantity.numericValue +
+              " " +
+              task.committedQuantity.unit.name +
+              " of " +
+              task.resourceClassifiedAs.name,
+            key: j,
+            process: task.inputOf ? task.inputOf.name : task.outputOf.name,
+            due: task.due,
+            note: task.note,
+            isFinished: task.isFinished,
+            members: task.involvedAgents,
+          }))}
           id={list.id}
           status={list.isFinished}
           key={i}
           note={list.note}
           plannedStart={list.plannedStart}
+          plannedFinish={list.plannedFinish}
           agents={list.workingAgents}
           name={list.name}
           planId={param}
+          isDeletable={list.isDeletable}
           openModal={openModal}
           openCardController={() => toggleNewCommitmentModal(list.id, list.scope.id)}
+          scope={list.scope.name}
+          scopeId={list.scope.id}
+          planStartDate={data.plannedOn}
+          planDueDate={data.due}
+          relationships={relationships.map((rel, i) => (
+            <option key={i} value={rel.object.id}>
+              {rel.object.name}
+            </option>
+          ))}
         />
       ))}
       <NewBin
@@ -63,6 +83,8 @@ const Canvas = ({
           </option>
         ))}
         param={param}
+        startDate={data.plannedOn}
+        due={data.due}
       />
     </div>
   </section>
