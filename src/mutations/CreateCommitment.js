@@ -55,6 +55,7 @@ const createCommitment = gql`
         }
         committedQuantity {
           unit {
+            id
             name
           }
           numericValue

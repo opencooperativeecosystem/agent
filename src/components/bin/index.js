@@ -1,7 +1,6 @@
 import React from "react";
-import { compose, withState, withHandlers } from "recompose";
+import { compose, withHandlers } from "recompose";
 import { graphql } from "react-apollo";
-import Plan from "../../queries/getPlan";
 import UpdateProcess from "../../mutations/updateProcess";
 import { Bin, Card, Icons } from "oce-components/build";
 import EditTitle from "./editTitle";

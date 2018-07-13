@@ -32,6 +32,7 @@ mutation ($token: String!, $providerId: Int, $receiverId: Int, $action: String!,
       affectedQuantity {
         numericValue
         unit {
+          id
           name
         }
       }

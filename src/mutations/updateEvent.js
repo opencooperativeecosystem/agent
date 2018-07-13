@@ -28,6 +28,7 @@ mutation ($token: String!, $id: Int!, $start: String!, $requestDistribution: Boo
         }
         affectedQuantity {
           unit {
+            id
             name
           }
           numericValue

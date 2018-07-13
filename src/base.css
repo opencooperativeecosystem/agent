@@ -319,7 +319,7 @@ body {
 .genericAlert {
   position: fixed;
   top: 10px;
-  left: 10px;
+  width: 320px;
   right: 10px;
   z-index: 99999999999999999999999999999999;
 }

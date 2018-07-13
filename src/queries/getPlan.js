@@ -47,6 +47,7 @@ query ($token: String, $planId: Int) {
             committedQuantity {
               unit {
                 name
+                id
               }
               numericValue
             }
@@ -75,6 +76,7 @@ query ($token: String, $planId: Int) {
             }
             committedQuantity {
               unit {
+                id
                 name
               }
               numericValue

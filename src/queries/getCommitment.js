@@ -30,6 +30,7 @@ query ($token: String, $id: Int!) {
         committedQuantity {
           unit {
             name
+            id
           }
           numericValue
         }

@@ -17,7 +17,6 @@ const StartDate = props => {
         selected={props.value}
         onChange={handleChange}
         dateFormat={"DD MMM"}
-        withPortal
       />
       {props.error && props.touched && <Alert>{props.error}</Alert>}
     </div>
@@ -32,12 +31,11 @@ export default function LogEvent({
   touched,
   setFieldTouched,
   unit,
-  units
+  units,
 }) {
   return (
     <Form>
       <div className={style.content_module}>
-        <h5 className={style.modalDescription_title}>Log your work</h5>
         <div className={style.content_log}>
           <div className={style.log_item}>
             <div className={style.item_sencence}>
@@ -46,6 +44,7 @@ export default function LogEvent({
                 name="numericValue"
                 render={({ field /* _form */ }) => (
                   <Input
+                    value={field.value}
                     name={field.name}
                     onChange={field.onChange}
                     className={style.action_input_amount}
@@ -71,6 +70,7 @@ export default function LogEvent({
               name="note"
               render={({ field /* _form */ }) => (
                 <Textarea
+                  value={field.value}
                   name={field.name}
                   onChange={field.onChange}
                   placeholder={"Add a more detailed description..."}

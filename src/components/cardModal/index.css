@@ -179,6 +179,7 @@
     letter-spacing: .5px;
     display: inline-block;
     margin: 0;
+    margin-bottom: 10px;
     text-transform: uppercase;
     /* margin-left: 10px; */
   }
@@ -430,6 +431,10 @@
     position: relative;
   }
   
+.item {
+  position: relative;
+}
+
   .list_item {
     /* display: inline; */
     margin: 0 6px 0 0;
@@ -505,9 +510,9 @@
     stroke: 2;
   }
   
-.item_sencence {
-  lost-utility: clearfix;
-}
+  .item_sencence {
+    lost-utility: clearfix;
+  }
 
   .log_item select {
     background: white;
@@ -980,7 +985,7 @@
   }
 
   .content_log {
-    margin-top: 10px;
+    margin-top: 0px;
     background: #F9F9F9;
     border: 1px solid #DEDEDE;
     border-radius: 3px;
@@ -1109,13 +1114,19 @@
  }
 
  .activity_header {
-  background: #dfe1e5;
-  margin: -20px;
-  margin-top: 0px;
-  margin-bottom: 20px;
-  padding: 20px;
-  padding-top: 10px;
-  padding-bottom: 0;
+  lost-utility: clearfix;
+  position: absolute;     
+  right: 0;     
+  top: 5px; 
+}
+
+
+ .popup_activity {
+    background: #fff;
+    border-radius: 3px;
+    border-bottom-color: #C4C9CC;
+    -webkit-transform: translate3d(0,0,0);
+    /* top: -50px; */
  }
 
  .event_actions button {
@@ -1123,26 +1134,25 @@
  }
 
  .activity_header h5 {
-  -moz-box-sizing: border-box;
     box-sizing: border-box;
     color: #8c8c8c;
     display: block;
     line-height: 36px;
     overflow: hidden;
-    margin-top: 10px;
     position: relative;
     text-overflow: ellipsis;
     white-space: nowrap;
     z-index: 1;
     font-weight: 400;
     font-size: 14px;
+    float: left;
     letter-spacing: .5px;
-    margin-bottom: 10px;
  }
 
  .activity_header span {
     float: right;
-    margin-top: -40px;
+    margin-right: 5px;
+    margin-top: 5px;
     position: relative;
     z-index: 10;
  }
