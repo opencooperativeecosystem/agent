@@ -196,6 +196,7 @@
 
 
 .dates {
+    lost-utility: clearfix;
     background: #ebebeb;
     height: 36px;
     border-bottom-left-radius: 3px;
@@ -205,7 +206,7 @@
 .dateWrapper {
    margin-top: 6px;
    margin-left: 5px;
-   display: inline-block;
+   float: left;
   }
   
   .dateName {

@@ -225,7 +225,7 @@ export default compose(
       date: Yup.string()
     }),
     handleSubmit: (values, { props, resetForm, setErrors, setSubmitting }) => {
-      let date = moment(props.date).format("YYYY-MM-DD");
+      let date = moment(values.date).format("YYYY-MM-DD");
       return props.client
         .mutate({
           mutation: CreateCommitment,
