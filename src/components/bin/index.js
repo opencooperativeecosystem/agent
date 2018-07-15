@@ -5,6 +5,7 @@ import UpdateProcess from "../../mutations/updateProcess";
 import { Bin, Card, Icons } from "oce-components/build";
 import EditTitle from "./editTitle";
 import EditStart from "./editStart";
+import EditDue from "./editDue";
 import EditScope from "./editScope";
 import EditNote from "./editNote";
 import Archive from "./archive";
@@ -74,6 +75,15 @@ const BinWrapper = ({
           id={id}
           planId={planId}
           start={plannedStart}
+        />
+      }
+      Dueform={
+        <EditDue
+          planStart={planStartDate}
+          planDue={planDueDate}
+          id={id}
+          planId={planId}
+          due={plannedFinish}
         />
       }
       Archive={<Archive id={id} planId={planId} />}

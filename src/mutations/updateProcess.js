@@ -9,6 +9,7 @@ export const UpdateProcess = gql`
     $scopeId: Int
     $note: String
     $start: String
+    $due: String
   ) {
     updateProcess(
       token: $token
@@ -18,6 +19,7 @@ export const UpdateProcess = gql`
       scopeId: $scopeId
       note: $note
       plannedStart: $start
+      plannedFinish: $due
     ) {
       process {
         processPlan {
@@ -32,6 +34,7 @@ export const UpdateProcess = gql`
         note
         isDeletable
         plannedStart
+        plannedFinish
         isFinished
       }
     }
