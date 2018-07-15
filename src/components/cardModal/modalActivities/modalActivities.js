@@ -95,7 +95,7 @@ export default function({
                       date={item.fulfilledBy.start}
                       scopeId={scopeId}
                       commitmentId={commitmentId}
-                      reqestPayment={item.fulfilledBy.requestDistribution}
+                      requestPayment={item.fulfilledBy.requestDistribution}
                     />
                   </div>
                 </div>
