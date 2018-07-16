@@ -56,23 +56,6 @@ query ($token: String, $id: Int) {
             }
           }
         }
-        agentPlans (isFinished: false) {
-          name
-          id
-          note
-          due
-          plannedOn
-          planProcesses {
-            isStarted
-            isFinished
-            name
-            workingAgents {
-              id
-              name
-              image
-            }
-          }
-        }
       }
     }
   }

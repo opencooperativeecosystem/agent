@@ -5,7 +5,7 @@ query ($token: String, $id: Int) {
     viewer(token: $token) {
       agent(id: $id) {
         id
-        agentPlans (isFinished: false)  {
+        agentPlans {
           name
           id
           note

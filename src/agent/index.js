@@ -1,13 +1,12 @@
 import React from 'react'
 import style from './style.css'
-import Cards from '../components/cards'
 import Feed from '../components/feed/feed'
 import { NavLink } from 'react-router-dom'
 import Item from '../components/inventoryItem'
+import PanelPlans from './plans'
 import {Icons, Panel, NavigationItem} from 'oce-components/build'
-// import Panel from '../components/panel'
 
-const Agent = ({data, match}) => {
+const Agent = ({data}) => {
   return (
     <section className={style.agent}>
       <Panel data-testid='diary' icon={<Icons.Diary width='18' color='#f0f0f0' />} title='Diary'>
@@ -39,15 +38,7 @@ const Agent = ({data, match}) => {
           
         </div>
       </Panel>
-      <Panel data-testid='plans' icon={<Icons.Card width='18' color='#f0f0f0' />} title='Plans'>
-        {data.agentPlans.length > 0
-          ? <Cards
-            data={data.agentPlans}
-            link='/canvas'
-          />
-          : <div className={style.emptyBox}>No item in this section :(</div>
-        }
-      </Panel>
+      <PanelPlans id={data.id} />
       <Panel data-testid='inventory' icon={<Icons.Inventory width='18' color='#f0f0f0' />} title='Inventory'>
         <div className={style.resources_list}>
           {data.ownedEconomicResources.length > 0

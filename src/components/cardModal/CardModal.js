@@ -13,7 +13,7 @@ import ModalNote from './modalNote'
 import Actions from './actions'
 import {LoadingMini} from '../loading'
 
-const CardModal = ({param, processId, id, agentId, toggleActions, actionPopup, updateCommitment, allPlanAgents, units, loading, data, error, close, modalDescription}) => {
+const CardModal = ({param, processId, id, agentId, units, loading, data, error, close}) => {
   console.log(data)
   return (
     loading ? <LoadingMini /> : (

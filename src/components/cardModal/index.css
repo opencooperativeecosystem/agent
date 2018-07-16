@@ -402,6 +402,23 @@
     margin-right: 5px;
   }
 
+  .publishActions_button span {
+    vertical-align: sub;
+    margin-right: 5px;
+  }
+
+  .publishActions_button {
+    height: 36px;
+    border: none;
+    background: #3b99fc;
+    color: #fafafa;
+    font-size: 14px;
+    width: 180px !important;
+    letter-spacing: .5px;
+    font-family: 'fira Sans';
+    line-height: 36px;
+  }
+
   .due {
     display: inline-block;
     background-color: #E2E4E6;

@@ -1,6 +1,6 @@
 import React from "react";
 import style from "../index.css";
-import { Button, Input, Textarea } from "oce-components/build";
+import { Button, Input, Textarea, Icons } from "oce-components/build";
 import DatePicker from "react-datepicker";
 import ToggleButton from "react-toggle-button";
 import { Form, Field } from "formik";
@@ -77,22 +77,27 @@ export default function LogEvent({
                 />
               )}
             />
-            <div className={style.item_publishActions}>
-              <Button>Publish</Button>
-              <div className={style.item_distribution}>
-                <Field
-                  name="requestPayment"
-                  render={({ field /* _form */ }) => (
-                    <ToggleButton
-                      name={field.name}
-                      value={field.value}
-                      onToggle={(value) => setFieldValue('requestPayment', !value)}
-                    />
-                  )}
-                />
-                <label>Request payment</label>
-              </div>
-            </div>
+            {action === 'produce' || action === 'use' || action === 'consume'
+             ? <div className={style.item_publishActions}>
+                <button className={style.publishActions_button}><span><Icons.Plus width='16' height='16' color='#f0f0f0' /></span>Create a resource</button>
+            </div> 
+             : <div className={style.item_publishActions}>
+             <Button>Publish</Button>
+             <div className={style.item_distribution}>
+               <Field
+                 name="requestPayment"
+                 render={({ field /* _form */ }) => (
+                   <ToggleButton
+                     name={field.name}
+                     value={field.value}
+                     onToggle={(value) => setFieldValue('requestPayment', !value)}
+                   />
+                 )}
+               />
+               <label>Request payment</label>
+             </div>
+            </div> 
+            }
           </div>
         </div>
       </div>

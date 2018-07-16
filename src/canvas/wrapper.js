@@ -82,7 +82,6 @@ const CanvasWrapper = ({
             />
          </Panel>
           <CardModal
-            allPlanAgents={data.viewer.plan.allPlanAgents}
             modalIsOpen={modalIsOpen}
             closeModal={closeModal}
             toggleModal={toggleModal}

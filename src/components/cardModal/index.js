@@ -4,18 +4,14 @@ import Modal from '../modal'
 
 const CommitmentModal = ({
   param,
-  loading,
   actionPopup,
   toggleActions,
   modalIsOpen,
-  error,
   commitment,
   units,
   modalDescription,
-  allPlanAgents,
   agentId,
   processId,
-  closeModal,
   toggleModal,
   id
 }) => {
@@ -29,7 +25,6 @@ const CommitmentModal = ({
       actionPopup={actionPopup}
       toggleActions={toggleActions}
       id={id}
-      allPlanAgents={allPlanAgents}
       units={units}
       agentId={agentId}
       processId={processId}
