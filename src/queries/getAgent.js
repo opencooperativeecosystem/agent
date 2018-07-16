@@ -7,6 +7,7 @@ query ($token: String, $id: Int) {
         id
         name
         image
+        email
         note
         type
         agentRelationships {

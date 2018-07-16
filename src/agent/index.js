@@ -16,6 +16,8 @@ const Agent = ({data}) => {
               <span className={style.image_photo} style={{backgroundImage: data.image ? `url(${data.image})` : `url('./images/sample.png')`}} />
             </div>
             <h1 className={style.info_title}>{data.name}</h1>
+            {data.email ? <h3 className={style.info_email}>{data.email}</h3> : null}
+            {data.note ? <h4 className={style.info_note}>{data.note}</h4> : null}
           </div>
           {data.agentEconomicEvents.length > 0
           ? <Feed feed={data.agentEconomicEvents} />

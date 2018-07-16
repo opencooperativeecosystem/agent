@@ -23,6 +23,8 @@
 
 .agent_info {
     lost-utility:clearfix;
+    border-bottom: 1px solid rgba(240,240,240, .1);
+    padding-bottom: 20px;
 }
 
 .info_image {
@@ -125,9 +127,13 @@
 
 .info_note {
     font-size: 14px;
-    margin:0;
+    margin: 0;
     line-height: 22px;
-    display: grid;
+    color: rgba(240,240,240, .8);
+    font-weight: 400;
+    text-align: center;
+    margin-top: 10px;
+    line-height: 20px;
 }
 
 
@@ -148,6 +154,15 @@
     font-weight: 400;
     color: #161515;
     font-size: 14px
+}
+
+.info_email{
+    margin: 0;
+    margin-top: 8px;
+    color: #99ADC6;
+    font-size: 13px;
+    text-align: center;
+    font-weight: 500;
 }
 
 .item_active {
