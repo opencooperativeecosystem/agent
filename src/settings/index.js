@@ -34,14 +34,17 @@ const Settings = ({active, id, image, note, email, name, updateNotification, mut
             : active === 'skills' ?
             <div>
               <h2>Skills</h2>
+              <h4>Be patience, skills will be implemented soon...</h4>
             </div>
             : active === 'recipes' ?
             <div>
               <h2>Recipes</h2>
+              <h4>Be patience, recipes will be implemented soon...</h4>
             </div>
             : active === 'credentials' ?
             <div>
               <h2>Credentials</h2>
+              <h4>Be patience, credentials will be implemented soon...</h4>
             </div>
             : null
           }
