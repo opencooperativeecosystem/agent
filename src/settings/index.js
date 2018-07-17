@@ -1,11 +1,11 @@
 import React from 'react'
 import style from './style.css'
-import ToggleButton from 'react-toggle-button'
-// import Panel from '../components/panel'
-// import {User, Bell} from '../icons'
 import {Icons, Panel} from 'oce-components/build'
+import Menu from './menu'
+import General from './general'
+import Notifications from './notifications';
 
-const Settings = ({allNotification, toggleNotification, data, saveSettings, updateImage, updateBio, updateEmail, updateLocation, updateName}) => {
+const Settings = ({active, id, image, note, email, name, updateNotification, mutateNotification, mutateSettings, toggleActivePanel, allNotification, toggleNotification, data}) => {
   const notifications = allNotification.map(notification => {
     let value
     let id
@@ -24,47 +24,27 @@ const Settings = ({allNotification, toggleNotification, data, saveSettings, upda
   })
   return (
     <div className={style.settings}>
-      <Panel icon={<Icons.User width='18' color='#f0f0f0' />} title='General'>
+      <Panel large icon={<Icons.Settings width='18' color='#f0f0f0' />} title='Settings'>
+        <Menu active={active} toggleActivePanel={toggleActivePanel} />
         <div className={style.container_form}>
-          <div className={style.form_item}>
-            <h5>Name</h5>
-            <input onChange={updateName} placeholder={data.name} />
-          </div>
-          <div className={style.form_item}>
-            <h5>Email</h5>
-            <input onChange={updateEmail} placeholder={data.email} />
-          </div>
-          <div className={style.form_item}>
-            <h5>Photo</h5>
-            <input onChange={updateImage} placeholder={data.image} />
-            <div className={style.item_photo}>
-              <img alt='agent' src={data.image} />
+          {active === 'general' ?
+            <General id={id} image={image} note={note} name={name} email={email} mutateSettings={mutateSettings} />
+            : active === 'notification' ?
+            <Notifications updateNotification={updateNotification} mutateNotification={mutateNotification} toggleNotification={toggleNotification} notifications={notifications} />
+            : active === 'skills' ?
+            <div>
+              <h2>Skills</h2>
             </div>
-          </div>
-          <div className={style.form_item}>
-            <h5>Bio</h5>
-            <textarea onChange={updateBio} placeholder={data.note} />
-          </div>
-          <div className={style.form_actions}>
-            <button onClick={saveSettings} >Save</button>
-          </div>
-        </div>
-      </Panel>
-      <Panel icon={<Icons.Bell width='18' color='#f0f0f0' />} title='Notification'>
-        <div className={style.container_form}>
-          {notifications.map((notification, i) => (
-            <div key={i} className={style.form_item + ' ' + style.form_setting}>
-              <div className={style.item_info}>
-                <h5>{notification.display}</h5>
-                <p>{notification.description}</p>
-              </div>
-              <div className={style.item_status}>
-              <ToggleButton
-                value={ notification.value || false }
-                onToggle={(value) => toggleNotification(notification.id, value, notification.originalId)} />
-              </div>
+            : active === 'recipes' ?
+            <div>
+              <h2>Recipes</h2>
             </div>
-          ))}
+            : active === 'credentials' ?
+            <div>
+              <h2>Credentials</h2>
+            </div>
+            : null
+          }
         </div>
       </Panel>
     </div>
