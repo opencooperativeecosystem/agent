@@ -2,45 +2,15 @@ import React from "react";
 import Component from "./index";
 import { graphql } from "react-apollo";
 import gql from "graphql-tag";
-import { compose, withHandlers, withState } from "recompose";
+import { compose, withState } from "recompose";
 import { LoadingMini } from "../components/loading";
-
-const allNotificationTypes = gql`
-  query($token: String) {
-    viewer(token: $token) {
-      allNotificationTypes {
-        id
-        label
-        display
-        description
-      }
-    }
-  }
-`;
+import allNotificationTypes from '../queries/getAllNotifications'
+import updateSettings from '../mutations/updateSettings'
 const agent = gql`
   query($token: String) {
     viewer(token: $token) {
       myAgent {
         id
-        name
-        image
-        email
-        note
-        agentRelationships {
-          relationship {
-            label
-            category
-          }
-          object {
-            id
-            name
-            note
-            image
-          }
-        }
-        primaryLocation {
-          name
-        }
         agentNotificationSettings {
           id
           send
@@ -51,33 +21,6 @@ const agent = gql`
             description
           }
         }
-      }
-    }
-  }
-`;
-
-const updateSettings = gql`
-  mutation(
-    $token: String!
-    $note: String
-    $id: Int!
-    $name: String
-    $email: String
-    $image: String
-  ) {
-    updatePerson(
-      token: $token
-      id: $id
-      note: $note
-      email: $email
-      name: $name
-      image: $image
-    ) {
-      person {
-        id
-        name
-        note
-        image
       }
     }
   }
@@ -141,11 +84,17 @@ class SettingsWrapper extends React.Component {
       loading,
       error,
       data,
-      updateImage,
-      updateBio,
+      id,
+      name,
+      note,
+      email,
+      image,
       saveSettings,
-      updateLocation,
-      updateName
+      active,
+      toggleActivePanel,
+      mutateSettings,
+      mutateNotification,
+      updateNotification
     } = this.props;
     return loading || notificationLoading ? (
       <LoadingMini />
@@ -155,36 +104,22 @@ class SettingsWrapper extends React.Component {
       <Component
         allNotification={allNotification}
         data={data}
-        updateImage={updateImage}
-        updateLocation={updateLocation}
-        updateName={updateName}
-        updateBio={updateBio}
+        active={active}
+        toggleActivePanel={toggleActivePanel}
         saveSettings={saveSettings}
         toggleNotification={toggleNotification}
+        mutateSettings={mutateSettings}
+        mutateNotification={mutateNotification}
+        updateNotification={updateNotification}
+        id={id}
+        name={name}
+        note={note}
+        email={email}
+        image={image}
       />
     );
   }
 }
-
-// const mapStateToProps = (state) => {
-//   return {
-//     state: state
-//   }
-// }
-
-// const mapDispatchToProps = (dispatch) => {
-//   const sendNotif = (id, message, kind, dismissAfter) => {
-//     notifActions.notifSend({
-//       message,
-//       kind,
-//       id: id,
-//       dismissAfter: 2000
-//     })(dispatch)
-//   }
-//   return {
-//     sendNotif
-//   }
-// }
 
 const agentNotificationSettings = gql`
   query($token: String) {
@@ -208,6 +143,7 @@ const agentNotificationSettings = gql`
 `;
 
 const WrapperConnected = compose(
+  withState('active', 'toggleActivePanel', 'general'),
   graphql(allNotificationTypes, {
     options: props => ({
       variables: {
@@ -295,83 +231,6 @@ const WrapperConnected = compose(
       id
     })
   }),
-  withState("image", "updateImage", ""),
-  withState("name", "updateName", ""),
-  withState("email", "updateEmail", ""),
-  withState("bio", "updateBio", ""),
-  withState("location", "updateLocation", ""),
-  withHandlers({
-    updateImage: props => event => {
-      event.preventDefault();
-      props.updateImage(event.target.value);
-    },
-    updateName: props => event => {
-      event.preventDefault();
-      props.updateName(event.target.value);
-    },
-    updateEmail: props => event => {
-      event.preventDefault();
-      props.updateEmail(event.target.value);
-    },
-    updateBio: props => event => {
-      event.preventDefault();
-      props.updateBio(event.target.value);
-    },
-    updateLocation: props => event => {
-      event.preventDefault();
-      props.updateLocation(event.target.value);
-    },
-    toggleNotification: props => (id, value, notificationId) => {
-      if (id !== undefined) {
-        return props
-          .mutateNotification({
-            variables: {
-              send: !value,
-              id: id,
-              token: localStorage.getItem("oce_token")
-            }
-          })
-          .then(data =>
-            props.sendNotif(
-              Math.random(),
-              "✌️✌️✌️ Settings updated correctly",
-              "success",
-              "5000"
-            )
-          )
-          .catch(e =>
-            props.sendNotif(Math.random(), e.message, "danger", "5000")
-          );
-      } else {
-        return props
-          .createNotification({
-            variables: {
-              agentId: props.data.id,
-              send: !value,
-              notificationTypeId: notificationId,
-              token: localStorage.getItem("oce_token")
-            }
-          })
-          .then(data => console.log(data))
-          .catch(e => console.log(e));
-      }
-    },
-    saveSettings: props => () => {
-      return props
-        .mutateSettings({
-          variables: {
-            id: props.data.id,
-            name: props.name,
-            email: props.email,
-            image: props.image,
-            note: props.bio,
-            token: localStorage.getItem("oce_token")
-          }
-        })
-        .then(data => console.log(data))
-        .catch(e => console.log(e));
-    }
-  })
 )(SettingsWrapper);
 
 export default WrapperConnected;

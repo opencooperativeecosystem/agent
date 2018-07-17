@@ -2,7 +2,7 @@ import * as React from "react";
 import { graphql } from "react-apollo";
 import gql from "graphql-tag";
 import style from "./style.css";
-import { Route, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import Sidebar from "../../components/sidebar";
 import { compose, withHandlers, withState } from "recompose";
 import Canvas from "../../canvas/wrapper";
@@ -10,10 +10,10 @@ import Settings from "../../settings/wrapper";
 import Agent from "../../agent/wrapper";
 import Overview from "../../overview/wrapper";
 import { PropsRoute } from "../../helpers/router";
-import Validate from '../../validation_plan/wrapper'
+import Validate from "../../validation_plan/wrapper";
 import updateNotification from "../../mutations/updateNotification";
 import deleteNotification from "../../mutations/deleteNotification";
-import {LoadingMini} from '../../components/loading'
+import { LoadingMini } from "../../components/loading";
 
 const AppTemplate = props => {
   return props.loading ? (
@@ -64,7 +64,16 @@ const AppTemplate = props => {
                     component={Validate}
                     relationships={props.data.agentRelationships}
                   />
-                  <Route path="/settings" component={Settings} />
+                  <PropsRoute
+                    exact
+                    path="/settings"
+                    component={Settings}
+                    id={props.data.id}
+                    name={props.data.name}
+                    image={props.data.image}
+                    note={props.data.note}
+                    email={props.data.email}
+                  />
                 </div>
               </div>
             </div>
@@ -82,6 +91,8 @@ const agentPlans = gql`
         id
         name
         image
+        email
+        note
         agentPlans {
           id
         }
@@ -104,8 +115,8 @@ const agentPlans = gql`
 const App = withRouter(AppTemplate);
 
 export default compose(
-  graphql(updateNotification, {name: 'updateNotification'}),
-  graphql(deleteNotification, {name: 'deleteNotification'}),
+  graphql(updateNotification, { name: "updateNotification" }),
+  graphql(deleteNotification, { name: "deleteNotification" }),
   graphql(agentPlans, {
     options: props => ({
       variables: {
