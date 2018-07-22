@@ -487,6 +487,8 @@ export default compose(
           })
         )
         .catch(e => {
+          console.log(e)
+          console.log(e.graphQLErrors)
           const errors = e.graphQLErrors.map(error => error.message);
           updateNotification({
             variables: {

@@ -1,7 +1,17 @@
 
   .activities_list  {
-    margin-top: 20px;
-    padding: 10px;
+    margin-top: 10px;
+  }
+
+  .list_title {
+    margin: 0;
+    color: #99ADC6;
+    font-size: 13px;
+    text-transform: uppercase;
+    text-align: left;
+    letter-spacing: .4px;
+    margin-bottom: 8px;
+    font-weight: 400;
   }
 
   .activities_list .list_item {

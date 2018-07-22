@@ -14,7 +14,6 @@ import Actions from './actions'
 import {LoadingMini} from '../loading'
 
 const CardModal = ({param, processId, id, agentId, units, loading, data, error, close}) => {
-  console.log(data)
   return (
     loading ? <LoadingMini /> : (
     error ? <p style={{ color: '#ddd' }}>{error}</p> : (
