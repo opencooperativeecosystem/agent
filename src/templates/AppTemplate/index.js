@@ -93,6 +93,10 @@ const agentPlans = gql`
         image
         email
         note
+        agentSkills {
+          id
+          name
+        }
         agentPlans {
           id
         }
