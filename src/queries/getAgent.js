@@ -10,10 +10,6 @@ query ($token: String, $id: Int) {
         email
         note
         type
-        agentSkills {
-          id
-          name
-        }
         agentRelationships {
           object {
             id
@@ -32,29 +28,6 @@ query ($token: String, $id: Int) {
             category
           }
           currentQuantity {
-            numericValue
-            unit {
-              name
-            }
-          }
-        }
-        agentEconomicEvents(latestNumberOfDays: 30) {
-          note
-          action
-          provider {
-            image
-            name
-          }
-          inputOf {
-            name
-          }
-          receiver {
-            name
-          }
-          start
-          requestDistribution
-          note
-          affectedQuantity {
             numericValue
             unit {
               name

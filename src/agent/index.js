@@ -1,15 +1,17 @@
 import React from 'react'
 import style from './style.css'
-import Feed from '../components/feed/feed'
+// import Feed from '../components/feed/feed'
 import { NavLink } from 'react-router-dom'
 import Item from '../components/inventoryItem'
-import PanelPlans from './plans'
+import Plans from './plans'
+import Feed from './feed'
 import {Icons, Panel, NavigationItem} from 'oce-components/build'
 
 const Agent = ({data, toggleModal, isOpen}) => {
   return (
     <section className={style.agent}>
-      <Panel data-testid='diary' icon={<div className={style.info_image} style={{backgroundImage: data.image ? `url(${data.image})` : `url('./images/sample.png')`}} />} title={data.name}>
+      <Feed image={data.image} name={data.name} id={data.id} toggleModal={toggleModal} />
+      {/* <Panel data-testid='diary' icon={<div className={style.info_image} style={{backgroundImage: data.image ? `url(${data.image})` : `url('./images/sample.png')`}} />} title={data.name}>
         <div className={style.agent_profile}>
           <div className={style.agent_info}>
             {data.email ? <h3 className={style.info_email}>{data.email}</h3> : null}
@@ -26,7 +28,7 @@ const Agent = ({data, toggleModal, isOpen}) => {
           </div>
           {data.agentEconomicEvents.length > 0 ? <Feed feed={data.agentEconomicEvents} /> : null }
         </div>
-      </Panel>
+      </Panel> */}
       <Panel data-testid='network' icon={<Icons.Globe width='18' color='#f0f0f0' />} title={data.type === 'Person' ? 'Network' : 'Participants'}>
         <div className={style.agent_list}>
           {data.type === 'Person' 
@@ -43,7 +45,7 @@ const Agent = ({data, toggleModal, isOpen}) => {
           
         </div>
       </Panel>
-      <PanelPlans id={data.id} />
+      <Plans id={data.id} />
       {/* <Panel data-testid='inventory' icon={<Icons.Inventory width='18' color='#f0f0f0' />} title='Inventory'>
         <div className={style.resources_list}>
           {data.ownedEconomicResources.length > 0
