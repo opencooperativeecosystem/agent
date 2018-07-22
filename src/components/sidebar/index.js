@@ -1,19 +1,20 @@
-import {compose, withHandlers} from 'recompose'
+import {compose,withState, withHandlers} from 'recompose'
 import Component from './sidebar'
 import moment from "moment";
 import {withFormik} from 'formik'
 import * as Yup from 'yup'
 import createPlan from '../../mutations/CreatePlan'
 import updateNotification from "../../mutations/updateNotification";
+import React from 'react'
 import deleteNotification from "../../mutations/deleteNotification";
 import {Icons} from 'oce-components/build'
 import { graphql } from "react-apollo";
-import React from 'react'
 
 export default compose(
   graphql(createPlan, { name: "createPlanMutation" }),
   graphql(updateNotification, {name: 'updateNotification'}),
   graphql(deleteNotification, {name: 'deleteNotification'}),
+  withState('isOpen', 'togglePopup', ''),
   withFormik({
     mapPropsToValues: (props) => ({ name: '', note: '', start: moment(), due: moment() }),
     validationSchema: Yup.object().shape({
@@ -60,9 +61,15 @@ export default compose(
     }
   }),
   withHandlers({
+    // onTogglePopup: props => (popup) => {
+    //   props.togglePopup(popup)
+    // },
+    onCreatePlanFromRecipe: props => event => {
+      props.toggleCreatePlanFromRecipe(!props.createPlanFromRecipe)
+    },
     logout: props => event => {
       localStorage.removeItem('oce_token')
       window.location.reload()
-    }
+    },
   })
 )(Component)

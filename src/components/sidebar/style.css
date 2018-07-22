@@ -63,16 +63,18 @@
   left: 0;
   right: 0;
   bottom: 0;
+  white-space: pre-wrap;
 }
 
 .sidebar_header .header_profile {
     lost-utility: clearfix;
     margin-top: 0px;
-    height: 30px;
-    line-height: 30px;
+    border-bottom: 1px solid rgba(240,240,240, .1);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
 }
 
-.sidebar_header .header_profile h3 {
+.sidebar_header .header_profile .main_title {
     font-size: 16px;
     letter-spacing: 1px;
     float: left;
@@ -88,61 +90,29 @@
     width: 30px;
     border-radius: 2px;
     float: left;
+    background-size: cover;
 }
 
-.sidebar_header .header_profile .data_image img {
-    height: 30px;
-    width: 30px;
-    border-radius: 2px;
-}
-
-.sidebar_section {
-    /* padding: 20px; */
-}
-
-.sidebar_section .section_list {
-    padding: 0;
-    list-style: none;
-    margin: 0;
-    margin-top: 10px;
-}
-
-.section_list {
-    margin: 0;
-    padding: 0;
-    margin-top: 20px;
-}
-
-.section_list li {
-    padding: 0;
-    margin: 0;
-    display: block;
-}
-
-.section_list li a {
-    font-size: 13px;
-    font-weight: 400;
-    letter-spacing: 1px;
-    text-decoration: none;
+.button_action {
     height: 40px;
-    line-height:40px;
-    color: #F0F0F0;
-    text-transform: uppercase;
-    position: relative;
+    color: #f0f0f0;
+    font-size: 14px;
+    letter-spacing: .5px;
+    background: #00000026;
+    border-radius: 4px;
+    line-height: 40px;
+    padding-left: 8px;
+    margin-top: 8px;
+    cursor: pointer;
+}
+.underlined {
+    text-decoration: underline;
+background: none;
 }
 
-.section_list li a.active {
-  color: #419BF9;
-}
-.section_list li a.active:before {
-    position: absolute;
-    content: "";
-    width: 2px;
-    height: 100%;
-    display: block;
-    background: #419BF9;
-    left: -15px;
-    top: 0;
+.button_action span {
+    vertical-align: sub;
+    margin-right: 8px;
 }
 
 .section_planCreation {
@@ -154,7 +124,7 @@
     color: #d9e1e8;
     margin: 0;
     margin-bottom: 8px;
-    margin-top: 24px;
+    margin-top: 0px;
     font-size: 14px;
     font-weight: 400;
     letter-spacing: .5px;
@@ -170,10 +140,21 @@
     border-bottom-right-radius: 3px;
 }
 
+.form_select {
+    margin-bottom: 8px;
+}
+
 .form_input{
     /* margin-bottom: 8px; */
-    border-bottom: 1px solid rgba(54,54,54, .1)
+    border-bottom: 1px solid rgb(228, 228, 228);
 }
+
+.form_input input {
+    border-radius: 0;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
 .form_input::placeholder {
     font-size: 13px;
     color: #606884;
@@ -183,6 +164,23 @@
     height: 150px;
 }
 
+.form_note textarea {
+    border-radius: 0;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+
+.planCreation_info {
+    lost-utility: clearfix;
+}
+
+.planCreation_info span {
+    float: right;
+    margin-top: -25px;
+    cursor: pointer;
+}
+
 .formPlanWrapper {
     height: 186px;
     background: white;
@@ -190,10 +188,12 @@
 }
 
 .planCreation_wrapper {
-    background: #f0f0f0;
-    border-radius: 3px;
 }
 
+
+.profile_main {
+  lost-utility: clearfix;
+}
 
 .dates {
     lost-utility: clearfix;

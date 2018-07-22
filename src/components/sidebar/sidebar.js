@@ -1,28 +1,9 @@
 import React from "react";
 import style from "./style.css";
-import { Icons, Input, Textarea, Button } from "oce-components/build";
-import DatePicker from "react-datepicker";
-import { Form, Field } from "formik";
-import Alert from "../alert";
+import { Icons } from "oce-components/build";
 import { NavLink } from "react-router-dom";
-require("react-datepicker/dist/react-datepicker-cssmodules.css");
-
-const DueDate = props => {
-  const handleChange = value => {
-    props.onChange("due", value);
-  };
-  return (
-    <div>
-      <DatePicker
-        selected={props.value}
-        onChange={handleChange}
-        dateFormat={"DD MMM YYYY"}
-        withPortal
-      />
-      {props.error && props.touched && <Alert>{props.error}</Alert>}
-    </div>
-  );
-};
+import CreatePlan from "./createPlan";
+import CreatePlanFromRecipe from "./createPlanFromRecipe";
 
 const Sidebar = props => {
   return props.panel ? (
@@ -62,77 +43,46 @@ const Sidebar = props => {
       </header>
       <div className={style.sidebar_header}>
         <div className={style.header_profile}>
-          <NavLink to={"/"}>
-            <div className={style.data_image}>
-              <img
-                alt="profile"
-                src={
-                  props.data.image
-                    ? props.data.image
-                    : "../../images/sample.png"
-                }
+          <div className={style.profile_main}>
+            <NavLink to={"/"}>
+              <div
+                className={style.data_image}
+                style={{ backgroundImage: `url(${props.data.image})` }}
               />
-            </div>
-            <h3 data-testid="agent-name">{props.data.name}</h3>
-          </NavLink>
+              <h3 className={style.main_title} data-testid="agent-name">
+                {props.data.name}
+              </h3>
+            </NavLink>
+          </div>
         </div>
-        <div className={style.section_planCreation}>
-          <h4 className={style.planCreation_title}>Create a new plan</h4>
-          <Form className={style.planCreation_wrapper}>
-            <div className={style.form_input}>
-              <Field
-                name="name"
-                render={({ field /* _form */ }) => (
-                  <Input {...field} placeholder="Type the plan name" />
-                )}
-              />
-              {props.errors.name &&
-                props.touched.name && <Alert>{props.errors.name}</Alert>}
-            </div>
-            <div className={style.formPlanWrapper}>
-              <div className={style.form_note}>
-                <Field
-                  name="note"
-                  render={({ field /* _form */ }) => (
-                    <Textarea {...field} placeholder="What is the plan about" />
-                  )}
-                />
-              </div>
-              <div className={style.dates}>
-                <div className={style.dateWrapper}>
-                  <h5 className={style.dateName}>
-                    <span style={{ verticalAlign: "sub" }}>
-                      <Icons.Calendar width="16" height="16" color="#707BA0" />
-                    </span>{" "}
-                    Due
-                  </h5>
-                  <DueDate
-                    value={props.values.due}
-                    onChange={props.setFieldValue}
-                    onBlur={props.setFieldTouched}
-                    error={props.errors.due}
-                    touched={props.touched.due}
-                  />
-                </div>
-                <div className={style.form_button}>
-                  <Button>Create</Button>
-                </div>
-              </div>
-            </div>
-          </Form>
-        </div>
-        {/* <ul className={style.section_list}>
-          <li className={style.list_item}><NavLink exact activeClassName={style.active} to={'/'}>Dashboard</NavLink></li>
-          <li className={style.list_item}><NavLink activeClassName={style.active} to={'/plans'}>Plans</NavLink></li>
-          <li className={style.list_item}><NavLink activeClassName={style.active} to={'/wallet'}>Wallet</NavLink></li>
-          {/* <li className={style.list_item}><NavLink activeClassName={style.active} to={'/network'}>Network</NavLink></li> */}
-        {/* <li className={style.list_item}><a href='http://fairplayground.info/datasources/editor.php' target='blank' >Stats</a></li>
-          <li><a href='https://board.net/p/Fair_Health_Care_v4' target='blank'>Welfare</a></li>
-        </ul> */}
+        {props.isOpen === 'createPlan' ? (
+          <CreatePlan {...props} />
+        ) : (
+          <div className={style.button_action} onClick={() => props.togglePopup('createPlan')}>
+            <span>
+              <Icons.Edit2 width="18" height="18" color="#f0f0f0" />
+            </span>Create a plan
+          </div>
+        )}
+        {props.isOpen === 'createPlanFromRecipe' ? (
+          <CreatePlanFromRecipe  togglePopup={props.togglePopup} />
+        ) : (
+          <div
+            onClick={() => props.togglePopup('createPlanFromRecipe')}
+            className={style.button_action}
+          >
+            <span>
+              <Icons.Copy width="18" height="18" color="#f0f0f0" />
+            </span>Create a plan from recipe
+          </div>
+        )}
+        {/* <div className={style.button_action + ' ' + style.underlined}><span><Icons.NewFile width='18' height='18' color='#f0f0f0'/></span>Create a new recipe</div> */}
       </div>
     </div>
   ) : (
-    <header className={style.sidebar_menu + " " + style.sidebar_menu_collapsed}>
+    <header
+      className={style.sidebar_menu + " " + style.sidebar_menu_scollapsed}
+    >
       <span
         className={style.menu_icon}
         onClick={() => props.handleTogglePanel()}
