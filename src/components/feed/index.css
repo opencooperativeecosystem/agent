@@ -37,6 +37,10 @@
   font-weight: 300;
 }
 
+.item_desc span a {
+  color: #f0f0f0;
+}
+
 .item_desc .desc {
   font-weight: 300;
   margin-top: 3px;
@@ -135,7 +139,5 @@
   }
 
   .item_meta span {
-    font-weight: 300;
-    text-decoration: underline;
-    cursor: pointer;
+    font-weight: 400;
   }

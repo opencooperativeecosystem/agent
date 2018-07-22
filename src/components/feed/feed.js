@@ -1,7 +1,7 @@
 import React from "react";
 import style from "./index.css";
 import moment from "moment";
-
+import { NavLink } from 'react-router-dom'
 export default function({ feed }) {
   return (
     <div className={style.activities_list}>
@@ -20,7 +20,7 @@ export default function({ feed }) {
             </span>
           </div>
           <div className={style.item_desc}>
-            <span>{item.provider.name}</span>{" "}
+            <span><NavLink to={`/agent/${item.provider.id}`}>{item.provider.name}</NavLink></span>{" "}
             {item.action + " " + item.affectedQuantity.numericValue + " "} <i>of</i> {item
               .affectedQuantity.unit
               ? item.affectedQuantity.unit.name
