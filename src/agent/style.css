@@ -28,12 +28,13 @@
 }
 
 .info_image {
-    width: 80px;
-    height: 80px;
-    border-radius: 100%;
+    width: 24px;
+    height: 24px;
+    border-radius: 2px;
     margin: 0 auto;
-    margin-top: 20px;
-    background: #606060;
+    background-size: cover;
+    background-color: #606060;
+    margin-top: 2px;
 }
 
 .info_title {
@@ -131,13 +132,53 @@
     line-height: 22px;
     color: rgba(240,240,240, .8);
     font-weight: 400;
-    text-align: center;
+    text-align: left;
     margin-top: 10px;
     line-height: 20px;
+    white-space: pre-wrap;
 }
 
+.info_skills {
+    lost-utility: clearfix;
+    margin-top: 16px;
+}
 
+.skill_item {
+    float: left;
+    border: 1px solid #2687d1;
+    padding: 5px;
+    border-radius: 2px;
+    color: #f0f0f0;
+    font-size: 13px;
+    font-weight: 400;
+    margin-right: 8px;
+    margin-bottom: 8px;
+}
 
+.skill_others {
+    background: #3B99FC;
+    float: left;
+    border: 1px solid #2687d1;
+    padding: 5px;
+    border-radius: 2px;
+    color: #f0f0f0;
+    font-size: 13px;
+    font-weight: 400;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+
+.skills_title {
+    margin: 0;
+    color: #99ADC6;
+    font-size: 11px;
+    text-transform: uppercase;
+    text-align: left;
+    letter-spacing: .4px;
+    margin-bottom: 8px;
+    font-weight: 400;
+}
 
 .agent_menu {
     margin-top: 40px;
@@ -161,7 +202,7 @@
     margin-top: 8px;
     color: #99ADC6;
     font-size: 13px;
-    text-align: center;
+    text-align: left;
     font-weight: 500;
 }
 
