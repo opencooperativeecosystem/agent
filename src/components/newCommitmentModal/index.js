@@ -22,7 +22,6 @@ import * as Yup from "yup";
 import updateNotification from "../../mutations/updateNotification";
 import deleteNotification from "../../mutations/deleteNotification";
 import Alert from "../alert";
-import "react-toastify/dist/ReactToastify.css";
 import getResourceClassification from "../../queries/getResourceClassification";
 require("react-datepicker/dist/react-datepicker-cssmodules.css");
 

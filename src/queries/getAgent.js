@@ -10,6 +10,10 @@ query ($token: String, $id: Int) {
         email
         note
         type
+        agentSkills {
+          id
+          name
+        }
         agentRelationships {
           object {
             id

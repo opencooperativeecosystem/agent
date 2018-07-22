@@ -47,7 +47,7 @@ const Menu = ({ toggleActivePanel, active }) => (
       }
     >
       <span>
-        <Icons.User
+        <Icons.Star
           width="18"
           height="18"
           color={active === "skills" ? "#f0f0f0" : "#99ADC6"}
@@ -64,7 +64,7 @@ const Menu = ({ toggleActivePanel, active }) => (
       }
     >
       <span>
-        <Icons.User
+        <Icons.Folder
           width="18"
           height="18"
           color={active === "recipes" ? "#f0f0f0" : "#99ADC6"}
@@ -81,7 +81,7 @@ const Menu = ({ toggleActivePanel, active }) => (
       }
     >
       <span>
-        <Icons.User
+        <Icons.Lock
           width="18"
           height="18"
           color={active === "credentials" ? "#f0f0f0" : "#99ADC6"}

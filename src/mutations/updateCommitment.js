@@ -30,6 +30,7 @@ const updateCommitment = gql`
         due
         committedQuantity {
           unit {
+            id
             name
           }
           numericValue
