@@ -36,7 +36,7 @@ const Menu = ({ toggleActivePanel, active }) => (
           color={active === "notification" ? "#f0f0f0" : "#99ADC6"}
         />
       </span>
-      Notification
+      Notifications
     </div>
     <div
       onClick={() => toggleActivePanel("skills")}
@@ -53,7 +53,7 @@ const Menu = ({ toggleActivePanel, active }) => (
           color={active === "skills" ? "#f0f0f0" : "#99ADC6"}
         />
       </span>
-      Skills <i>(Coming soon)</i>
+      Skills
     </div>
     <div
       onClick={() => toggleActivePanel("recipes")}

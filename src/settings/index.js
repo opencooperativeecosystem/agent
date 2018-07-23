@@ -4,6 +4,7 @@ import {Icons, Panel} from 'oce-components/build'
 import Menu from './menu'
 import General from './general'
 import Notifications from './notifications';
+import Skills from './skills'
 
 const Settings = ({active, id, image, note, email, name, updateNotification, mutateNotification, mutateSettings, toggleActivePanel, allNotification, toggleNotification, data}) => {
   const notifications = allNotification.map(notification => {
@@ -32,10 +33,7 @@ const Settings = ({active, id, image, note, email, name, updateNotification, mut
             : active === 'notification' ?
             <Notifications updateNotification={updateNotification} mutateNotification={mutateNotification} toggleNotification={toggleNotification} notifications={notifications} />
             : active === 'skills' ?
-            <div>
-              <h2>Skills</h2>
-              <h4>Be patience, skills will be implemented soon...</h4>
-            </div>
+            <Skills skills={data.agentSkills} />
             : active === 'recipes' ?
             <div>
               <h2>Recipes</h2>

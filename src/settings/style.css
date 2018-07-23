@@ -4,6 +4,18 @@ body {
     background-color: #191B22 !important;
 }
 
+
+.skill_item {
+    border: 1px solid #2687d1;
+    padding: 5px;
+    border-radius: 2px;
+    color: #3B99FC;
+    font-size: 13px;
+    font-weight: 400;
+    margin-right: 8px;
+    margin-bottom: 8px;
+}
+
 .settings_menu {
     width: 230px;
     float: left;
