@@ -81,7 +81,7 @@ const Sidebar = props => {
     </div>
   ) : (
     <header
-      className={style.sidebar_menu + " " + style.sidebar_menu_scollapsed}
+      className={style.sidebar_menu + " " + style.sidebar_menu_collapsed}
     >
       <span
         className={style.menu_icon}

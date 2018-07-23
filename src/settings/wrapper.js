@@ -11,6 +11,10 @@ const agent = gql`
     viewer(token: $token) {
       myAgent {
         id
+        agentSkills {
+          id
+          name
+        }
         agentNotificationSettings {
           id
           send
