@@ -2,6 +2,8 @@ import gql from 'graphql-tag';
 
 export const defaults = {
     notifications: [],
+    agentPanel: 'feed',
+    plans: 'active'
   };
 
 
@@ -51,6 +53,21 @@ export const resolvers = {
       }
       cache.writeQuery({query, data})
       return data
+    },
+    setAgentPanel: (_, {type}, {cache}) => {
+      const query = gql`
+      query getAgentPanel {
+        agentPanel @client
+      }`
+      let previousState = cache.readQuery({query})
+      console.log(previousState)
+      const newAgentPanel = {
+        agentPanel: type
+      }
+      cache.writeQuery({query, data: newAgentPanel})
+      let previousState2 = cache.readQuery({query})
+      console.log(previousState2)
+      return type
     }
   }
 }

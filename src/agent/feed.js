@@ -6,29 +6,55 @@ import getFeed from "../queries/getFeed";
 import { Query } from "react-apollo";
 import { LoadingMini } from "../components/loading";
 import { compose, withState, withHandlers } from "recompose";
+import SkillsModal from "../components/skillsModal";
+import setAgentPanel from '../mutations/setAgentPanel'
+import {graphql} from 'react-apollo'
+import getAgentPanel from '../queries/getAgentPanel'
 
-const PlanOptions = ({ onFeed }) => (
+const PlanOptions = ({ onFeed, setAgent, agentPanel }) => (
   <form className={style.settingsModal}>
     <div className={style.settingsModal_item}>
       <div className={style.item_option}>
-        <input
-          id="feed"
-          type="radio"
-          defaultChecked
-          name="feed"
-          onChange={() => onFeed("feed")}
+        {agentPanel === 'feed'
+        ? <input
+        id="feed"
+        type="radio"
+        name="feed"
+        value='feed'
+        checked={true}
+        onChange={() => setAgent("feed")}
         />
+        :<input
+        id="feed"
+        type="radio"
+        name="feed"
+        value='feed'
+        checked={false}
+        onChange={() => setAgent("feed")}
+      />
+        }
         <label htmlFor="feed">Show only feed</label>
       </div>
     </div>
     <div className={style.settingsModal_item}>
       <div className={style.item_option}>
-        <input
-          id="info"
-          type="radio"
-          name="feed"
-          onChange={() => onFeed("info")}
-        />
+       {agentPanel === 'info'
+        ? <input
+        id="info"
+        type="radio"
+        name="feed"
+        checked={true}
+        onChange={() => setAgent("info")}
+      /> 
+        : <input
+        id="info"
+        type="radio"
+        name="feed"
+        checked={false}
+        onChange={() => setAgent("info")}
+      /> 
+       }
+        
         <label htmlFor="info">Show Info</label>
       </div>
     </div>
@@ -42,9 +68,13 @@ const AgentFeed = ({
   feed,
   id,
   image,
+  setAgent,
   name,
-  toggleModal
+  toggleModal,
+  modalIsOpen,
+  agentPanel
 }) => {
+  console.log(agentPanel)
   return (
     <Panel
       data-testid="diary"
@@ -73,7 +103,7 @@ const AgentFeed = ({
       title={name}
     >
       <div>
-        {feedOptions ? <PlanOptions onFeed={onFeed} /> : null}
+        {feedOptions ? <PlanOptions agentPanel={agentPanel} setAgent={setAgent} onFeed={onFeed} /> : null}
         <Query
           query={getFeed}
           variables={{
@@ -82,11 +112,12 @@ const AgentFeed = ({
           }}
         >
           {({ loading, error, data }) => {
+
             if (loading) return <LoadingMini />;
             if (error) return `Error! ${error.message}`;
             return (
               <div>
-                {feed === "info" ? (
+                {agentPanel === "info" ? (
                   <div className={style.agent_profile}>
                     <div className={style.agent_info}>
                       {data.viewer.agent.email ? (
@@ -117,6 +148,7 @@ const AgentFeed = ({
                 {data.viewer.agent.agentEconomicEvents.length > 0 ? (
                   <Feed feed={data.viewer.agent.agentEconomicEvents} />
                 ) : null}
+                <SkillsModal isOpen={modalIsOpen} toggleModal={toggleModal} skills={data.viewer.agent.agentSkills}/>
               </div>
             );
           }}
@@ -127,11 +159,25 @@ const AgentFeed = ({
 };
 
 export default compose(
+  graphql(getAgentPanel, {
+    props: ({ ownProps, data }) => ({
+      agentPanel: data.agentPanel
+  })}),
+  graphql(setAgentPanel, {name: 'setAgentPanelMutation'}),
+  withState("modalIsOpen", "toggleModalIsOpen", false),
   withState("feed", "onFeed", ""),
   withState("feedOptions", "handleFeedOptions", false),
   withHandlers({
     onFeedOptions: props => () => {
       props.handleFeedOptions(!props.feedOptions);
+    },
+    toggleModal: props => () => {
+      props.toggleModalIsOpen(!props.modalIsOpen)
+    },
+    setAgent: props => (type) => {
+      console.log('type')
+      console.log(type)
+      return props.setAgentPanelMutation({variables: {type: type}})
     }
-  })
+  }),
 )(AgentFeed);

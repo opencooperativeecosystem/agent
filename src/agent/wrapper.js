@@ -3,8 +3,8 @@ import { graphql } from "react-apollo";
 import Component from "./index";
 import agentQuery from "../queries/getAgent";
 import { LoadingMini } from "../components/loading";
-import {compose, withState, withHandlers} from "recompose";
-import SkillsModal from "../components/skillsModal";
+import {compose} from "recompose";
+
 
 class AgentWrapper extends React.Component {
   render() {
@@ -16,19 +16,12 @@ class AgentWrapper extends React.Component {
     ) : (
       <div>
         <Component data={data} isOpen={modalIsOpen} toggleModal={toggleModal} />
-        <SkillsModal isOpen={modalIsOpen} toggleModal={toggleModal} skills={data.agentSkills}/>
       </div>
     );
   }
 }
 
 export default compose(
-  withState("modalIsOpen", "toggleModalIsOpen", false),
-  withHandlers({
-    toggleModal: props => () => {
-      props.toggleModalIsOpen(!props.modalIsOpen)
-    }
-  }),
   graphql(agentQuery, {
     options: props => ({
       variables: {
