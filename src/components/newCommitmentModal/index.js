@@ -5,7 +5,6 @@ import {
   Input,
   Textarea,
   Button,
-  Select,
   Icons
 } from "oce-components/build";
 import { graphql } from "react-apollo";
@@ -23,6 +22,7 @@ import updateNotification from "../../mutations/updateNotification";
 import deleteNotification from "../../mutations/deleteNotification";
 import Alert from "../alert";
 import getResourceClassification from "../../queries/getResourceClassification";
+import Select from "react-select";
 require("react-datepicker/dist/react-datepicker-cssmodules.css");
 
 const events = [
@@ -36,16 +36,10 @@ const events = [
   "Use",
   "Work"
 ];
-let options = events.map((ev, i) => (
-  <option key={i} value={ev}>
-    {ev}
-  </option>
-));
-options.unshift(
-  <option defaultValue="" key={"383737ehshdh"}>
-    Select your event
-  </option>
-);
+let options = events.map((ev, i) => ({
+  value: ev,
+  label: ev
+}));
 
 const NewCommModal = ({
   handleEvent,
@@ -61,37 +55,17 @@ const NewCommModal = ({
   units
 }) => {
   let resourcesOptions = resources.map((ev, i) => {
-    return (
-      <option key={i} value={ev.id}>
-        {ev.name}
-      </option>
-    );
+    return {
+      value: ev.id,
+      label: ev.name
+    };
   });
-  resourcesOptions.unshift(
-    <option defaultValue="" key={"383737ehshdh"}>
-      Resource
-    </option>
-  );
-  let unitsOptions = units.map((ev, i) => (
-    <option key={i} value={ev.id}>
-      {ev.name}
-    </option>
-  ));
-  
-  unitsOptions.unshift(
-    <option defaultValue="" key={"383737ehshdh"}>
-      Units
-    </option>
-  );
 
-  if (units.length == 0) {
-    unitsOptions.unshift(
-      <option key={"1010010"}>
-        Units
-      </option>
-    );
-  }
-  
+  let unitsOptions = units.map((ev, i) => ({
+    value: ev.id,
+    label: ev.name
+  }));
+
   return (
     <Form>
       <div style={{ padding: "16px", paddingBottom: 0 }}>
@@ -137,9 +111,7 @@ const NewCommModal = ({
             <Field
               name="unit"
               render={({ field /* _form */ }) => (
-                <Select name={field.name} onChange={field.onChange}>
-                  {unitsOptions.map(opt => opt)}
-                </Select>
+                <Select isDisabled={unitsOptions.length === 0} name={field.name} placeholder='Unit...' options={unitsOptions} onChange={(value) => setFieldValue('unit', value.value)} />
               )}
             />
             {errors.unit && touched.unit && <Alert>{errors.unit}</Alert>}
@@ -178,14 +150,12 @@ const NewCommModal = ({
 
 const EventSelect = props => {
   const handleChange = value => {
-    props.onChange("event", value.target.value);
-    props.handleEvent(props.client, value);
+    props.onChange("event", value.value);
+    props.handleEvent(props.client, value.value);
   };
   return (
     <div>
-      <Select name={"event"} onChange={handleChange}>
-        {props.options.map(opt => opt)}
-      </Select>
+      <Select name={"event"} placeholder='Events' options={options} onChange={handleChange} />
       {props.error && props.touched && <Alert>{props.error}</Alert>}
     </div>
   );
@@ -193,16 +163,19 @@ const EventSelect = props => {
 
 const ResourceSelect = props => {
   const handleChange = value => {
-    props.onChange("resource", value.target.value);
-    props.handleResource(props.client, value);
+    props.onChange("resource", value.value);
+    props.handleResource(props.client, value.value);
   };
   return (
     <div>
-      <Select name={"resource"} onChange={handleChange}>
-        {props.options.map(opt => opt)}
-      </Select>
-      {props.error &&
-        props.touched && <Alert>{props.error}</Alert>}
+      <Select
+        name={"resource"}
+        isDisabled={props.options.length === 0}
+        options={props.options}
+        placeholder='Resources'
+        onChange={handleChange}
+      />
+      {props.error && props.touched && <Alert>{props.error}</Alert>}
     </div>
   );
 };
@@ -236,7 +209,7 @@ export default compose(
   graphql(updateNotification, { name: "updateNotification" }),
   graphql(deleteNotification, { name: "deleteNotification" }),
   withFormik({
-    mapPropsToValues: (props) => ({
+    mapPropsToValues: props => ({
       event: "",
       note: "",
       resource: "",
@@ -255,6 +228,7 @@ export default compose(
     handleSubmit: (values, { props, resetForm, setErrors, setSubmitting }) => {
       let date = moment(values.date).format("YYYY-MM-DD");
       setSubmitting(true);
+      console.log(values)
       return props.client
         .mutate({
           mutation: CreateCommitment,
@@ -359,7 +333,7 @@ export default compose(
           query: getResourcesQuery,
           variables: {
             token: localStorage.getItem("oce_token"),
-            action: ev.target.value.toUpperCase()
+            action: ev.toUpperCase()
           }
         })
         .then(res => {
@@ -369,29 +343,31 @@ export default compose(
             }
           });
           props.onResourcesArray([]);
-          props.onResourcesArray(res.data.viewer.resourceClassificationsByAction || []);
-          props.onUnitsArray([])
+          props.onResourcesArray(
+            res.data.viewer.resourceClassificationsByAction || []
+          );
+          props.onUnitsArray([]);
         })
         .catch(e => console.log(e));
     },
     handleResource: props => (client, ev) => {
+      console.log(ev)
       return client
         .query({
           query: getResourceClassification,
           variables: {
             token: localStorage.getItem("oce_token"),
-            id: ev.target.value
+            id: ev
           }
         })
         .then(res => {
-          console.log(res)
-          let arr = []
-          if (res.data.viewer.resourceClassification.unit.id === "2"){
-            arr.push(res.data.viewer.resourceClassification.unit)
-          }
-          else {
-            arr.push(res.data.viewer.resourceClassification.unit)
-            arr.push({id: "2", name: 'Hour'})
+          console.log(res);
+          let arr = [];
+          if (res.data.viewer.resourceClassification.unit.id === "2") {
+            arr.push(res.data.viewer.resourceClassification.unit);
+          } else {
+            arr.push(res.data.viewer.resourceClassification.unit);
+            arr.push({ id: "2", name: "Hour" });
           }
           props.onUnitsArray(arr || []);
         })
