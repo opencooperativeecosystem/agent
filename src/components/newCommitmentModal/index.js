@@ -71,7 +71,7 @@ const NewCommModal = ({
       <div style={{ padding: "16px", paddingBottom: 0 }}>
         <h1 className={style.commTitle}>Create a new commitment</h1>
         <div className={style.commitmentWrapper}>
-          <div className={style.commInput}>
+          <div className={style.commInput + ' ' + style.event }>
             <EventSelect
               value={values.event}
               onChange={setFieldValue}
@@ -82,7 +82,7 @@ const NewCommModal = ({
               client={client}
             />
           </div>
-          <div className={style.commInput}>
+          <div className={style.commInput + ' ' + style.resource}>
             <ResourceSelect
               value={values.resource}
               onChange={setFieldValue}
@@ -93,21 +93,22 @@ const NewCommModal = ({
               handleResource={handleResource}
             />
           </div>
-          <div className={style.commInput}>
+          <div className={style.commInput + ' ' +  style.qtyInput}>
             <Field
               name="qty"
               render={({ field /* _form */ }) => (
                 <Input
-                  className={style.qtyInput}
                   name={field.name}
                   onChange={field.onChange}
                   placeholder="00.00"
+                  type="number"
+                  step="0.1"
                 />
               )}
             />
             {errors.qty && touched.qty && <Alert>{errors.qty}</Alert>}
           </div>
-          <div className={style.commInput}>
+          <div className={style.commInput + ' ' + style.unit}>
             <Field
               name="unit"
               render={({ field /* _form */ }) => (
@@ -228,7 +229,6 @@ export default compose(
     handleSubmit: (values, { props, resetForm, setErrors, setSubmitting }) => {
       let date = moment(values.date).format("YYYY-MM-DD");
       setSubmitting(true);
-      console.log(values)
       return props.client
         .mutate({
           mutation: CreateCommitment,
@@ -291,6 +291,7 @@ export default compose(
               }
             })
             .then(res => {
+              setSubmitting(false)
               setTimeout(() => {
                 props.deleteNotification({
                   variables: { id: res.data.addNotification.id }
@@ -351,7 +352,6 @@ export default compose(
         .catch(e => console.log(e));
     },
     handleResource: props => (client, ev) => {
-      console.log(ev)
       return client
         .query({
           query: getResourceClassification,
@@ -361,7 +361,6 @@ export default compose(
           }
         })
         .then(res => {
-          console.log(res);
           let arr = [];
           if (res.data.viewer.resourceClassification.unit.id === "2") {
             arr.push(res.data.viewer.resourceClassification.unit);

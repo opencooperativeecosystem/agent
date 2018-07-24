@@ -161,6 +161,7 @@ export default compose(
           due: Yup.string(),
       }),
       handleSubmit: (values, {props, resetForm, setErrors, setSubmitting}) => {
+        setSubmitting(true)
         props
           .createProcessMutation({
             variables: {
@@ -189,6 +190,8 @@ export default compose(
             }
           })
           .then(data => {
+            props.toggleClicked()
+            setSubmitting(false)
             props.updateNotification({variables: {
               message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Bell width='18' height='18' color='white' /></span>Process {data.data.createProcess.process.name} created successfully!</div>,
               type: 'success'
@@ -199,6 +202,8 @@ export default compose(
              }, 1000);
             })
           }, (e) => {
+            props.toggleClicked()
+            setSubmitting(false)
             const errors = e.graphQLErrors.map(error => error.message)
             props.setSubmitting(false)
             props.updateNotification({variables: {

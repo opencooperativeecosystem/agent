@@ -8,7 +8,6 @@ query($token: String) {
         name
         image
         category
-        processCategory
         note
       }
     }

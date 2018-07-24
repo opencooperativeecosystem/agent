@@ -13,7 +13,7 @@ import { graphql } from "react-apollo";
 import deleteNotification from "../../mutations/deleteNotification";
 import updateNotification from "../../mutations/updateNotification";
 import moment from "moment";
-import createPlanFromRecipe from '../../mutations/createPlanFromRecipe'
+import createPlanFromRecipe from "../../mutations/createPlanFromRecipe";
 require("react-datepicker/dist/react-datepicker-cssmodules.css");
 
 const DueDate = props => {
@@ -51,7 +51,7 @@ const CreatePlan = props => {
         return newOpt;
       });
   const handleInputChange = val => {
-    props.setFieldValue("recipe", val.value);
+    props.setFieldValue("recipeId", val.value);
   };
   return (
     <ApolloConsumer>
@@ -67,14 +67,22 @@ const CreatePlan = props => {
           </div>
           <Form className={style.planCreation_wrapper}>
             <div className={style.form_select}>
-              <AsyncSelect
+            <Field
+                name="recipeId"
+                render={({ field }) => (
+                <AsyncSelect
                 placeholder={"Select a recipe"}
                 defaultOptions
                 cacheOptions
-                isClearable
                 onChange={handleInputChange}
                 loadOptions={val => promiseOptions(client, val)}
               />
+            )}
+            />
+            {props.errors.recipeId &&
+                props.touched.recipeId && (
+                  <Alert>{props.errors.recipeId}</Alert>
+                )}
             </div>
             <div className={style.form_input}>
               <Field
@@ -114,7 +122,7 @@ const CreatePlan = props => {
                   />
                 </div>
                 <div className={style.form_button}>
-                  <Button>Create</Button>
+                  <Button disabled={props.isSubmitting}>Create</Button>
                 </div>
               </div>
             </div>
@@ -126,58 +134,93 @@ const CreatePlan = props => {
 };
 
 export default compose(
-// graphql(createPlanFromRecipe, { name: "createPlanMutation" }),
-//   graphql(updateNotification, {name: 'updateNotification'}),
-//   graphql(deleteNotification, {name: 'deleteNotification'}),
+  graphql(createPlanFromRecipe, { name: "createPlanMutation" }),
+  graphql(updateNotification, { name: "updateNotification" }),
+  graphql(deleteNotification, { name: "deleteNotification" }),
   withFormik({
     mapPropsToValues: props => ({
       recipeName: "",
       recipeNote: "",
       recipeDue: moment(),
-      recipe: ""
+      recipeId: ""
     }),
     validationSchema: Yup.object().shape({
-      name: Yup.string().required(),
-      note: Yup.string(),
-      due: Yup.string().required(),
-      recipe: Yup.string().required()
+      recipeName: Yup.string().required('Name is a required field'),
+      recipeNote: Yup.string(),
+      recipeDue: Yup.string(),
+      recipeId: Yup.string().required('Recipe is a required field')
     }),
-    // handleRecipeSubmit: (values, { props }) => {
-    //   let date = moment(values.recipeDue).format("YYYY-MM-DD");
-    //   props
-    //     .createPlanMutation({
-    //       variables: {
-    //         token: localStorage.getItem("oce_token"),
-    //         name: values.recipeName,
-    //         due: date,
-    //         note: values.recipeNote,
-    //         producesResourceClassificationId: values.recipe
-    //       }
-    //     })
-    //     .then(data => {
-    //       props.updateNotification({variables: {
-    //         message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Bell width='18' height='18' color='white' /></span>Plan {data.data.createPlan.plan.name} created successfully!</div>,
-    //         type: 'success'
-    //       }})
-    //       .then(res => {
-    //         setTimeout(() => {
-    //          props.deleteNotification({variables: {id: res.data.addNotification.id}})
-    //        }, 1000);
-    //       })
-    //        return props.history.push(`/canvas/${data.data.createPlan.plan.id}`);
-    //     }, (e) => {
-    //       const errors = e.graphQLErrors.map(error => error.message)
-    //       props.updateNotification({variables: {
-    //         message: <div style={{fontSize:'14px'}}><span style={{marginRight: '10px', verticalAlign: 'sub'}}><Icons.Cross width='18' height='18' color='white' /></span>{errors}</div>,
-    //         type: 'alert'
-    //       }})
-    //       .then(res => {
-    //         setTimeout(() => {
-    //          props.deleteNotification({variables: {id: res.data.addNotification.id}})
-    //        }, 1000);
-    //       })
-    //       props.setSubmitting(false)
-    //    })
-    // }
+    handleSubmit: (values, { props, setSubmitting, setErrors }) => {
+      let date = moment(values.recipeDue).format("YYYY-MM-DD");
+      setSubmitting(true)
+      props
+        .createPlanMutation({
+          variables: {
+            token: localStorage.getItem("oce_token"),
+            name: values.recipeName,
+            due: date,
+            note: values.recipeNote,
+            id: values.recipeId,
+          }
+        })
+        .then(
+          data => {
+            props
+              .updateNotification({
+                variables: {
+                  message: (
+                    <div style={{ fontSize: "14px" }}>
+                      <span
+                        style={{ marginRight: "10px", verticalAlign: "sub" }}
+                      >
+                        <Icons.Bell width="18" height="18" color="white" />
+                      </span>Plan {data.data.createPlanFromRecipe.plan.name} created
+                      successfully!
+                    </div>
+                  ),
+                  type: "success"
+                }
+              })
+              .then(res => {
+                setTimeout(() => {
+                  props.deleteNotification({
+                    variables: { id: res.data.addNotification.id }
+                  });
+                }, 1000);
+              });
+            setSubmitting(false)
+            return props.history.push(
+              `/canvas/${data.data.createPlanFromRecipe.plan.id}`
+            );
+          },
+          e => {
+            const errors = e.graphQLErrors.map(error => error.message);
+            props
+              .updateNotification({
+                variables: {
+                  message: (
+                    <div style={{ fontSize: "14px" }}>
+                      <span
+                        style={{ marginRight: "10px", verticalAlign: "sub" }}
+                      >
+                        <Icons.Cross width="18" height="18" color="white" />
+                      </span>
+                      {errors}
+                    </div>
+                  ),
+                  type: "alert"
+                }
+              })
+              .then(res => {
+                setSubmitting(false)
+                setTimeout(() => {
+                  props.deleteNotification({
+                    variables: { id: res.data.addNotification.id }
+                  });
+                }, 1000);
+              });
+          }
+        );
+    }
   })
 )(CreatePlan);

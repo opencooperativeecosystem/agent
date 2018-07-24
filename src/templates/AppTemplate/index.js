@@ -16,6 +16,7 @@ import deleteNotification from "../../mutations/deleteNotification";
 import { LoadingMini } from "../../components/loading";
 
 const AppTemplate = props => {
+  console.log(props.data)
   return props.loading ? (
     <LoadingMini />
   ) : props.error ? (
@@ -110,6 +111,10 @@ const agentPlans = gql`
             name
             note
             image
+            agentRecipes {
+              id
+              name
+            }
           }
         }
       }

@@ -56,7 +56,7 @@ const Sidebar = props => {
           </div>
         </div>
         {props.isOpen === 'createPlan' ? (
-          <CreatePlan {...props} />
+          <CreatePlan history={props.history} togglePopup={props.togglePopup} />
         ) : (
           <div className={style.button_action} onClick={() => props.togglePopup('createPlan')}>
             <span>
@@ -65,8 +65,8 @@ const Sidebar = props => {
           </div>
         )}
         {props.isOpen === 'createPlanFromRecipe' ? (
-          <CreatePlanFromRecipe  togglePopup={props.togglePopup} />
-        ) : (
+          <CreatePlanFromRecipe history={props.history} togglePopup={props.togglePopup} />
+        ) : ( 
           <div
             onClick={() => props.togglePopup('createPlanFromRecipe')}
             className={style.button_action}

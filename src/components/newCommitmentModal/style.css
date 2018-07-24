@@ -71,15 +71,17 @@
 }
 
 .textareaWrapper textarea {
-  border-radius: 0 !important;
-
+  border-radius: 0;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
 }
 
 .commitmentWrapper {
     lost-utility: clearfix;
     margin-top: 10px;
-    background: #fafafa;
-    border-bottom: 1px solid rgba(54, 54, 54, .1);
+    /* background: #fafafa; */
+    margin-bottom: 10px;
+    /* border-bottom: 1px solid rgba(54, 54, 54, .1); */
 }
 
 .footer {
@@ -105,6 +107,29 @@
     width: 24%
 }
 
-.qtyInput {
-    width: 50px;
+.commInput:last-of-type {
+    width: 25%;
+    margin-right: 0;
+}
+
+.commInput.event {
+    width: 160px;
+}
+.commInput.resource {
+    width: 260px;
+}
+.commInput.qtyInput {
+    width: 100px;
+}
+.commInput.unit {
+    width: 127px;
+}
+
+
+
+
+.qtyInput input {
+    border: 1px solid #dadada;
+    height: 38px;
+    font-size: 16px;
 }
