@@ -23,7 +23,11 @@ const wrapperComponent = compose(
       numericValue: "00.00",
       unit: 2,
       requestPayment: true,
-      date: moment()
+      date: moment(),
+      affectedResourceClassifiedAsId: null,
+      resourceCurrentLocationId: null,
+      resourceTrackingIdentifier: null,
+      createResource: false
     }),
     validationSchema: Yup.object().shape({
       note: Yup.string(),
@@ -49,7 +53,11 @@ const wrapperComponent = compose(
             note: values.note,
             affectedNumericValue: values.numericValue,
             affectedUnitId: unit[0],
-            start: date
+            start: date,
+            affectedResourceClassifiedAsId: values.affectedResourceClassifiedAsId,
+            resourceCurrentLocationId: values.resourceCurrentLocationId,
+            resourceTrackingIdentifier: values.resourceTrackingIdentifier,
+            createResource: values.createResource
           },
           // options: (props) => ({
           update: (store, { data }) => {

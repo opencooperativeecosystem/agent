@@ -32,6 +32,7 @@ export default function LogEvent({
   setFieldTouched,
   unit,
   units,
+  resource
 }) {
   return (
     <Form>
@@ -58,13 +59,8 @@ export default function LogEvent({
               />
               {errors.numericValue && touched.numericValue && <Alert>{errors.numericValue}</Alert>}
               <h5 className={style.sentence_action}>{unit}</h5>
-              <StartDate
-                value={values.date}
-                onChange={setFieldValue}
-                onBlur={setFieldTouched}
-                error={errors.start}
-                touched={touched.start}
-              />
+              <span className={style.of}>of</span>
+              <h5 className={style.sentence_action}>{resource}</h5>
             </div>
             <Field
               name="note"
@@ -78,26 +74,34 @@ export default function LogEvent({
               )}
             />
             {action === 'produce' || action === 'use' || action === 'consume'
-             ? <div className={style.item_publishActions}>
-                <button className={style.publishActions_button}><span><Icons.Plus width='16' height='16' color='#f0f0f0' /></span>Create a resource</button>
+             ? <div className={style.item_publishResourceName}>
+                <span><Icons.Edit width='16' height='16' color='#525561'/></span>
+                <Input placeholder='Type an identify name for the resource...' />
+              </div> 
+             : null } 
+            <div className={style.item_publishActions}>
+              <Button>Publish</Button>
+              <div className={style.item_distribution}>
+              <StartDate
+                value={values.date}
+                onChange={setFieldValue}
+                onBlur={setFieldTouched}
+                error={errors.start}
+                touched={touched.start}
+              />
+                <Field
+                  name="requestPayment"
+                  render={({ field /* _form */ }) => (
+                    <ToggleButton
+                      name={field.name}
+                      value={field.value}
+                      onToggle={(value) => setFieldValue('requestPayment', !value)}
+                    />
+                  )}
+                />
+                <label>Request payment</label>
+              </div>
             </div> 
-             : <div className={style.item_publishActions}>
-             <Button>Publish</Button>
-             <div className={style.item_distribution}>
-               <Field
-                 name="requestPayment"
-                 render={({ field /* _form */ }) => (
-                   <ToggleButton
-                     name={field.name}
-                     value={field.value}
-                     onToggle={(value) => setFieldValue('requestPayment', !value)}
-                   />
-                 )}
-               />
-               <label>Request payment</label>
-             </div>
-            </div> 
-            }
           </div>
         </div>
       </div>

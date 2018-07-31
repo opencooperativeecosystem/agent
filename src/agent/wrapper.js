@@ -8,14 +8,14 @@ import {compose} from "recompose";
 
 class AgentWrapper extends React.Component {
   render() {
-    const { loading, error, data, modalIsOpen, toggleModal } = this.props;
+    const { loading, error, data, modalIsOpen, match, toggleModal } = this.props;
     return loading ? (
       <LoadingMini />
     ) : error ? (
       <p style={{ color: "#F00" }}>API error</p>
     ) : (
       <div>
-        <Component data={data} isOpen={modalIsOpen} toggleModal={toggleModal} />
+        <Component match={match} data={data} isOpen={modalIsOpen} toggleModal={toggleModal} />
       </div>
     );
   }

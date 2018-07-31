@@ -1,25 +1,31 @@
-import React from 'react'
-import style from './style.css'
-import Item from '../components/inventoryItem'
+import React from "react";
+import { Query } from "react-apollo";
+import Component from "./inventory";
+import InventoryQuery from "../queries/getInventory";
+import { Panel, Icons } from "oce-components/build";
+import { LoadingMini } from "../components/loading";
 
-const Network = ({data}) => (
-    <section className={style.agent}>
-      <div className={style.agent_profile}>
-        <div className={style.agent_info}>
-          <div className={style.info_data}>
-            <h1 className={style.info_title}>Inventory</h1>
-            <h5 className={style.info_note}>Internet Advertising Trends You Won T Be Disappointed Internet Advertising Trends You Won T Be Disappointed</h5>
-          </div>
-        </div>
-        <div className={style.section}>
-        <div className={style.section_wrapper}>
-            {data.ownedEconomicResources.map((item, i) => (
-              <Item item={item} key={i} />
-            ))}
-        </div>
-      </div>
-    </div>
-  </section>
-)
+export default (props) => (
+  <Query
+    query={InventoryQuery}
+    variables={{
+      token: localStorage.getItem("oce_token"),
+      id: Number(props.match.params.id)
+    }}
+  >
+    {({ loading, error, data }) => {
+      if (loading) return <LoadingMini />;
+      if (error) return "error";
+      return (
+      <Panel
+        large
+        icon={<Icons.Globe width="18" color="#f0f0f0" />}
+        title={"Inventory"}
+      >
+        <Component data={data} />
+      </Panel>
+      )
+    }}
+  </Query>
+);
 
-export default Network

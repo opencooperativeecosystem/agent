@@ -74,7 +74,6 @@ const AgentFeed = ({
   modalIsOpen,
   agentPanel
 }) => {
-  console.log(agentPanel)
   return (
     <Panel
       data-testid="diary"
@@ -90,17 +89,8 @@ const AgentFeed = ({
           <Icons.Settings width="18" height="18" color="#99ADC6" />
         </span>
       }
-      icon={
-        <div
-          className={style.info_image}
-          style={{
-            backgroundImage: image
-              ? `url(${image})`
-              : `url('./images/sample.png')`
-          }}
-        />
-      }
-      title={name}
+      icon={<Icons.Diary width='18' height='18' color='#f0f0f0' />}
+      title={'Feed'}
     >
       <div>
         {feedOptions ? <PlanOptions agentPanel={agentPanel} setAgent={setAgent} onFeed={onFeed} /> : null}

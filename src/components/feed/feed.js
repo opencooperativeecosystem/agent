@@ -5,7 +5,6 @@ import { NavLink } from 'react-router-dom'
 export default function({ feed }) {
   return (
     <div className={style.activities_list}>
-      <h3 className={style.list_title}>Feed</h3>
       {feed.map((item, i) => (
         <div key={i} className={style.list_item}>
           <div className={style.members}>

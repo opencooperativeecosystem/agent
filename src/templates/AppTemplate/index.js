@@ -8,6 +8,7 @@ import { compose, withHandlers, withState } from "recompose";
 import Canvas from "../../canvas/wrapper";
 import Settings from "../../settings/wrapper";
 import Agent from "../../agent/wrapper";
+import Inventory from "../../inventory";
 import Overview from "../../overview/wrapper";
 import { PropsRoute } from "../../helpers/router";
 import Validate from "../../validation_plan/wrapper";
@@ -16,7 +17,6 @@ import deleteNotification from "../../mutations/deleteNotification";
 import { LoadingMini } from "../../components/loading";
 
 const AppTemplate = props => {
-  console.log(props.data)
   return props.loading ? (
     <LoadingMini />
   ) : props.error ? (

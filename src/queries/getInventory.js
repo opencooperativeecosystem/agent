@@ -1,9 +1,9 @@
 import gql from 'graphql-tag'
 
-const GetCommitment = gql`
-query ($token: String) {
+export default gql`
+query ($token: String, $id: Int!) {
   viewer(token: $token) {
-    myAgent {
+    agent (id: $id) {
       ownedEconomicResources {
         id
         resourceClassifiedAs {
@@ -24,6 +24,3 @@ query ($token: String) {
   }
 }
 `
-
-export default GetCommitment
-  

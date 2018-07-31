@@ -564,8 +564,17 @@
     border-radius: 0;
   } 
 
+.of {
+  font-size: 18px;
+  color: #717171;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 40px;
+  float: left;
+}
+
   .sentence_action {
-    font-size: 20px;
+    font-size: 18px;
     color: #717171;
     font-weight: 500;
     font-style: italic;
@@ -576,6 +585,7 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    text-transform: capitalize;
   }
 
   .log_item textarea {
@@ -742,7 +752,7 @@
 
   .item_sencence input {
     border-radius: 0;
-    width: 100px;
+    width: 70px;
   }
   .customdate {
     height: 40px;
@@ -1171,4 +1181,33 @@
     margin-top: 5px;
     position: relative;
     z-index: 10;
+ }
+
+ .item_publishResourceName {
+   background: #ECECEC;
+   height: 32px;
+ }
+
+ .item_publishResourceName input::placeholder {
+  color: #525561;
+ }
+ .item_publishResourceName input {
+  float: none !important;
+  display: inline-block;
+  height: 32px;
+  margin-left: 5px;
+  width: 90%;
+  text-indent: 0;
+  text-align: left;
+  border-radius: 0;
+  font-size: 14px;
+  line-height: 37px;
+  border: none;
+  outline: none;
+  color: #525561;
+ }
+ 
+ .item_publishResourceName span {
+  vertical-align: sub;
+  margin-left: 10px;
  }
