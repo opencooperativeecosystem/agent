@@ -1,0 +1,109 @@
+
+.wrapper {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: row;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    overflow-x: auto;
+    position: relative;
+    margin-left: -5px;
+    margin-right: -5px;
+}
+
+.inventory_canvas {
+    lost-column: 3/5;
+    lost-offset: 1/5;
+    margin-top: 20px;
+}
+
+.canvas_image {
+    width: 165px;
+    height: 165px;
+    border-radius: 2px;
+    background-size: cover;
+    background-color: #191b23;
+    margin: 0 auto;
+    border-radius: 100%;
+}
+
+.canvas_container {
+    margin-top: 16px;
+    text-align: center;
+}
+
+.canvas_title {
+    margin: 0;
+    color: #f0f0f0;
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.canvas_description {
+    margin: 0;
+    margin-top: 16px;
+    color: #f0f0f0;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 20px;
+}
+
+.canvas_options {
+    margin-top: 30px;
+}
+
+.options_item {
+    lost-utility: clearfix;
+    border-bottom: 1px solid rgba(240, 240, 240, .2);
+    line-height: 50px;
+    height: 50px;
+}
+
+.options_item h5 {
+    color: #99ADC6;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: .5px;
+    margin: 0;
+    float: left;
+    line-height: 50px;
+}
+
+.skills h5 {
+    color: #99ADC6;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: .5px;
+    margin: 0;
+    line-height: 50px;
+}
+
+.options_item h4 {
+    color: #f0f0f0;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    margin: 0;
+    word-break: break-word;
+    word-wrap: break-word;
+    line-height: 25px;
+    background: #40485D;
+    border-radius: 3px;
+    padding: 3px 10px;
+    float: right;
+    margin-top: 10px;
+}
+
+.skill_item {
+    border: 1px solid #2687d1;
+    padding: 5px;
+    border-radius: 2px;
+    color: #3B99FC;
+    font-size: 13px;
+    font-weight: 400;
+    margin-right: 8px;
+    display: inline-block;
+    margin-bottom: 8px;
+}
