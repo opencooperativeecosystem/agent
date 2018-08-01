@@ -49,7 +49,8 @@ const CanvasWrapper = ({
       if (loading) return <LoadingMini />;
       if (error) return <ErrorPlan />;
       return (
-        <div style={{ display: "initial" }}>
+        <div className={style.agentWrapper}>
+        <div className={style.wrapper}>
           <Panel
             large
             icon={<Icons.Globe width="18" color="#f0f0f0" />}
@@ -110,6 +111,7 @@ const CanvasWrapper = ({
             match={match}
             scopeId={scopeId}
           />
+          </div>
         </div>
       );
     }}

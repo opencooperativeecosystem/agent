@@ -1,19 +1,52 @@
 .canvasWrapper {
-  position: relative;
+  /* position: relative;
   min-height: 100vh;
-  margin-bottom: 20px;
+  margin-bottom: 20px; */
 }
 
 .wrapperContainer {
-  user-select: text;
-  white-space: nowrap;
+  flex: 1;
+    flex-direction: row;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    overflow-x: scroll;
+    width: 100%;
+    left: 0;
+    padding: 10px;
+}
+
+.agentWrapper {
+  flex: 1 1 auto;
+  flex-direction: column;
+  justify-content: flex-start;
   overflow-x: auto;
-  overflow-y: hidden;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  position: relative;
+  vertical-align: top;
+  white-space: nowrap;
+  position: relative;
+  box-sizing: border-box;
+  flex-direction: column;
+  flex: 0 0 auto;
+  overflow: hidden;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  flex: 1;
+  padding-bottom: 10px;
+  padding-right: 10px;
+}
+
+.wrapper {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: row;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  overflow-x: auto;
+  position: relative;
+  margin-left: -5px;
+  margin-right: -5px;
 }
 
 .right_button {
@@ -45,7 +78,6 @@
   vertical-align: sub;
 }
 
-
 .errorEmoji {
   text-align: center;
 }
@@ -62,22 +94,22 @@
 
 .errorWrapperDesc {
   text-align: center;
-    font-size: 18px;
-    color: #fafafacc;
-    font-weight: 400;
+  font-size: 18px;
+  color: #fafafacc;
+  font-weight: 400;
 }
 
 .errorLink {
   background: #2588d0;
-    padding: 0 10px;
-    height: 40px;
-    display: block;
-    width: 100px;
-    line-height: 40px;
-    text-align: center;
-    margin: 0 auto;
-    margin-top: 40px;
-    text-decoration: none;
-    border-radius: 4px;
-    color: white;
+  padding: 0 10px;
+  height: 40px;
+  display: block;
+  width: 100px;
+  line-height: 40px;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 40px;
+  text-decoration: none;
+  border-radius: 4px;
+  color: white;
 }
