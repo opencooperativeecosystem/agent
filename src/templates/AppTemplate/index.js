@@ -8,7 +8,6 @@ import { compose, withHandlers, withState } from "recompose";
 import Canvas from "../../canvas/wrapper";
 import Settings from "../../settings/wrapper";
 import Agent from "../../agent/wrapper";
-import Inventory from "../../inventory";
 import Overview from "../../overview/wrapper";
 import { PropsRoute } from "../../helpers/router";
 import Validate from "../../validation_plan/wrapper";
@@ -25,59 +24,43 @@ const AppTemplate = props => {
     <div className={style.surface}>
       <div className={style.content}>
         <div className={style.boards}>
-          <div className={style.boards_main_content}>
-            <div className={style.boards_canvas}>
-              <div className={style.canvas}>
-                <Sidebar
-                  handleTogglePanel={props.handleTogglePanel}
-                  panel={props.panel}
-                  data={props.data}
-                  agents={props.data.agentRelationships}
-                  history={props.history}
-                />
-                <div
-                  className={
-                    props.panel
-                      ? style.container + " " + style.full
-                      : style.container
-                  }
-                >
-                  <PropsRoute
-                    exact
-                    path={props.match.path}
-                    component={Overview}
-                    id={props.data.id}
-                  />
-                  <PropsRoute
-                    path="/agent/:id"
-                    component={Agent}
-                    data={props}
-                  />
-                  <PropsRoute
-                    exact
-                    path="/canvas/:id"
-                    component={Canvas}
-                    relationships={props.data.agentRelationships}
-                    agentId={props.data.id}
-                  />
-                  <PropsRoute
-                    path="/canvas/:id/validate"
-                    component={Validate}
-                    relationships={props.data.agentRelationships}
-                  />
-                  <PropsRoute
-                    exact
-                    path="/settings"
-                    component={Settings}
-                    id={props.data.id}
-                    name={props.data.name}
-                    image={props.data.image}
-                    note={props.data.note}
-                    email={props.data.email}
-                  />
-                </div>
-              </div>
-            </div>
+          <div className={style.columnsArea}>
+            <Sidebar
+              handleTogglePanel={props.handleTogglePanel}
+              panel={props.panel}
+              data={props.data}
+              agents={props.data.agentRelationships}
+              history={props.history}
+            />
+            <PropsRoute
+              exact
+              path={props.match.path}
+              component={Overview}
+              id={props.data.id}
+            />
+            <PropsRoute path="/agent/:id" component={Agent} data={props} />
+            <PropsRoute
+              exact
+              path="/canvas/:id"
+              component={Canvas}
+              relationships={props.data.agentRelationships}
+              agentId={props.data.id}
+            />
+            <PropsRoute
+              path="/canvas/:id/validate"
+              component={Validate}
+              relationships={props.data.agentRelationships}
+            />
+            <PropsRoute
+              exact
+              path="/settings"
+              component={Settings}
+              id={props.data.id}
+              name={props.data.name}
+              image={props.data.image}
+              note={props.data.note}
+              email={props.data.email}
+            />
           </div>
         </div>
       </div>
@@ -92,12 +75,6 @@ const agentPlans = gql`
         id
         name
         image
-        email
-        note
-        agentSkills {
-          id
-          name
-        }
         agentPlans {
           id
         }
