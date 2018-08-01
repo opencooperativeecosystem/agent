@@ -19,6 +19,16 @@ body {
 
 /* LOGIN */
 
+
+.body {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  background: #282c37;
+}
+
+
 .alert {
   height: 30px;
   line-height: 30px;
