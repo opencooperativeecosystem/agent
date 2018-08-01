@@ -42,6 +42,7 @@ const Sidebar = props => {
         </span>
       </header>
       <div className={style.sidebar_header}>
+      <div className={style.sidebar_inner}>
         <div className={style.header_profile}>
           <div className={style.profile_main}>
             <NavLink to={"/"}>
@@ -77,6 +78,7 @@ const Sidebar = props => {
           </div>
         )}
         {/* <div className={style.button_action + ' ' + style.underlined}><span><Icons.NewFile width='18' height='18' color='#f0f0f0'/></span>Create a new recipe</div> */}
+        </div>
       </div>
     </div>
   ) : (
