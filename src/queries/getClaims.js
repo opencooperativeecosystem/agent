@@ -4,30 +4,14 @@ const GetClaims = gql`
 query ($token: String, $id: Int) {
     viewer(token: $token) {
       agent(id: $id) {
-        name
-        eventsCount(month:4, year:2018)
-        eventHoursCount(month:4, year:2018)
-        eventPeopleCount(month:4, year:2018)
-        validatedEventsCount(month:4, year:2018)
-        agentPlans(month:4, year: 2018) {
+        id
+        agentPlans (isFinished: false) {
           name
           id
           plannedOn
-          planProcesses(month:4, year: 2018) {
-            name
+          planProcesses {
             id
             committedInputs(action: WORK) {
-              note
-              action
-              resourceClassifiedAs{
-                name
-              }
-              committedQuantity {
-                unit {
-                  name
-                }
-                numericValue
-              }
               fulfilledBy(requestDistribution: true) {
                 fulfilledBy {
                   id

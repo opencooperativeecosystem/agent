@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 
-const agentQuery = gql`
+export default gql`
 query ($token: String, $id: Int) {
     viewer(token: $token) {
       agent(id: $id) {
@@ -38,5 +38,3 @@ query ($token: String, $id: Int) {
     }
   }
 `
-
-export default agentQuery

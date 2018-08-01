@@ -12,22 +12,9 @@ query ($token: String, $id: Int) {
         name
       }
       planProcesses {
-        name
         id
         committedInputs(action: WORK) {
-          note
           id
-          action
-          resourceClassifiedAs{
-            name
-          }
-          committedQuantity {
-            unit {
-              id
-              name
-            }
-            numericValue
-          }
           fulfilledBy(requestDistribution: true) {
             fulfilledBy {
               id
