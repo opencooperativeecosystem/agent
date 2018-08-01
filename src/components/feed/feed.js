@@ -11,7 +11,7 @@ export default function({ feed }) {
             <span className={style.members_item}>
               <span
                 style={{
-                  backgroundImage: item.provider.image
+                  backgroundImage: item.provider
                     ? `url(${item.provider.image})`
                     : ""
                 }}
