@@ -13,6 +13,7 @@ body {
     font-size: 13px;
     font-weight: 400;
     margin-right: 8px;
+    display: inline-block;
     margin-bottom: 8px;
 }
 
@@ -23,6 +24,7 @@ body {
     margin-left: -10px;
     margin-top: -10px;
     min-height: 100vh;
+    margin-right: 30px;
 }
 
 .settings_menu .menu_item {
@@ -39,11 +41,6 @@ body {
 .menu_item span {
     vertical-align: sub;
     margin-right: 8px;
-}
-
-.container_form {
-    float: left;
-    margin-left: 20px;
 }
 
 .container_form h2 {
@@ -131,6 +128,11 @@ body {
 .form_setting {
   padding-bottom: 20px;
   border-bottom: 1px solid rgba(240, 240, 240, 0.15)
+}
+
+.container_form {
+    width: 400px;
+    float: left;
 }
 
 .container_form .form_item  .item_info{

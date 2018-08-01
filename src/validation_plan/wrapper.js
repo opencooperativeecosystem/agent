@@ -41,6 +41,7 @@ class CanvasWrapper extends React.Component {
   }
   render () {
     const {createValidation, deleteValidation, loading, error, data} = this.props
+    console.log(error)
     return (
       loading ? <LoadingMini /> : (
         error ? <p style={{ color: '#F00' }}>API error</p> : (

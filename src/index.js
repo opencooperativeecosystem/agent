@@ -7,7 +7,7 @@ import {BrowserRouter as Router,
   Route,
   Switch
 } from 'react-router-dom'
-import { compose, withHandlers } from "recompose";
+import { compose } from "recompose";
 import {ApolloProvider} from 'react-apollo'
 import {client} from './store'
 import AppTemplate from './templates/AppTemplate'
@@ -43,7 +43,7 @@ const EhnanchedNotifications = compose(
 ReactDOM.render(
   <ApolloProvider client={client}>
       <Router>
-        <div>
+        <div className={style.body}>
           <Query query={getNotification}>
             {({ data: {notifications} }) => {
               return (
