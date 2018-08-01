@@ -5,6 +5,20 @@ body {
 }
 
 
+.settings {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: row;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  overflow-x: auto;
+  position: relative;
+  margin-left: -5px;
+  margin-right: -5px;
+}
+
+
 .skill_item {
     border: 1px solid #2687d1;
     padding: 5px;
