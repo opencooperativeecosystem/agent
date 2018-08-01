@@ -4,12 +4,12 @@ import Header from "./header";
 import Agent from "./agent";
 import { PropsRoute } from "../helpers/router";
 import Inventory from '../inventory'
+import About from '../about'
+
 export default ({ data, match, toggleModal, isOpen }) => {
-  console.log(match)
   return (
-    <div>
+    <div className={style.agentWrapper}>
       <Header data={data} />
-      <section className={style.agent}>
         <PropsRoute
           exact
           path={match.path}
@@ -28,7 +28,15 @@ export default ({ data, match, toggleModal, isOpen }) => {
           isOpen={isOpen}
           id={data.id}
         />
-      </section>
+        <PropsRoute
+          exact
+          path={`${match.path}/about`}
+          component={About}
+          data={data}
+          toggleModal={toggleModal}
+          isOpen={isOpen}
+          id={data.id}
+        />
     </div>
   );
 };

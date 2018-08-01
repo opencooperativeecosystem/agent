@@ -11,55 +11,55 @@ import setAgentPanel from '../mutations/setAgentPanel'
 import {graphql} from 'react-apollo'
 import getAgentPanel from '../queries/getAgentPanel'
 
-const PlanOptions = ({ onFeed, setAgent, agentPanel }) => (
-  <form className={style.settingsModal}>
-    <div className={style.settingsModal_item}>
-      <div className={style.item_option}>
-        {agentPanel === 'feed'
-        ? <input
-        id="feed"
-        type="radio"
-        name="feed"
-        value='feed'
-        checked={true}
-        onChange={() => setAgent("feed")}
-        />
-        :<input
-        id="feed"
-        type="radio"
-        name="feed"
-        value='feed'
-        checked={false}
-        onChange={() => setAgent("feed")}
-      />
-        }
-        <label htmlFor="feed">Show only feed</label>
-      </div>
-    </div>
-    <div className={style.settingsModal_item}>
-      <div className={style.item_option}>
-       {agentPanel === 'info'
-        ? <input
-        id="info"
-        type="radio"
-        name="feed"
-        checked={true}
-        onChange={() => setAgent("info")}
-      /> 
-        : <input
-        id="info"
-        type="radio"
-        name="feed"
-        checked={false}
-        onChange={() => setAgent("info")}
-      /> 
-       }
+// const PlanOptions = ({ onFeed, setAgent, agentPanel }) => (
+//   <form className={style.settingsModal}>
+//     {/* <div className={style.settingsModal_item}>
+//       <div className={style.item_option}>
+//         {agentPanel === 'feed'
+//         ? <input
+//         id="feed"
+//         type="radio"
+//         name="feed"
+//         value='feed'
+//         checked={true}
+//         onChange={() => setAgent("feed")}
+//         />
+//         :<input
+//         id="feed"
+//         type="radio"
+//         name="feed"
+//         value='feed'
+//         checked={false}
+//         onChange={() => setAgent("feed")}
+//       />
+//         }
+//         <label htmlFor="feed">Show only feed</label>
+//       </div>
+//     </div> */}
+//     {/* <div className={style.settingsModal_item}>
+//       <div className={style.item_option}>
+//        {agentPanel === 'info'
+//         ? <input
+//         id="info"
+//         type="radio"
+//         name="feed"
+//         checked={true}
+//         onChange={() => setAgent("info")}
+//       /> 
+//         : <input
+//         id="info"
+//         type="radio"
+//         name="feed"
+//         checked={false}
+//         onChange={() => setAgent("info")}
+//       /> 
+//        }
         
-        <label htmlFor="info">Show Info</label>
-      </div>
-    </div>
-  </form>
-);
+//         <label htmlFor="info">Show Info</label>
+//       </div>
+//     </div>
+//   </form> */}
+// );
 
 const AgentFeed = ({
   onFeedOptions,
@@ -77,23 +77,10 @@ const AgentFeed = ({
   return (
     <Panel
       data-testid="diary"
-      actions={
-        <span
-          onClick={onFeedOptions}
-          className={
-            feedOptions
-              ? style.hightlighted + " " + style.planOptionsSpan
-              : style.planOptionsSpan
-          }
-        >
-          <Icons.Settings width="18" height="18" color="#99ADC6" />
-        </span>
-      }
       icon={<Icons.Diary width='18' height='18' color='#f0f0f0' />}
       title={'Feed'}
     >
       <div>
-        {feedOptions ? <PlanOptions agentPanel={agentPanel} setAgent={setAgent} onFeed={onFeed} /> : null}
         <Query
           query={getFeed}
           variables={{
@@ -138,7 +125,6 @@ const AgentFeed = ({
                 {data.viewer.agent.agentEconomicEvents.length > 0 ? (
                   <Feed feed={data.viewer.agent.agentEconomicEvents} />
                 ) : null}
-                <SkillsModal isOpen={modalIsOpen} toggleModal={toggleModal} skills={data.viewer.agent.agentSkills}/>
               </div>
             );
           }}

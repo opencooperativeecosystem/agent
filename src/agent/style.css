@@ -3,7 +3,27 @@
     border-radius: 3px;
     height: 40px;
     padding: 0;
-    margin-left: 5px;
+    margin: 0;
+}
+
+
+.agentWrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    overflow-x: auto;
+    position: relative;
+    padding: 10px;
+    padding-left: 0;
 }
 
 .header_image {
@@ -54,19 +74,15 @@
 }
 
 .agent {
-    lost-utility: clearfix;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    white-space: nowrap;
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: row;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
     overflow-x: auto;
-    overflow-y: hidden;
-    position: absolute;
-    top: 50px;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    position: relative;
+    margin-left: -5px;
 }
 
 .agent_profile {

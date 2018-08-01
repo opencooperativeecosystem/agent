@@ -7,8 +7,8 @@ import Plans from "./plans";
 import style from "./style.css";
 
 export default ({ data, toggleModal, isOpen }) => (
-    <div>
-    <Feed
+    <div className={style.agent}>
+      <Feed
           image={data.image}
           name={data.name}
           id={data.id}
