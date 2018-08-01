@@ -4,6 +4,7 @@ export default gql`
 query ($token: String, $id: Int!) {
   viewer(token: $token) {
     agent (id: $id) {
+      id
       ownedEconomicResources {
         id
         resourceClassifiedAs {

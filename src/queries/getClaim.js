@@ -23,6 +23,7 @@ query ($token: String, $id: Int) {
           }
           committedQuantity {
             unit {
+              id
               name
             }
             numericValue
@@ -46,6 +47,7 @@ query ($token: String, $id: Int) {
               affectedQuantity {
                 numericValue
                 unit {
+                  id
                   name
                 }
               }
