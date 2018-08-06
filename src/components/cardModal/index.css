@@ -555,7 +555,7 @@
     margin-top: 10px;
   }
 
-  .item_publishActions button {
+  .item_publishActions .publish_button {
     float: right;
     width: 120px;
     margin: 0;
@@ -574,14 +574,14 @@
 }
 
   .sentence_action {
-    font-size: 18px;
+    font-size: 16px;
     color: #717171;
     font-weight: 500;
     font-style: italic;
     float: left;
     line-height: 40px;
     margin-right: 10px;
-    max-width: 170px;
+    max-width: 210px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -1020,6 +1020,7 @@
   .item_publishActions {
     height: 36px;
     background: #E5E5E5;
+    lost-utility: clearfix;
   }
 
   .header_note_input {
@@ -1096,20 +1097,32 @@
 
 
   .item_date input {
-    width: 100%;
+    border: none;
+    font-size: 14px;
+    padding: 0;
+    height: 36px;
+    width: 70px;
+    font-weight: 500;
   }
   
+  .item_date > div {
+    height: 30px !important;
+    display: inline-block;
+  }
+
+  .item_date span {
+    display: inline-block;
+    /* margin-top: 5px; */
+    line-height: 36px;
+    height: 36px;
+    vertical-align: bottom;
+  }
   .item_date {
-    lost-column: 1/4 0;
-    lost-column-cycle: 0;
+    width: auto;
     margin-right: 0 !important;
-    margin-right: 0 !important;
-    & .full {
-      border-radius: 3px;
-      font-size: 14px;
-      text-indent: 5px;
-      color: #4d4d4d;
-    }
+    margin-left: 10px;
+    float: left;
+    height: 36px;
   }
 
   .back svg {

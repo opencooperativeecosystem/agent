@@ -13,10 +13,12 @@ const StartDate = props => {
   };
   return (
     <div className={style.item_date}>
+      <span><Icons.Calendar width='18' height='18' color='#3B99FC' /></span>
       <DatePicker
         selected={props.value}
         onChange={handleChange}
         dateFormat={"DD MMM"}
+        withPortal
       />
       {props.error && props.touched && <Alert>{props.error}</Alert>}
     </div>
@@ -80,15 +82,15 @@ export default function LogEvent({
               </div> 
              : null } 
             <div className={style.item_publishActions}>
-              <Button>Publish</Button>
-              <div className={style.item_distribution}>
-              <StartDate
+            <StartDate
                 value={values.date}
                 onChange={setFieldValue}
                 onBlur={setFieldTouched}
                 error={errors.start}
                 touched={touched.start}
               />
+              <Button className={style.publish_button}>Publish</Button>
+              <div className={style.item_distribution}>
                 <Field
                   name="requestPayment"
                   render={({ field /* _form */ }) => (
