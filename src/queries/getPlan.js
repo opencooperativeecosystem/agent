@@ -31,6 +31,9 @@ query ($token: String, $planId: Int) {
             action
             note
             due
+            scope {
+              id
+            }
             involvedAgents {
               image
               id
@@ -53,6 +56,7 @@ query ($token: String, $planId: Int) {
             }
             resourceClassifiedAs {
               name
+              id
             }
           }
           committedInputs {
@@ -84,6 +88,7 @@ query ($token: String, $planId: Int) {
             resourceClassifiedAs {
               category
               name
+              id
             }
           }
         }

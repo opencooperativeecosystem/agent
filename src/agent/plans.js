@@ -6,7 +6,7 @@ import getActivePlan from "../queries/getPlans";
 import getAllPlans from "../queries/getAllPlans";
 import getFinishedPlans from "../queries/getFinishedPlans";
 import { Query } from "react-apollo";
-import { LoadingMini } from "../components/loading";
+import { LoadingMini, ErrorMini } from "../components/loading";
 import {compose, withState, withHandlers } from "recompose";
 
 
@@ -87,9 +87,9 @@ const AgentPlans = ({
             id: Number(id)
           }}
         >
-          {({ loading, error, data }) => {
+          {({ loading, error, data, refetch }) => {
             if (loading) return <LoadingMini />;
-            if (error) return `Error! ${error.message}`;
+            if (error) return <ErrorMini loading={loading} refetch={refetch} message={`Error! ${error.message}`} />;
             return (
               <div>
                 {data.viewer.agent.agentPlans.length > 0 ? (

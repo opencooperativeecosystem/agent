@@ -33,6 +33,9 @@ const createCommitment = gql`
         action
         id
         note
+        scope {
+          id
+        }
         fulfilledBy {
           fulfilledQuantity {
             numericValue
@@ -63,6 +66,7 @@ const createCommitment = gql`
         resourceClassifiedAs {
           category
           name
+          id
         }
       }
     }

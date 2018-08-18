@@ -14,3 +14,10 @@
 .loaderIcon {
     vertical-align: sub;
 }
+
+.wrapper_error h1 {
+    font-size: 26px;
+    color: #f0f0f0a3;
+    line-height: 30px;
+    font-weight: 500;
+}

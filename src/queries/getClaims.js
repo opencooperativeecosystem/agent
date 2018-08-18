@@ -26,16 +26,19 @@ query ($token: String, $id: Int) {
                   start
                   inputOf {
                     name
+                    id
                   }
                   affectedQuantity {
                     numericValue
                     unit {
+                      id
                       name
                     }
                   }
                   affects {
                     resourceClassifiedAs {
                       name
+                      id
                       category
                     }
                     trackingIdentifier

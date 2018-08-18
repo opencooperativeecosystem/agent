@@ -17,6 +17,7 @@ export default gql`
     $resourceCurrentLocationId: Int
     $resourceTrackingIdentifier: String
     $createResource: Boolean
+    $resourceUrl: String
   ) {
     createEconomicEvent(
       token: $token
@@ -28,6 +29,7 @@ export default gql`
       requestDistribution: $requestDistribution
       fulfillsCommitmentId: $commitmentId
       note: $note
+      resourceUrl: $resourceUrl
       affectedNumericValue: $affectedNumericValue
       affectedUnitId: $affectedUnitId
       affectedResourceClassifiedAsId: $affectedResourceClassifiedAsId
@@ -41,6 +43,7 @@ export default gql`
         start
         id
         note
+        url
         provider {
           name
           image
@@ -48,6 +51,14 @@ export default gql`
         }
         scope {
           id
+        }
+        affects {
+          trackingIdentifier
+          resourceClassifiedAs {
+            name
+            id
+          }
+          note
         }
         affectedQuantity {
           numericValue

@@ -574,9 +574,9 @@
 }
 
   .sentence_action {
-    font-size: 16px;
+    font-size: 14px;
     color: #717171;
-    font-weight: 500;
+    font-weight: 600;
     font-style: italic;
     float: left;
     line-height: 40px;
@@ -591,7 +591,7 @@
   .log_item textarea {
     outline: none;
     display: block;
-    min-height: 100px;
+    min-height: 70px;
     padding: 7px;
     resize: none;
     width: 100%;
@@ -752,7 +752,9 @@
 
   .item_sencence input {
     border-radius: 0;
-    width: 70px;
+    width: 60px;
+    font-size: 16px;
+    font-weight: 500;
   }
   .customdate {
     height: 40px;
@@ -1200,11 +1202,34 @@
    background: #ECECEC;
    height: 32px;
  }
+ .item_extLink {
+  background: #dadada;
+  height: 32px;
+  border-top: 1px solid #d6d6d6;
+ }
 
  .item_publishResourceName input::placeholder {
   color: #525561;
  }
- .item_publishResourceName input {
+ .item_extLink input::placeholder {
+  color: #525561;
+ }
+ .item_publishResourceName  input {
+  float: none !important;
+  display: inline-block;
+  height: 32px;
+  margin-left: 5px;
+  width: 90%;
+  text-indent: 0;
+  text-align: left;
+  border-radius: 0;
+  font-size: 14px;
+  line-height: 37px;
+  border: none;
+  outline: none;
+  color: #525561;
+ }
+.item_extLink  input {
   float: none !important;
   display: inline-block;
   height: 32px;
@@ -1220,7 +1245,12 @@
   color: #525561;
  }
  
- .item_publishResourceName span {
+ .item_publishResourceName  span {
+  vertical-align: sub;
+  margin-left: 10px;
+ }
+
+ .item_extLink  span {
   vertical-align: sub;
   margin-left: 10px;
  }

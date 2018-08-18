@@ -42,6 +42,7 @@ query ($token: String, $id: Int) {
                 resourceClassifiedAs {
                   name
                   category
+                  id
                 }
                 trackingIdentifier
               }

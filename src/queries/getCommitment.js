@@ -37,6 +37,7 @@ query ($token: String, $id: Int!) {
         resourceClassifiedAs {
           category
           name
+          id
         }
       }
     }

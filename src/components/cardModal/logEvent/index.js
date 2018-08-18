@@ -22,44 +22,47 @@ const wrapperComponent = compose(
       note: "",
       numericValue: "00.00",
       unit: 2,
-      requestPayment: true,
+      requestPayment: props.action === 'produce' ? false : true,
+      url: '',
       date: moment(),
-      affectedResourceClassifiedAsId: null,
+      affectedResourceClassifiedAsId: props.resourceId,
       resourceCurrentLocationId: null,
-      resourceTrackingIdentifier: null,
-      createResource: false
+      resourceTrackingIdentifier: '',
+      createResource: props.action === 'produce' ? true : false
     }),
     validationSchema: Yup.object().shape({
       note: Yup.string(),
       numericValue: Yup.string().required(),
       unit: Yup.number(),
       requestPayment: Yup.boolean(),
-      date: Yup.string()
+      date: Yup.string(),
+      url: Yup.string()
     }),
     handleSubmit: (values, { props, resetForm, setErrors, setSubmitting }) => {
       let date = moment(values.date).format("YYYY-MM-DD");
-      let unit = props.units.filter(u => u.name === props.unit).map(u => u.id);
+      let unit = props.units.filter(u => u.name === props.unit).map(u => u.id);      
+        let eventMutationVariables = {
+          token: localStorage.getItem("oce_token"),
+          id: props.id,
+          providerId: props.agentId,
+          receiverId: props.scopeId,
+          action: props.action,
+          scopeId: props.scopeId,
+          requestDistribution: values.requestPayment,
+          commitmentId: props.commitmentId,
+          note: values.note,
+          affectedNumericValue: values.numericValue,
+          affectedUnitId: unit[0],
+          start: date,
+          resourceUrl: values.url,
+          affectedResourceClassifiedAsId: values.affectedResourceClassifiedAsId,
+          resourceCurrentLocationId: values.resourceCurrentLocationId,
+          resourceTrackingIdentifier: values.resourceTrackingIdentifier,
+          createResource: values.createResource
+        }
       return props
         .createEventMutation({
-          variables: {
-            token: localStorage.getItem("oce_token"),
-            id: props.id,
-            providerId: props.agentId,
-            receiverId: props.scopeId,
-            action: props.action,
-            scopeId: props.scopeId,
-            requestDistribution: values.requestPayment,
-            commitmentId: props.commitmentId,
-            note: values.note,
-            affectedNumericValue: values.numericValue,
-            affectedUnitId: unit[0],
-            start: date,
-            affectedResourceClassifiedAsId: values.affectedResourceClassifiedAsId,
-            resourceCurrentLocationId: values.resourceCurrentLocationId,
-            resourceTrackingIdentifier: values.resourceTrackingIdentifier,
-            createResource: values.createResource
-          },
-          // options: (props) => ({
+          variables: eventMutationVariables,
           update: (store, { data }) => {
             let EventsCache = store.readQuery({
               query: queryEvents,
@@ -81,10 +84,25 @@ const wrapperComponent = compose(
                 action: data.createEconomicEvent.economicEvent.action,
                 requestDistribution:
                   data.createEconomicEvent.economicEvent.requestDistribution,
+                scope: {
+                  id: data.createEconomicEvent.economicEvent.scope.id,
+                  __typename: "Organization"
+                },
                 start: data.createEconomicEvent.economicEvent.start,
                 id: data.createEconomicEvent.economicEvent.id,
                 note: data.createEconomicEvent.economicEvent.note,
                 provider: data.createEconomicEvent.economicEvent.provider,
+                url: data.createEconomicEvent.economicEvent.url,
+                affects:  {
+                  trackingIdentifier: data.createEconomicEvent.economicEvent.affects.trackingIdentifier,
+                  resourceClassifiedAs: {
+                    id: data.createEconomicEvent.economicEvent.affects.resourceClassifiedAs.id,
+                    name:data.createEconomicEvent.economicEvent.affects.resourceClassifiedAs.name,
+                    __typename: "ResourceClassification"
+                  },
+                  note: data.createEconomicEvent.economicEvent.affects.note,
+                  __typename:"EconomicResource"
+                },
                 __typename: "EconomicEvent"
               },
               fulfilledQuantity: {
@@ -136,8 +154,9 @@ const wrapperComponent = compose(
             });
           }
         })
-        .then(data =>
-          props
+        .then(data => {
+          return (
+            props
             .updateNotification({
               variables: {
                 message: (
@@ -157,9 +176,12 @@ const wrapperComponent = compose(
                 });
               }, 1000);
             })
+          )
+        } 
         )
         .catch(e => {
           const errors = e.graphQLErrors.map(error => error.message);
+          console.log(errors)
           props
             .updateNotification({
               variables: {

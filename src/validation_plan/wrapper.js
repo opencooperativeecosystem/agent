@@ -10,7 +10,7 @@ import gql from 'graphql-tag'
 import {Icons, Panel} from 'oce-components/build'
 import style from './style.css'
 import {Link} from 'react-router-dom'
-import { LoadingMini } from '../components/loading';
+import { LoadingMini, ErrorMini } from '../components/loading';
 
 class CanvasWrapper extends React.Component {
   constructor () {
@@ -40,11 +40,11 @@ class CanvasWrapper extends React.Component {
     })
   }
   render () {
-    const {createValidation, deleteValidation, loading, error, data} = this.props
+    const {createValidation, deleteValidation, loading, error, refetch, data} = this.props
     console.log(error)
     return (
       loading ? <LoadingMini /> : (
-        error ? <p style={{ color: '#F00' }}>API error</p> : (
+        error ? <ErrorMini refetch={refetch} message={`Error! ${error.message}`} /> : (
           <div className={style.container}>
             <Panel large icon={<Icons.Globe width='18' color='#f0f0f0' />} title={data.name} actions={<Link className={style.right_button} to={`/canvas/${this.props.match.params.id}`}><span><Icons.Validate width={18} height={18} color={'#fafafa'} /></span>Log</Link>}>
               <Component data={data} myAgentId={this.state.myAgentId} deleteValidation={deleteValidation} createValidation={createValidation} />
@@ -67,7 +67,8 @@ const wrapperComponent = compose(
       return ({
         loading: loading,
         error: error,
-        data: viewer ? viewer.plan : null
+        data: viewer ? viewer.plan : null,
+        refetch: refetch
     })}
   }),
   graphql(createValidation, { name: 'createValidationMutation' }),

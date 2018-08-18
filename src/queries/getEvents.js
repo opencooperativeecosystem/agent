@@ -17,6 +17,18 @@ query ($token: String!, $id: Int!) {
                 image
                 id
               }
+              scope {
+                id
+              }
+              affects {
+                trackingIdentifier
+                resourceClassifiedAs {
+                  name
+                  id
+                }
+                note
+              }
+              url
             }
             fulfilledQuantity {
               numericValue

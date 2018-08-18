@@ -13,7 +13,9 @@ const StartDate = props => {
   };
   return (
     <div className={style.item_date}>
-      <span><Icons.Calendar width='18' height='18' color='#3B99FC' /></span>
+      <span>
+        <Icons.Calendar width="18" height="18" color="#3B99FC" />
+      </span>
       <DatePicker
         selected={props.value}
         onChange={handleChange}
@@ -34,8 +36,10 @@ export default function LogEvent({
   setFieldTouched,
   unit,
   units,
-  resource
+  resource,
+  resourceId
 }) {
+
   return (
     <Form>
       <div className={style.content_module}>
@@ -59,7 +63,8 @@ export default function LogEvent({
                   />
                 )}
               />
-              {errors.numericValue && touched.numericValue && <Alert>{errors.numericValue}</Alert>}
+              {errors.numericValue &&
+                touched.numericValue && <Alert>{errors.numericValue}</Alert>}
               <h5 className={style.sentence_action}>{unit}</h5>
               <span className={style.of}>of</span>
               <h5 className={style.sentence_action}>{resource}</h5>
@@ -75,14 +80,47 @@ export default function LogEvent({
                 />
               )}
             />
-            {action === 'produce' || action === 'use' || action === 'consume'
-             ? <div className={style.item_publishResourceName}>
-                <span><Icons.Edit width='16' height='16' color='#525561'/></span>
-                <Input placeholder='Type an identify name for the resource...' />
-              </div> 
-             : null } 
+            {action === "produce" ||
+            action === "use" ||
+            action === "consume" ? (
+              <div>
+                <div className={style.item_publishResourceName}>
+                  <span>
+                    <Icons.Edit width="16" height="16" color="#525561" />
+                  </span>
+                  <Field
+                    name="resourceTrackingIdentifier"
+                    render={({ field /* _form */ }) => (
+                      <Input
+                        value={field.value}
+                        name={field.name}
+                        onChange={field.onChange}
+                        placeholder="Type an identify name for the resource..."
+                      />
+                    )}
+                  />
+                </div>
+
+                <div className={style.item_extLink}>
+                  <span>
+                    <Icons.Link width="16" height="16" color="#525561" />
+                  </span>
+                  <Field
+                    name="url"
+                    render={({ field /* _form */ }) => (
+                      <Input
+                        value={field.value}
+                        name={field.name}
+                        onChange={field.onChange}
+                        placeholder="Type an optional external url for the resource ..."
+                      />
+                    )}
+                  />
+                </div>
+              </div>
+             ) : null}
             <div className={style.item_publishActions}>
-            <StartDate
+              <StartDate
                 value={values.date}
                 onChange={setFieldValue}
                 onBlur={setFieldTouched}
@@ -90,20 +128,26 @@ export default function LogEvent({
                 touched={touched.start}
               />
               <Button className={style.publish_button}>Publish</Button>
-              <div className={style.item_distribution}>
-                <Field
-                  name="requestPayment"
-                  render={({ field /* _form */ }) => (
-                    <ToggleButton
-                      name={field.name}
-                      value={field.value}
-                      onToggle={(value) => setFieldValue('requestPayment', !value)}
-                    />
-                  )}
-                />
-                <label>Request payment</label>
-              </div>
-            </div> 
+              {action === "produce" ||
+              action === "use" ||
+              action === "consume" ? null : (
+                <div className={style.item_distribution}>
+                  <Field
+                    name="requestPayment"
+                    render={({ field /* _form */ }) => (
+                      <ToggleButton
+                        name={field.name}
+                        value={field.value}
+                        onToggle={value =>
+                          setFieldValue("requestPayment", !value)
+                        }
+                      />
+                    )}
+                  />
+                  <label>Request payment</label>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

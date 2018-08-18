@@ -24,6 +24,9 @@
 
 .sidebar_menu_collapsed {
     width: 40px;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .sidebar_menu_collapsed .menu_icon {
@@ -267,9 +270,13 @@ background: none;
 }
 
 .dateWrapper {
-   margin-top: 6px;
+   margin-top: 8px;
    margin-left: 5px;
    float: left;
+  }
+
+  .dateWrapper input {
+      margin-top: 2px !important;
   }
   
   .dateName {

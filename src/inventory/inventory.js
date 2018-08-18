@@ -40,6 +40,10 @@ const Network = ({ data }) => {
                         item.currentQuantity.unit.name}
                     </h4>
                   </div>
+                  <div className={style.options_item}>
+                    <h5>Url</h5>
+                    <h4>{item.url}</h4>
+                  </div>
                 </div>
               </div>
             </div>

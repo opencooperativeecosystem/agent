@@ -18,7 +18,7 @@ require("react-datepicker/dist/react-datepicker-cssmodules.css");
 
 const DueDate = props => {
   const handleChange = value => {
-    props.onChange("due", value);
+    props.onChange("recipeDue", value);
   };
   return (
     <div>
@@ -67,19 +67,19 @@ const CreatePlan = props => {
           </div>
           <Form className={style.planCreation_wrapper}>
             <div className={style.form_select}>
-            <Field
+              <Field
                 name="recipeId"
                 render={({ field }) => (
-                <AsyncSelect
-                placeholder={"Select a recipe"}
-                defaultOptions
-                cacheOptions
-                onChange={handleInputChange}
-                loadOptions={val => promiseOptions(client, val)}
+                  <AsyncSelect
+                    placeholder={"Select a recipe"}
+                    defaultOptions
+                    cacheOptions
+                    onChange={handleInputChange}
+                    loadOptions={val => promiseOptions(client, val)}
+                  />
+                )}
               />
-            )}
-            />
-            {props.errors.recipeId &&
+              {props.errors.recipeId &&
                 props.touched.recipeId && (
                   <Alert>{props.errors.recipeId}</Alert>
                 )}
@@ -145,14 +145,14 @@ export default compose(
       recipeId: ""
     }),
     validationSchema: Yup.object().shape({
-      recipeName: Yup.string().required('Name is a required field'),
+      recipeName: Yup.string().required("Name is a required field"),
       recipeNote: Yup.string(),
       recipeDue: Yup.string(),
-      recipeId: Yup.string().required('Recipe is a required field')
+      recipeId: Yup.string().required("Recipe is a required field")
     }),
     handleSubmit: (values, { props, setSubmitting, setErrors }) => {
       let date = moment(values.recipeDue).format("YYYY-MM-DD");
-      setSubmitting(true)
+      setSubmitting(true);
       props
         .createPlanMutation({
           variables: {
@@ -160,7 +160,7 @@ export default compose(
             name: values.recipeName,
             due: date,
             note: values.recipeNote,
-            id: values.recipeId,
+            id: values.recipeId
           }
         })
         .then(
@@ -174,8 +174,8 @@ export default compose(
                         style={{ marginRight: "10px", verticalAlign: "sub" }}
                       >
                         <Icons.Bell width="18" height="18" color="white" />
-                      </span>Plan {data.data.createPlanFromRecipe.plan.name} created
-                      successfully!
+                      </span>Plan {data.data.createPlanFromRecipe.plan.name}{" "}
+                      created successfully!
                     </div>
                   ),
                   type: "success"
@@ -188,7 +188,7 @@ export default compose(
                   });
                 }, 1000);
               });
-            setSubmitting(false)
+            setSubmitting(false);
             return props.history.push(
               `/canvas/${data.data.createPlanFromRecipe.plan.id}`
             );
@@ -212,7 +212,7 @@ export default compose(
                 }
               })
               .then(res => {
-                setSubmitting(false)
+                setSubmitting(false);
                 setTimeout(() => {
                   props.deleteNotification({
                     variables: { id: res.data.addNotification.id }

@@ -2,7 +2,7 @@ import React from "react";
 import { graphql } from "react-apollo";
 import Component from "./index";
 import agentQuery from "../queries/getAgent";
-import { LoadingMini } from "../components/loading";
+import { LoadingMini, ErrorMini } from "../components/loading";
 import { compose } from "recompose";
 
 class AgentWrapper extends React.Component {
@@ -10,6 +10,7 @@ class AgentWrapper extends React.Component {
     const {
       loading,
       error,
+      refetchAgent,
       data,
       modalIsOpen,
       match,
@@ -18,7 +19,7 @@ class AgentWrapper extends React.Component {
     return loading ? (
       <LoadingMini />
     ) : error ? (
-      <p style={{ color: "#F00" }}>API error</p>
+      <ErrorMini refetch={refetchAgent} message={`Error! ${error.message}`} />
     ) : (
       <Component
         match={match}

@@ -5,8 +5,9 @@ query ($token: String, $id: Int!) {
   viewer(token: $token) {
     agent (id: $id) {
       id
-      ownedEconomicResources {
+      ownedEconomicResources (category: INVENTORY) {
         id
+        url
         resourceClassifiedAs {
         name
         category

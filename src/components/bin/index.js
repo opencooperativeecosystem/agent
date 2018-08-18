@@ -14,6 +14,7 @@ import updateNotification from "../../mutations/updateNotification";
 import deleteNotification from "../../mutations/deleteNotification";
 import gql from "graphql-tag";
 import style from "./style.css";
+import {NavLink} from 'react-router-dom'
 
 const BinWrapper = ({
   name,
@@ -56,7 +57,7 @@ const BinWrapper = ({
       updateProcess={updateProcess}
       name={name}
       status={status}
-      scope={scope}
+      scope={<NavLink to={`/agent/${scopeId}`}>{scope}</NavLink>}
       infoNote={note}
       Scopeform={
         <EditScope

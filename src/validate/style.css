@@ -1,20 +1,201 @@
+@import "../base.css";
+@import "../mixins.css";
+@import "../variables.css";
+.right_button {
+  background: #1c1d1f;
+  border-radius: 4px;
+  padding: 0 15px;
+  height: 30px;
+  display: inline-block;
+  margin-top: 5px;
+  margin-right: 10px;
+  line-height: 30px;
+  color: #fafafa;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.canvas_board {
+}
+
+.list_item {
+  margin-bottom: 8px;
+  background: #3a404e;
+  padding: 8px;
+  border-bottom: 1px solid rgba(240, 240, 240, 0.1);
+}
+
+.right_button span {
+  margin-right: 5px;
+  vertical-align: sub;
+}
+.wrapper_accordion {
+  padding: 20px;
+  padding-top: 0;
+}
+
 .container {
-    user-select: none;
-    white-space: nowrap;
-    overflow-x: auto;
-    overflow-y: hidden;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: row;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  overflow-x: auto;
+  position: relative;
+  margin-left: -5px;
+  margin-right: -5px;
 }
 
-.container_link {
-    position: relative;
-    margin: 10px;
+.item_actions {
+  float: left;
+  width: 120px;
 }
 
-.active > div {
-    border: 2px solid #419bf9;
+.actions_validations {
+  lost-utility: clearfix;
+  margin: -10px;
+}
+
+.validations_box {
+  width: 50%;
+  height: 3px;
+  float: left;
+  /* border-radius: 30px; */
+  background: $n40;
+  /* margin-right: 10px; */
+  /* display: inline-block; */
+  margin-bottom: 10px;
+}
+
+.validations_box:last-of-type {
+  margin-right: 0;
+}
+
+.actions_unvalidate {
+  width: 170px !important;
+  background: #ffab00 !important;
+  color: #172b4d;
+}
+
+.actions_validate {
+  width: 120px;
+  height: 30px;
+  margin-top: 0px;
+  font-weight: 500;
+  font-size: 14px;
+  border-radius: 2px;
+  cursor: pointer;
+  background: #3b99fc;
+  color: #f0f0f0;
+  font-weight: 600 !important;
+  border: none;
+  border-radius: 3px !important;
+  letter-spacing: 0px !important;
+  /* float: right; */
+}
+
+.item_info {
+  /* margin-left: 130px; */
+  lost-utility: clearfix;
+  padding-bottom: 10px;
+}
+
+.buttonRight {
+  float: right;
+}
+
+.event_info {
+  lost-utility: clearfix;
+  float: left;
+}
+
+.event_secondary {
+  lost-utility: clearfix;
+  margin-bottom: 0px;
+}
+
+.validations_active {
+  background: $g400;
+}
+
+.event_secondary span {
+  margin: 0;
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 400;
+  margin-top: 10px;
+  display: block;
+  font-weight: 400;
+  color: #a1a1a1;
+}
+
+.infos_title {
+  lost-utility: clearfix;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.info_description {
+  margin-top: 0px;
+  lost-utility: clearfix;
+}
+
+.event_info img {
+  width: 24px;
+  height: 24px;
+  border-radius: 2px;
+  vertical-align: middle;
+  margin-right: 5px;
+  float: left;
+}
+
+.event_info h3 {
+  font-weight: 400;
+  margin: 0;
+  color: #f0f0f0;
+  letter-spacing: 0.5px;
+  font-size: 14px;
+  line-height: 24px;
+  margin-left: 5px;
+  overflow-wrap: normal;
+  float: left;
+}
+
+.event_info p {
+  margin-bottom: 0;
+  margin-top: 0px;
+  font-weight: 300;
+  font-size: 14px;
+  color: #f0f0f0;
+}
+
+.info_validation {
+  lost-utility: clearfix;
+}
+
+.info_validation .validation_item {
+  float: left;
+  margin-right: 10px;
+  font-style: italic;
+  color: #f0f0f0;
+  font-size: 14px;
+  background: #444a5c;
+  border-radius: 2px;
+  padding: 0 10px;
+  height: 30px;
+  line-height: 30px;
+}
+
+.info_validation .validation_item span {
+  vertical-align: sub;
+}
+
+.filter .filter_item {
+  lost-column: 1/4;
+}
+
+.filter {
+  lost-utility: clearfix;
+  margin-top: 20px;
 }

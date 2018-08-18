@@ -14,6 +14,9 @@ mutation ($token: String!, $validatedById: Int!, $economicEventId: Int!) {
       }
       economicEvent {
         id
+        scope {
+          id
+        }
         inputOf {
           id
           processPlan {

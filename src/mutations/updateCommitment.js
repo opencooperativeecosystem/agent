@@ -38,6 +38,7 @@ const updateCommitment = gql`
         resourceClassifiedAs {
           category
           name
+          id
         }
         fulfilledBy {
           fulfilledBy {

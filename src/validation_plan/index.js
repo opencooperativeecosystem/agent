@@ -41,7 +41,6 @@ import moment from 'moment'
 
 const Canvas = (props) => {
   const {data} = props
-  console.log(data)
   return (
       <div className={style.canvas_board}>
         {data.planProcesses.map(process => (

@@ -13,13 +13,16 @@ import { PropsRoute } from "../../helpers/router";
 import Validate from "../../validation_plan/wrapper";
 import updateNotification from "../../mutations/updateNotification";
 import deleteNotification from "../../mutations/deleteNotification";
-import { LoadingMini } from "../../components/loading";
+import { LoadingMini, ErrorMini } from "../../components/loading";
 
 const AppTemplate = props => {
+  console.log(props.error)
   return props.loading ? (
     <LoadingMini />
   ) : props.error ? (
-    <p style={{ color: "#F00" }}>API error</p>
+    <div className={style.errorWrapper}>
+    <ErrorMini refetch={props.refetch} message={`Error! ${props.error.message}`} />
+    </div>
   ) : (
     <div className={style.surface}>
       <div className={style.content}>

@@ -31,6 +31,7 @@ export default function({
   error,
   refetchData
 }) {
+  console.log(error)
   return (
     <div className={style.activities_list}>
       {loading ? (
