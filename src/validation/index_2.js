@@ -5,7 +5,6 @@ import moment from "moment";
 
 const Canvas = props => {
   const { data, param } = props;
-  console.log(data)
   return (
     <div className={style.canvas_board}>
       {data.map(plan =>

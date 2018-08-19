@@ -11,17 +11,20 @@ import Agent from "../../agent/wrapper";
 import Overview from "../../overview/wrapper";
 import { PropsRoute } from "../../helpers/router";
 import Validate from "../../validation_plan/wrapper";
+import Validation from "../../validation/wrapper";
 import updateNotification from "../../mutations/updateNotification";
 import deleteNotification from "../../mutations/deleteNotification";
 import { LoadingMini, ErrorMini } from "../../components/loading";
 
 const AppTemplate = props => {
-  console.log(props.error)
   return props.loading ? (
     <LoadingMini />
   ) : props.error ? (
     <div className={style.errorWrapper}>
-    <ErrorMini refetch={props.refetch} message={`Error! ${props.error.message}`} />
+      <ErrorMini
+        refetch={props.refetch}
+        message={`Error! ${props.error.message}`}
+      />
     </div>
   ) : (
     <div className={style.surface}>
@@ -42,6 +45,7 @@ const AppTemplate = props => {
               id={props.data.id}
             />
             <PropsRoute path="/agent/:id" component={Agent} data={props} />
+            <PropsRoute path="/validation" component={Validation} data={props} />
             <PropsRoute
               exact
               path="/canvas/:id"

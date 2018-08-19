@@ -5,54 +5,27 @@ query ($token: String, $id: Int) {
     viewer(token: $token) {
       agent(id: $id) {
         id
-        agentPlans (isFinished: false) {
-          name
-          id
-          plannedOn
-          planProcesses {
+        eventsCount(month:8, year:2018)
+        eventHoursCount(month:8, year:2018)
+        eventPeopleCount(month:8, year:2018)
+        agentPlans (isFinished: false, month:8, year:2018 ) {
+          planProcesses (month:8, year:2018) {
             id
             committedInputs(action: WORK) {
               fulfilledBy(requestDistribution: true) {
                 fulfilledBy {
                   id
-                  action
-                  validations {
-                    id
-                    validatedBy {
-                      name
-                      id
-                    }
-                  }
-                  start
-                  inputOf {
-                    name
-                    id
-                  }
-                  affectedQuantity {
-                    numericValue
-                    unit {
-                      id
-                      name
-                    }
-                  }
-                  affects {
-                    resourceClassifiedAs {
-                      name
-                      id
-                      category
-                    }
-                    trackingIdentifier
-                  }
                   provider {
                     id
                     name
                     image
                   }
-                  receiver {
-                    id
-                    name
+                  affectedQuantity {
+                    numericValue
                   }
-                  note
+                  validations {
+                    id
+                  }
                 }
               }
             }

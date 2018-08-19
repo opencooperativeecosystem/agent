@@ -28,7 +28,7 @@ export default ({ data }) => (
       >
         About
       </NavLink>
-      {data.type === "Person" ? (
+      {/* {data.type === "Person" ? (
         <NavLink
           exact
           activeStyle={{ background: "#3B99FC" }}
@@ -36,7 +36,7 @@ export default ({ data }) => (
         >
           Validate
         </NavLink>
-      ) : null}
+      ) : null} */}
       <NavLink
         exact
         activeStyle={{ background: "#3B99FC" }}

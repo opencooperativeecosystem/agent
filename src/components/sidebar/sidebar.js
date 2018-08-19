@@ -77,7 +77,9 @@ const Sidebar = props => {
             </span>Create a plan from recipe
           </div>
         )}
-        {/* <div className={style.button_action + ' ' + style.underlined}><span><Icons.NewFile width='18' height='18' color='#f0f0f0'/></span>Create a new recipe</div> */}
+        <div className={style.button_action + ' ' + style.underlined}>
+          <NavLink to={"/validation"}><span><Icons.Star width='18' height='18' color='#f0f0f0'/></span>Validation</NavLink>
+        </div>
         </div>
       </div>
     </div>

@@ -4,96 +4,63 @@ import { graphql, withApollo } from "react-apollo";
 import Claim from "../queries/getClaims";
 import createValidation from "../mutations/createValidation";
 import deleteValidation from "../mutations/deleteValidation";
-import { compose, withHandlers } from "recompose";
+import { compose, withHandlers, withState } from "recompose";
 import gql from "graphql-tag";
 import { Icons, Panel } from "oce-components/build";
 import style from "./style.css";
 import { LoadingMini, ErrorMini } from "../components/loading";
+import Header from './header'
 
 class CanvasWrapper extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      myAgentId: null
-    };
-  }
-
-  componentDidMount() {
-    const myAgent = this.props.client.readQuery({
-      query: gql`
-        query($token: String) {
-          viewer(token: $token) {
-            myAgent {
-              id
-            }
-          }
-        }
-      `,
-      variables: {
-        token: localStorage.getItem("oce_token")
-      }
-    });
-    this.setState({
-      myAgentId: myAgent.viewer.myAgent.id
-    });
-  }
   render() {
     const {
       createValidation,
-      match,
       deleteValidation,
       loading,
       error,
-      networkStatus,
       refetch,
-      data
+      data,
+      selectTab,
+      tabId,
+      tabName
     } = this.props;
-    console.log(networkStatus)
     return loading ? (
       <LoadingMini />
     ) : error ? (
       <ErrorMini refetch={refetch} message={`Error! ${error.message}`} />
     ) : (
       <div className={style.container}>
+        <Header agents={data.data.agentRelationships} selectTab={selectTab} tabId={tabId}/>
+        <div className={style.validation}>
         <Panel
           large
           icon={<Icons.Globe width="18" color="#f0f0f0" />}
-          title={"Validate"}
+          title={tabName}
         >
           <Component
-            param={match.params.id}
             data={data}
-            myAgentId={this.state.myAgentId}
             deleteValidation={deleteValidation}
             createValidation={createValidation}
+            tabId={tabId}
           />
         </Panel>
+        </div>
       </div>
     );
   }
 }
 
 const wrapperComponent = compose(
-  graphql(Claim, {
-    options: props => ({
-      variables: {
-        token: localStorage.getItem("oce_token"),
-        id: Number(props.match.params.id)
-      }
-    }),
-    props: ({ ownProps, data: { viewer,networkStatus, loading, error, refetch } }) => {
-      return {
-        loading: loading,
-        error: error,
-        data: viewer ? viewer.agent.agentPlans : null,
-        refetch: refetch,
-        networkStatus: networkStatus
-      };
-    }
-  }),
+  
   graphql(createValidation, { name: "createValidationMutation" }),
   graphql(deleteValidation, { name: "deleteValidationMutation" }),
+  withState('tabId', 'onSelectTab', null),
+  withState('tabName', 'onSelectTabName', null),
   withHandlers({
+    selectTab: props => (id, name) => {
+      props.onSelectTab(id)
+      props.onSelectTabName(name)
+    },
     createValidation: props => eventId => {
       const myAgent = props.client.readQuery({
         query: gql`
