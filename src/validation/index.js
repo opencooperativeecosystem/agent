@@ -1,6 +1,5 @@
 import React from "react";
 import style from "./style.css";
-import { Icons } from "oce-components/build";
 import AgentTab from "./agentTab";
 import Overview from "./overview";
 import Legend from "./legend";
@@ -13,7 +12,9 @@ export default props => {
       query={getClaims}
       variables={{
         token: localStorage.getItem("oce_token"),
-        id: Number(props.tabId)
+        id: Number(props.tabId),
+        month: Number(props.values.month),
+        year: Number(props.values.year)
       }}
     >
       {({ loading, error, data, refetch }) => {
@@ -22,20 +23,7 @@ export default props => {
           return (
             <ErrorMini refetch={refetch} message={`Error! ${error.message}`} />
           );
-        console.log(data);
-        // [
-        //     {
-        //         id: 123,
-        //         name: 'bob',
-        //         events: [
-        //             {
-        //                 id: 456
-        //                 validations: []
-        //             }
-        //         ]
-
-        //     }
-        // ]
+          console.log(data)
         let agentsArray = [];
         data.viewer.agent.agentPlans.map(plan =>
           plan.planProcesses.map(process =>
@@ -65,6 +53,7 @@ export default props => {
                   .filter(event => event.fulfilledBy.provider.id === agent.id)
                   .map(item =>
                     uniqueAgents[i].events.push({
+                      id: item.fulfilledBy.id,
                       hours: item.fulfilledBy.affectedQuantity.numericValue,
                       validations: item.fulfilledBy.validations.length
                     })
@@ -73,14 +62,13 @@ export default props => {
             )
           )
         );
-        console.log(uniqueAgents);
         return (
           <div>
             <Overview data={data} />
             <Legend />
             <div className={style.validationTab}>
               {uniqueAgents.map((agent, i) => (
-                <AgentTab key={i} data={agent} />
+                <AgentTab toggleModal={props.toggleModal} key={i} data={agent} />
               ))}
             </div>
           </div>

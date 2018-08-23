@@ -11,7 +11,6 @@ import updateNotification from "../../mutations/updateNotification";
 import deleteNotification from "../../mutations/deleteNotification";
 
 const EditScope = props => {
-console.log(props.relationships)
 //   console.log(props.scope)
 //   let updateRelationships = props.relationships.map((rel, i) => {
 //       let select

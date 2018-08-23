@@ -204,8 +204,8 @@ ul.tabs > li:after {
   height: 60px;
   line-height: 60px;
   width: 170px;
-      position: absolute;
-      background: #393f4f;
+  position: absolute;
+  background: #393f4f;
 }
 
 .agent_info .info_image {
@@ -227,10 +227,10 @@ ul.tabs > li:after {
 }
 
 .tab_contributions {
-    margin-left: 16px;
-    margin-left: 170px;
-    margin-right: 130px;
-    margin-top: 22px;
+  margin-left: 16px;
+  margin-left: 170px;
+  margin-right: 130px;
+  margin-top: 22px;
 }
 
 .contributions_item {
@@ -280,4 +280,25 @@ ul.tabs > li:after {
 
 .agent_resume h4:last-of-type {
   border-right: 0;
+}
+
+.datePicker {
+  lost-utility: clearfix;
+}
+
+.datePicker_month {
+  float: left;
+  margin-right: 4px;
+}
+.datePicker_year {
+  float: left;
+  margin-right: 8px;
+}
+
+.datePicker select {
+  height: 26px;
+  margin-top: 7px;
+  background: #1b1c1d;
+  color: #f0f0f0;
+  border-radius: 1px;
 }

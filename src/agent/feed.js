@@ -4,12 +4,11 @@ import Feed from "../components/feed/feed";
 import { Icons, Panel } from "oce-components/build";
 import getFeed from "../queries/getFeed";
 import { Query } from "react-apollo";
-import { LoadingMini } from "../components/loading";
+import { LoadingMini, ErrorMini } from "../components/loading";
 import { compose, withState, withHandlers } from "recompose";
 import setAgentPanel from "../mutations/setAgentPanel";
 import { graphql } from "react-apollo";
 import getAgentPanel from "../queries/getAgentPanel";
-import {ErrorMini} from '../components/loading'
 
 const AgentFeed = ({
   onFeedOptions,

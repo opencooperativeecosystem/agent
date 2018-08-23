@@ -51,7 +51,6 @@ export default compose(
   withState("modalIsOpen", "toggleModalIsOpen", false),
   withHandlers({
     toggleModal: props => () => {
-      console.log('qyu')
       props.toggleModalIsOpen(!props.modalIsOpen)
     }
   })

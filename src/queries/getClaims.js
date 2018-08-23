@@ -1,15 +1,15 @@
 import gql from 'graphql-tag'
 
 const GetClaims = gql`
-query ($token: String, $id: Int) {
+query ($token: String, $id: Int, $month: Int, $year: Int) {
     viewer(token: $token) {
       agent(id: $id) {
         id
-        eventsCount(month:8, year:2018)
-        eventHoursCount(month:8, year:2018)
-        eventPeopleCount(month:8, year:2018)
-        agentPlans (isFinished: false, month:8, year:2018 ) {
-          planProcesses (month:8, year:2018) {
+        eventsCount(month:$month, year:$year)
+        eventHoursCount(month:$month, year:$year)
+        eventPeopleCount(month:$month, year:$year)
+        agentPlans (isFinished: false, month:$month, year:$year ) {
+          planProcesses (month:$month, year:$year) {
             id
             committedInputs(action: WORK) {
               fulfilledBy(requestDistribution: true) {
@@ -24,7 +24,9 @@ query ($token: String, $id: Int) {
                     numericValue
                   }
                   validations {
-                    id
+                    validatedBy {
+                      id
+                    }
                   }
                 }
               }
