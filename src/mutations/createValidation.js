@@ -1,33 +1,41 @@
-import gql from 'graphql-tag'
+import gql from "graphql-tag";
 
 const createValidation = gql`
-mutation ($token: String!, $validatedById: Int!, $economicEventId: Int!) {
-  createValidation(token: $token,
-    validatedById: $validatedById,
-    economicEventId: $economicEventId
+  mutation(
+    $token: String!
+    $validatedById: Int!
+    $economicEventId: Int!
+    $note: String
   ) {
-    validation {
-      id
-      validatedBy {
-        name
+    createValidation(
+      token: $token
+      validatedById: $validatedById
+      economicEventId: $economicEventId
+      note: $note
+    ) {
+      validation {
         id
-      }
-      economicEvent {
-        id
-        scope {
+        note
+        validatedBy {
+          name
           id
         }
-        inputOf {
+        economicEvent {
           id
-          processPlan {
+          scope {
             id
           }
+          inputOf {
+            id
+            processPlan {
+              id
+            }
+          }
         }
+        validationDate
       }
-      validationDate
     }
   }
-}`
+`;
 
-export default createValidation
-  
+export default createValidation;

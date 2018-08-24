@@ -78,7 +78,7 @@ const Sidebar = props => {
           </div>
         )}
         <div className={style.button_action + ' ' + style.underlined}>
-          <NavLink to={"/validation"}><span><Icons.Star width='18' height='18' color='#f0f0f0'/></span>Validation</NavLink>
+          <NavLink to={"/validation"}><span><Icons.Star width='18' height='18' color='#f0f0f0'/></span>Validate</NavLink>
         </div>
         </div>
       </div>

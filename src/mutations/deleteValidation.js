@@ -20,6 +20,7 @@ mutation ($token: String!, $id: Int!) {
           affectedQuantity {
             numericValue
             unit {
+              id
               name
             }
           }

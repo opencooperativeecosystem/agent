@@ -9,6 +9,7 @@ query ($token: String, $id: Int!) {
         start
       inputOf {
         name
+        id
         processPlan {
           name
           id
@@ -34,6 +35,8 @@ query ($token: String, $id: Int!) {
           name
         }
         validations {
+            id
+            note
           validatedBy {
             name
             id

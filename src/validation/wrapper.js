@@ -1,23 +1,19 @@
 import React from "react";
 import Component from "./index";
 import { graphql, withApollo } from "react-apollo";
-import Claim from "../queries/getClaims";
+import Claim from "../queries/getEvent";
 import createValidation from "../mutations/createValidation";
 import deleteValidation from "../mutations/deleteValidation";
 import { compose, withHandlers, withState, lifecycle } from "recompose";
-import gql from "graphql-tag";
 import style from "./style.css";
 import Header from "./header";
 import ContributionModal from "../components/contributionModal/wrapper";
-import { Select, Icons, Button, Panel } from "oce-components/build";
-import { Form, Field, withFormik } from "formik";
+import { Select, Icons, Textarea, Panel } from "oce-components/build";
+import { Field, withFormik } from "formik";
 import * as Yup from "yup";
+import updateNotification from "../mutations/updateNotification";
+import deleteNotification from "../mutations/deleteNotification";
 // import Alert from "../alert";
-{
-  /* <Select defaultValue={props.scope} name={field.name} onChange={field.onChange}>
-            {props.relationships.map(opt => opt)}
-          </Select> */
-}
 
 const DatePicker = ({ month, year }) => {
   return (
@@ -26,7 +22,11 @@ const DatePicker = ({ month, year }) => {
         <Field
           name="month"
           render={({ field /* _form */ }) => (
-            <Select name={field.name} onChange={field.onChange} defaultValue={month}>
+            <Select
+              name={field.name}
+              onChange={field.onChange}
+              defaultValue={month}
+            >
               <option value="1">Jan</option>
               <option value="2">Feb</option>
               <option value="3">Mar</option>
@@ -47,7 +47,11 @@ const DatePicker = ({ month, year }) => {
         <Field
           name="year"
           render={({ field /* _form */ }) => (
-            <Select name={field.name} onChange={field.onChange} defaultValue={year}>
+            <Select
+              name={field.name}
+              onChange={field.onChange}
+              defaultValue={year}
+            >
               <option value="2017">2017</option>
               <option value="2018">2018</option>
             </Select>
@@ -70,9 +74,9 @@ class CanvasWrapper extends React.Component {
       modalIsOpen,
       modalId,
       toggleModal,
-      values
+      values,
+      handleChange
     } = this.props;
-    console.log(values)
     return (
       <div className={style.container}>
         <Header
@@ -90,8 +94,6 @@ class CanvasWrapper extends React.Component {
             <Component
               data={data}
               values={values}
-              deleteValidation={deleteValidation}
-              createValidation={createValidation}
               tabId={tabId}
               toggleModal={toggleModal}
             />
@@ -101,6 +103,18 @@ class CanvasWrapper extends React.Component {
             closeModal={toggleModal}
             toggleModal={toggleModal}
             contributionId={modalId}
+            deleteValidation={deleteValidation}
+            createValidation={createValidation}
+            myId={data.data.id}
+            handleChange={handleChange}
+            note={
+              <Field
+                name="note"
+                render={({ field /* _form */ }) => (
+                  <Textarea className={style.textarea} {...field} placeholder="Type the validation note..." />
+                )}
+              />
+            }
           />
         </div>
       </div>
@@ -108,22 +122,22 @@ class CanvasWrapper extends React.Component {
   }
 }
 
-// let d = new Date();
-//   let m = d.getMonth();
-//   let y = d.getFullYear();
-
 const wrapperComponent = compose(
   graphql(createValidation, { name: "createValidationMutation" }),
   graphql(deleteValidation, { name: "deleteValidationMutation" }),
+  graphql(updateNotification, { name: "updateNotification" }),
+  graphql(deleteNotification, { name: "deleteNotification" }),
   withFormik({
     mapPropsToValues: props => ({
-      month: new Date().getMonth() +1,
-      year: new Date().getFullYear()
+      month: new Date().getMonth() + 1,
+      year: new Date().getFullYear(),
+      note: ""
     }),
     validationSchema: Yup.object().shape({
       month: Yup.number(),
-      year: Yup.number()
-    }),
+      year: Yup.number(),
+      note: Yup.string()
+    })
   }),
   withState("tabId", "onSelectTab", null),
   withState("tabName", "onSelectTabName", null),
@@ -139,83 +153,25 @@ const wrapperComponent = compose(
       props.onSelectTabName(name);
     },
     createValidation: props => eventId => {
-      const myAgent = props.client.readQuery({
-        query: gql`
-          query($token: String) {
-            viewer(token: $token) {
-              myAgent {
-                id
-              }
-            }
-          }
-        `,
-        variables: {
-          token: localStorage.getItem("oce_token")
-        }
-      });
       return props
         .createValidationMutation({
           variables: {
             token: localStorage.getItem("oce_token"),
-            validatedById: myAgent.viewer.myAgent.id,
-            economicEventId: eventId
+            validatedById: props.data.data.id,
+            economicEventId: eventId,
+            note: props.values.note
           },
           update: (store, { data }) => {
             let claimCache = store.readQuery({
               query: Claim,
               variables: {
                 token: localStorage.getItem("oce_token"),
-                id: Number(props.match.params.id)
+                id: Number(eventId)
               }
             });
-            // Find the process index
-            let PlanIndex = claimCache.viewer.agent.agentPlans.findIndex(
-              plan => {
-                return (
-                  Number(plan.id) ===
-                  Number(
-                    data.createValidation.validation.economicEvent.inputOf
-                      .processPlan.id
-                  )
-                );
-              }
-            );
-            let ProcessIndex = claimCache.viewer.agent.agentPlans[
-              PlanIndex
-            ].planProcesses.findIndex(
-              process =>
-                Number(process.id) ===
-                Number(
-                  data.createValidation.validation.economicEvent.inputOf.id
-                )
-            );
-            // Find the commitment index
-            let CommitmentIndex = claimCache.viewer.agent.agentPlans[
-              PlanIndex
-            ].planProcesses[ProcessIndex].committedInputs.findIndex(
-              commitment =>
-                commitment.fulfilledBy.some(
-                  item =>
-                    Number(item.fulfilledBy.id) ===
-                    Number(data.createValidation.validation.economicEvent.id)
-                )
-            );
-            // Find the event index
-            let EventIndex = claimCache.viewer.agent.agentPlans[
-              PlanIndex
-            ].planProcesses[ProcessIndex].committedInputs[
-              CommitmentIndex
-            ].fulfilledBy.findIndex(
-              item =>
-                Number(item.fulfilledBy.id) ===
-                Number(data.createValidation.validation.economicEvent.id)
-            );
-            claimCache.viewer.agent.agentPlans[PlanIndex].planProcesses[
-              ProcessIndex
-            ].committedInputs[CommitmentIndex].fulfilledBy[
-              EventIndex
-            ].fulfilledBy.validations.push({
+            claimCache.viewer.economicEvent.validations.push({
               id: data.createValidation.validation.id,
+              note: data.createValidation.validation.note,
               validatedBy: {
                 id: data.createValidation.validation.validatedBy.id,
                 name: data.createValidation.validation.validatedBy.name,
@@ -227,90 +183,146 @@ const wrapperComponent = compose(
               query: Claim,
               variables: {
                 token: localStorage.getItem("oce_token"),
-                id: Number(props.match.params.id)
+                id: Number(eventId)
               },
               data: claimCache
             });
           }
         })
-        .then(data => console.log(data))
-        .catch(e => console.log(e));
+        .then(
+          data => {
+            props
+              .updateNotification({
+                variables: {
+                  message: (
+                    <div style={{ fontSize: "14px" }}>
+                      <span
+                        style={{ marginRight: "10px", verticalAlign: "sub" }}
+                      >
+                        <Icons.Bell width="18" height="18" color="white" />
+                      </span>Validation updated successfully!
+                    </div>
+                  ),
+                  type: "success"
+                }
+              })
+              .then(res => {
+                setTimeout(() => {
+                  props.deleteNotification({
+                    variables: { id: res.data.addNotification.id }
+                  });
+                }, 1000);
+              });
+          },
+          e => {
+            const errors = e.graphQLErrors.map(error => error.message);
+            props
+              .updateNotification({
+                variables: {
+                  message: (
+                    <div style={{ fontSize: "14px" }}>
+                      <span
+                        style={{ marginRight: "10px", verticalAlign: "sub" }}
+                      >
+                        <Icons.Cross width="18" height="18" color="white" />
+                      </span>
+                      {errors}
+                    </div>
+                  ),
+                  type: "alert"
+                }
+              })
+              .then(res => {
+                setTimeout(() => {
+                  props.deleteNotification({
+                    variables: { id: res.data.addNotification.id }
+                  });
+                }, 1000);
+              });
+          }
+        );
     },
-    deleteValidation: props => eventId => {
+    deleteValidation: props => (eventId, valId) => {
       return props
         .deleteValidationMutation({
           variables: {
             token: localStorage.getItem("oce_token"),
-            id: eventId
+            id: valId
           },
           update: (store, { data }) => {
             let claimCache = store.readQuery({
               query: Claim,
               variables: {
                 token: localStorage.getItem("oce_token"),
-                id: Number(props.match.params.id)
+                id: Number(eventId)
               }
             });
-            let PlanIndex = claimCache.viewer.agent.agentPlans.findIndex(
-              plan =>
-                Number(plan.id) ===
-                Number(
-                  data.deleteValidation.validation.economicEvent.inputOf
-                    .processPlan.id
-                )
+            let ValIndex = claimCache.viewer.economicEvent.validations.findIndex(
+              item => Number(item.id) === Number(valId)
             );
-            let ProcessIndex = claimCache.viewer.agent.agentPlans[
-              PlanIndex
-            ].planProcesses.findIndex(
-              process =>
-                Number(process.id) ===
-                Number(
-                  data.deleteValidation.validation.economicEvent.inputOf.id
-                )
-            );
-            let CommitmentIndex = claimCache.viewer.agent.agentPlans[
-              PlanIndex
-            ].planProcesses[ProcessIndex].committedInputs.findIndex(
-              commitment =>
-                commitment.fulfilledBy.some(
-                  item =>
-                    Number(item.fulfilledBy.id) ===
-                    Number(data.deleteValidation.validation.economicEvent.id)
-                )
-            );
-            let EventIndex = claimCache.viewer.agent.agentPlans[
-              PlanIndex
-            ].planProcesses[ProcessIndex].committedInputs[
-              CommitmentIndex
-            ].fulfilledBy.findIndex(
-              item =>
-                Number(item.fulfilledBy.id) ===
-                Number(data.deleteValidation.validation.economicEvent.id)
-            );
-            let ValIndex = claimCache.viewer.agent.agentPlans[
-              PlanIndex
-            ].planProcesses[ProcessIndex].committedInputs[
-              CommitmentIndex
-            ].fulfilledBy[EventIndex].fulfilledBy.validations.findIndex(
-              item => Number(item.id) === Number(eventId)
-            );
-            claimCache.viewer.agent.agentPlans[PlanIndex].planProcesses[
-              ProcessIndex
-            ].committedInputs[CommitmentIndex].fulfilledBy[
-              EventIndex
-            ].fulfilledBy.validations.splice(ValIndex, 1);
+            claimCache.viewer.economicEvent.validations.splice(ValIndex, 1);
             store.writeQuery({
               query: Claim,
               variables: {
                 token: localStorage.getItem("oce_token"),
-                id: Number(props.match.params.id)
+                id: Number(eventId)
               },
               data: claimCache
             });
           }
         })
-        .then(data => console.log(data))
-        .catch(e => console.log(e));
+        .then(
+          data => {
+            props
+              .updateNotification({
+                variables: {
+                  message: (
+                    <div style={{ fontSize: "14px" }}>
+                      <span
+                        style={{ marginRight: "10px", verticalAlign: "sub" }}
+                      >
+                        <Icons.Bell width="18" height="18" color="white" />
+                      </span>Validation updated successfully!
+                    </div>
+                  ),
+                  type: "success"
+                }
+              })
+              .then(res => {
+                setTimeout(() => {
+                  props.deleteNotification({
+                    variables: { id: res.data.addNotification.id }
+                  });
+                }, 1000);
+              });
+          },
+          e => {
+            const errors = e.graphQLErrors.map(error => error.message);
+            props
+              .updateNotification({
+                variables: {
+                  message: (
+                    <div style={{ fontSize: "14px" }}>
+                      <span
+                        style={{ marginRight: "10px", verticalAlign: "sub" }}
+                      >
+                        <Icons.Cross width="18" height="18" color="white" />
+                      </span>
+                      {errors}
+                    </div>
+                  ),
+                  type: "alert"
+                }
+              })
+              .then(res => {
+                setTimeout(() => {
+                  props.deleteNotification({
+                    variables: { id: res.data.addNotification.id }
+                  });
+                }, 1000);
+              });
+          }
+        );
     }
   }),
   lifecycle({

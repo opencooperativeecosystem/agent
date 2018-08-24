@@ -23,7 +23,6 @@ export default props => {
           return (
             <ErrorMini refetch={refetch} message={`Error! ${error.message}`} />
           );
-          console.log(data)
         let agentsArray = [];
         data.viewer.agent.agentPlans.map(plan =>
           plan.planProcesses.map(process =>

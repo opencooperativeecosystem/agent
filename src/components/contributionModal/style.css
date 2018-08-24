@@ -224,9 +224,13 @@
     margin-left: 8px;
     float: left;
     line-height: 35px;
-    font-weight: 500;
+    font-weight: 400;
     color: #525561;
     letter-spacing: 0.5px;
+}
+
+.sentence_text a {
+    font-weight: 500;
 }
 
 .date {
@@ -266,6 +270,20 @@
     padding: 16px;
 }
 
+.validations_item button {
+    float: right;
+    margin-top: -40px;
+    font-size: 14px;
+    text-transform: capitalize;
+    letter-spacing: .5px;
+    background: #C68608;
+}
+
+.validations_item span {
+    vertical-align: sub;
+    margin-right: 5px;
+}
+
 .validations_main {
     lost-utility:  clearfix;
 }
@@ -287,6 +305,6 @@
     font-weight: 300;
     font-style: italic;
     font-size: 14px;
-    margin-top: 8px;
+    margin-top: 4px;
     color: #525561;
 }

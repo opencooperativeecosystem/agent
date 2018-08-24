@@ -302,3 +302,30 @@ ul.tabs > li:after {
   color: #f0f0f0;
   border-radius: 1px;
 }
+
+.contribution_wrapper {
+  display: inline-block;
+  position: relative;
+}
+
+.popup {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  margin-left: -40px;
+  width: 60px;
+  height: 30px;
+  border-radius: 2px;
+  padding: 0 8px;
+  background: #1b1c1d90;
+}
+
+.popup h1 {
+  font-size: 13px;
+  font-weight: 500;
+  color: #f0f0f0;
+  text-align: center;
+  line-height: 30px;
+  margin: 0;
+  padding: 0;
+}
