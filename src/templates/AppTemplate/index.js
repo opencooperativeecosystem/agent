@@ -10,11 +10,12 @@ import Settings from "../../settings/wrapper";
 import Agent from "../../agent/wrapper";
 import Overview from "../../overview/wrapper";
 import { PropsRoute } from "../../helpers/router";
-import Validate from "../../validation_plan/wrapper";
+import PlanOverview from "../../planOverview/wrapper";
 import Validation from "../../validation/wrapper";
 import updateNotification from "../../mutations/updateNotification";
 import deleteNotification from "../../mutations/deleteNotification";
 import { LoadingMini, ErrorMini } from "../../components/loading";
+import Network from "../../network/wrapper";
 
 const AppTemplate = props => {
   return props.loading ? (
@@ -46,6 +47,7 @@ const AppTemplate = props => {
             />
             <PropsRoute path="/agent/:id" component={Agent} data={props} />
             <PropsRoute path="/validation" component={Validation} data={props} />
+            <PropsRoute path="/network" component={Network} data={props} />
             <PropsRoute
               exact
               path="/canvas/:id"
@@ -54,8 +56,8 @@ const AppTemplate = props => {
               agentId={props.data.id}
             />
             <PropsRoute
-              path="/canvas/:id/validate"
-              component={Validate}
+              path="/canvas/:id/overview"
+              component={PlanOverview}
               relationships={props.data.agentRelationships}
             />
             <PropsRoute

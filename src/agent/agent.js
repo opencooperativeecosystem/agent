@@ -1,6 +1,6 @@
 import React from 'react'
 import Feed from "./feed";
-import { Icons, Panel, NavigationItem } from "oce-components/build";
+import { Icons, Panel, Participant } from "oce-components/build";
 import { NavLink } from "react-router-dom";
 // import Item from '../components/inventoryItem'
 import Plans from "./plans";
@@ -27,7 +27,7 @@ export default ({ data, toggleModal, isOpen }) => (
                     activeClassName={style.activeLink}
                     to={"/agent/" + item.object.id}
                   >
-                    <NavigationItem
+                    <Participant
                       img={item.object.image}
                       title={item.object.name}
                     />
@@ -39,7 +39,7 @@ export default ({ data, toggleModal, isOpen }) => (
                     activeClassName={style.activeLink}
                     to={"/agent/" + item.subject.id}
                   >
-                    <NavigationItem
+                    <Participant
                       img={item.subject.image}
                       title={item.subject.name}
                     />

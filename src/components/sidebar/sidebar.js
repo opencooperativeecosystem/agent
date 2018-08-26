@@ -29,6 +29,11 @@ const Sidebar = props => {
           </NavLink>
         </span>
         <span className={style.menu_icon}>
+          <NavLink to={"/network"}>
+            <Icons.Users color="#99ADC6" width="18" />
+          </NavLink>
+        </span>
+        <span className={style.menu_icon}>
           <NavLink to={"/settings"}>
             <Icons.Settings color="#99ADC6" width="18" />
           </NavLink>

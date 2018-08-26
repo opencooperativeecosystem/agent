@@ -73,9 +73,13 @@
     color: #9baec8;
     text-decoration: none;
     text-align: center;
-    lost-column: 1/4;
+    lost-column: 1/5;
     display: inline-block;
     line-height: 52px;
+}
+
+.sidebar_menu .menu_icon {
+
 }
 
 .menu_icon:hover {

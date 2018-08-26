@@ -301,6 +301,7 @@ ul.tabs > li:after {
   background: #1b1c1d;
   color: #f0f0f0;
   border-radius: 1px;
+  padding: 0;
 }
 
 .contribution_wrapper {

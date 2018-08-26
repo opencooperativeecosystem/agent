@@ -47,14 +47,15 @@ const CanvasWrapper = ({
             title={data.viewer.plan.name}
             navigation
             back={() => history.goBack()}
+            
             forward={() => history.goForward()}
             actions={
               <div>
               <Button small onClick={onTogglePlanModal}><span data-edit='edit-plan' className={style.buttonIcon}><Icons.Edit width='16' height='16' color='#fff' /></span> Edit Plan</Button>
-              <Link className={style.right_button} to={`${match.url}/validate`}>
+              <Link className={style.right_button} to={`${match.url}/overview`}>
                 <span>
-                  <Icons.Validate width={18} height={18} color={"#fafafa"} />
-                </span>Validate
+                  <Icons.Activity width={18} height={18} color={"#fafafa"} />
+                </span>Overview
               </Link>
               </div>
             }
